@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{5A76C15A-F6EB-4170-ACC4-4F8D5E2AD656}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{ADA7A68B-0743-45C0-8ECA-AAF6C0709034}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{FA292CD9-8188-494A-AB27-7298F5C7659C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore", "UI\CompuStore.csproj", "{5A76C15A-F6EB-4170-ACC4-4F8D5E2AD656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +15,6 @@ Global
 		{5A76C15A-F6EB-4170-ACC4-4F8D5E2AD656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A76C15A-F6EB-4170-ACC4-4F8D5E2AD656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A76C15A-F6EB-4170-ACC4-4F8D5E2AD656}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADA7A68B-0743-45C0-8ECA-AAF6C0709034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADA7A68B-0743-45C0-8ECA-AAF6C0709034}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADA7A68B-0743-45C0-8ECA-AAF6C0709034}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADA7A68B-0743-45C0-8ECA-AAF6C0709034}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA292CD9-8188-494A-AB27-7298F5C7659C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA292CD9-8188-494A-AB27-7298F5C7659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA292CD9-8188-494A-AB27-7298F5C7659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA292CD9-8188-494A-AB27-7298F5C7659C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

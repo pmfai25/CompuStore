@@ -1,6 +1,6 @@
 # License
 
-Please carefully understand the license and download the latest icons at ModernUIIcons.com.
+Please carefully understand the license and download the latest icons at ModernCompuStoreIcons.com.
 
 ## Understand Your Rights
 No Attribution and No Derived Works
@@ -40,14 +40,14 @@ http://creativecommons.org/licenses/by-nd/3.0/ *
   - List of missing exported icons
 - Proletkult Graphik, from The Noun Project
   - appbar.draw.pen (inspired)
-- Olivier Guin, from The Noun Project
+- Olivier GCompuStoren, from The Noun Project
   - appbar.draw.marker
 - Gibran Bisio, from The Noun Project
   - appbar.draw.bucket
 Andrew Forrester, from The Noun Project
   - appbar.fingerprint
 
-* The license is for attribution, but this is not required.
+* The license is for attribution, but this is not reqCompuStorered.
 ** Developers and designers that emailed Templarian the source .design icons to be added into the package. PNGs also accepted, but may take longer to be added.
 *** Icons I've copied so closely you want to attribute them and are also under the CC license.
 
