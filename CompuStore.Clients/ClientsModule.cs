@@ -15,7 +15,7 @@ namespace CompuStore.Clients
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            this._regionManager.RegisterViewWithRegion(CompuStore.Infrastructure.RegionNames.MainContentRegion, typeof(Views.ClientsMain));
         }
     }
 }

@@ -15,7 +15,8 @@ namespace CompuStore.Suppliers
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            this._regionManager.RegisterViewWithRegion(Infrastructure.RegionNames.MainContentRegion, typeof(Views.SuppliersMain));
+
         }
     }
 }
