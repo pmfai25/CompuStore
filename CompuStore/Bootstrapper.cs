@@ -12,6 +12,14 @@ namespace CompuStore
         {
             return Container.Resolve<MainWindow>();
         }
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            this.Container.RegisterTypeForNavigation<CompuStore.Suppliers.Views.SuppliersMain>(Infrastructure.RegionNames.SuppliersMain);
+            this.Container.RegisterTypeForNavigation<CompuStore.Clients.Views.ClientsMain>(Infrastructure.RegionNames.ClientsMain);
+            this.Container.RegisterTypeForNavigation<CompuStore.Items.Views.ItemsMain>(Infrastructure.RegionNames.ItemsMain);
+            this.Container.RegisterTypeForNavigation<CompuStore.Reports.Views.ReportsMain>(Infrastructure.RegionNames.ReportsMain);
+        }
 
         protected override void InitializeShell()
         {

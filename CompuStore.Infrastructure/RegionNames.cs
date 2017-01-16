@@ -9,6 +9,9 @@ namespace CompuStore.Infrastructure
     public static class RegionNames
     {
         public const String MainContentRegion = "MainContentRegion";
-        public const String MainNavigationRegion = "MainNavigationRegion";
+        public const String SuppliersMain = "SuppliersMain";
+        public const String ClientsMain = "ClientsMain";
+        public const String ItemsMain = "ItemsMain";
+        public const String ReportsMain = "ReportsMain";
     }
 }

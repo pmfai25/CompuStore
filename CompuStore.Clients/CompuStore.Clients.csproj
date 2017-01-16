@@ -78,6 +78,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ClientsMainViewModel.cs" />
     <Compile Include="Views\ClientsMain.xaml.cs">
       <DependentUpon>ClientsMain.xaml</DependentUpon>
     </Compile>
@@ -92,9 +93,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ClientsMain.xaml">
       <SubType>Designer</SubType>
