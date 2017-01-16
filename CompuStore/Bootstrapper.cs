@@ -3,6 +3,12 @@ using Prism.Unity;
 using CompuStore.Views;
 using System.Windows;
 using Prism.Modularity;
+using CompuStore.Clients.Service;
+using CompuStore.Suppliers.Views;
+using CompuStore.Clients.Views;
+using CompuStore.Items.Views;
+using CompuStore.Reports.Views;
+using CompuStore.Infrastructure;
 
 namespace CompuStore
 {
@@ -15,10 +21,11 @@ namespace CompuStore
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            this.Container.RegisterTypeForNavigation<CompuStore.Suppliers.Views.SuppliersMain>(Infrastructure.RegionNames.SuppliersMain);
-            this.Container.RegisterTypeForNavigation<CompuStore.Clients.Views.ClientsMain>(Infrastructure.RegionNames.ClientsMain);
-            this.Container.RegisterTypeForNavigation<CompuStore.Items.Views.ItemsMain>(Infrastructure.RegionNames.ItemsMain);
-            this.Container.RegisterTypeForNavigation<CompuStore.Reports.Views.ReportsMain>(Infrastructure.RegionNames.ReportsMain);
+            this.Container.RegisterType<IClientService, ClientService>();
+            this.Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
+            this.Container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
+            this.Container.RegisterTypeForNavigation<ItemsMain>(RegionNames.ItemsMain);
+            this.Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
         }
 
         protected override void InitializeShell()

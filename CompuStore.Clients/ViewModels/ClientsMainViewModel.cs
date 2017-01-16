@@ -6,49 +6,37 @@ using System.Linq;
 using Prism.Regions;
 using Prism.Interactivity.InteractionRequest;
 using CompuStore.Clients.Properties;
+using System.Collections.ObjectModel;
+using CompuStore.Clients.Model;
+using CompuStore.Clients.Service;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientsMainViewModel : BindableBase, IConfirmNavigationRequest
+    public class ClientsMainViewModel : BindableBase
     {
-        private readonly InteractionRequest<Confirmation> confirmExitInteractionRequest;
-        public IInteractionRequest ConfirmExitInteractionRequest
+        private ObservableCollection<Client> clients;
+        public ObservableCollection<Client> Clients
         {
-            get { return this.confirmExitInteractionRequest; }
+            get { return clients; }
+            set { SetProperty(ref clients, value); }
         }
-        int x;
-        public ClientsMainViewModel()
+        private Client selectedClient;
+        public Client SelectedClient
         {
-            confirmExitInteractionRequest = new InteractionRequest<Confirmation>();
+            get { return selectedClient; }
+            set { SetProperty(ref selectedClient, value); }
         }
-
-        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+        private IClientService clientService;
+        public string SelectedClientName {
+            get {  
+                    if (selectedClient != null)
+                    return selectedClient.Name;
+                else
+                    return "Not Selected"; } }
+        public ClientsMainViewModel(IClientService ClientService)
         {
-            if (x==1)
-            {
-                this.confirmExitInteractionRequest.Raise(
-                    new Confirmation { Content = Resources.ConfirmExitMessage, Title = Resources.ConfirmExitTitle },
-                    c => { continuationCallback(c.Confirmed); });
-            }
-            else
-            {
-                continuationCallback(true);
-            }
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            x = (int)navigationContext.Parameters["X"];
-        }
+            this.clientService = ClientService;
+            clients = this.clientService.GetAllClients();
+        }      
     }
 }
