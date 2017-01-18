@@ -20,12 +20,12 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <ToolBar  DockPanel.Dock="Top">
-            <Button Style="{StaticResource AccentedSquareButtonStyle}">Add</Button>
-            <Button Style="{StaticResource AccentedSquareButtonStyle}">Edit</Button>
-            <Button Style="{StaticResource AccentedSquareButtonStyle}">Delete</Button>
+        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Add</Button>
+            <Button Command="{Binding EditCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Edit</Button>
+            <Button Command="{Binding DeleteCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Delete</Button>
             <Separator></Separator>
-            <Label >Phone Number</Label>
+            <Label >Search By Phone</Label>
             <TextBox Width="150" Text="{Binding Path=SelectedClient.Name}" VerticalAlignment="Top"></TextBox>
             <Button Style="{StaticResource AccentedSquareButtonStyle}">Search</Button>
         </ToolBar>

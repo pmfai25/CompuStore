@@ -24,15 +24,40 @@ namespace CompuStore.Clients.ViewModels
         public Client SelectedClient
         {
             get { return selectedClient; }
-            set { SetProperty(ref selectedClient, value); }
+            set {
+               SetProperty(ref selectedClient, value);
+
+            }
         }
         private IClientService clientService;
-        public string SelectedClientName {
-            get {  
-                    if (selectedClient != null)
-                    return selectedClient.Name;
-                else
-                    return "Not Selected"; } }
+        public DelegateCommand AddCommand => new DelegateCommand(Add);
+        public DelegateCommand EditCommand => new DelegateCommand(Edit, CanEdit).ObservesProperty(()=>SelectedClient);
+        public DelegateCommand DeleteCommand => new DelegateCommand(Delete, CanDelete).ObservesProperty(() => SelectedClient);
+
+        private void Delete()
+        {
+            Clients.Remove(SelectedClient);
+        }
+
+        private bool CanDelete()
+        {
+            return SelectedClient != null;
+        }
+
+        private void Edit()
+        {
+            
+        }
+
+        private bool CanEdit()
+        {
+            return SelectedClient != null;
+        }
+
+        private void Add()
+        {
+            
+        }
         public ClientsMainViewModel(IClientService ClientService)
         {
             this.clientService = ClientService;

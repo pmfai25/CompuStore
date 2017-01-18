@@ -8,13 +8,14 @@ namespace CompuStore.Clients
     {
         IRegionManager _regionManager;
 
-        public ClientsModule(RegionManager regionManager)
+        public ClientsModule(IRegionManager regionManager )
         {
             _regionManager = regionManager;
         }
 
         public void Initialize()
         {
+            
             this._regionManager.RegisterViewWithRegion(CompuStore.Infrastructure.RegionNames.MainContentRegion, typeof(Views.ClientsMain));
         }
     }
