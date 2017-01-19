@@ -7,7 +7,23 @@
         prism:ViewModelLocator.AutoWireViewModel="True"        
         Title="{Binding Title}" Height="600" Width="800"
         ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
-        GlowBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        GlowBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Icon="/CompuStore;component/MainIcon.ico">
+    <Window.Resources>
+        <Style x:Key="TabButton" TargetType="Button">
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#CC119EDA"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="#CC119EDA"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="BorderBrush" Value="#CC119EDA"/>                    
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button>
@@ -31,7 +47,7 @@
         <Image Width="auto" Stretch="Fill" Height="150" Source="{StaticResource Logo}" DockPanel.Dock="Top"></Image>
         <Border Margin="1, 0, 0 ,0" Width="200" CornerRadius="5" BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" DockPanel.Dock="Left">
             <StackPanel Orientation="Vertical">
-                <Button Command="{Binding SuppliersCommand}" Height="80" Style="{StaticResource AccentedSquareButtonStyle}" BorderThickness="1" Margin="1,1,0,1" FontSize="16" FontWeight="Bold">
+                <Button Command="{Binding SuppliersCommand}" Style="{StaticResource TabButton}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
                             <Rectangle Width="40" HorizontalAlignment="Left"
@@ -41,12 +57,12 @@
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_store}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Margin="10,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center">Companies</TextBlock>
+                            <TextBlock Margin="10,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center">Purchases</TextBlock>
 
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding ClientsCommand}" Height="80" Style="{StaticResource AccentedSquareButtonStyle}" Margin="1" HorizontalAlignment="Stretch">
+                <Button Command="{Binding ClientsCommand}" Style="{StaticResource TabButton}">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal" Width="170">
                             <Rectangle Width="40" HorizontalAlignment="Left"
@@ -56,12 +72,12 @@
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Clients</TextBlock>
+                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Sales</TextBlock>
 
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Height="80" Style="{StaticResource AccentedSquareButtonStyle}" BorderThickness="1" Controls:ButtonHelper.CornerRadius="5" Margin="1">
+                <Button Style="{StaticResource TabButton}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
                             <Rectangle Width="40" HorizontalAlignment="Right"
@@ -71,12 +87,12 @@
                                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_laptop}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Items</TextBlock>
+                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Store</TextBlock>
                             
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Height="80" Style="{StaticResource AccentedSquareButtonStyle}" BorderThickness="1" Controls:ButtonHelper.CornerRadius="5" Margin="1">
+                <Button  Style="{StaticResource TabButton}" Background="#CC119EDA">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
                             <Rectangle Width="40" HorizontalAlignment="Right"
