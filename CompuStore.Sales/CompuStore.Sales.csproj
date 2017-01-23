@@ -73,9 +73,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientsModule.cs" />
-    <Compile Include="Model\Client.cs" />
-    <Compile Include="Model\ClientPayment.cs" />
+    <Compile Include="SalesModule.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -91,8 +89,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Service\ClientService.cs" />
-    <Compile Include="Service\IClientService.cs" />
     <Compile Include="ViewModels\SalesMainViewModel.cs" />
     <Compile Include="Views\SalesMain.xaml.cs">
       <DependentUpon>SalesMain.xaml</DependentUpon>
@@ -108,7 +104,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\SalesMain.xaml">
       <SubType>Designer</SubType>

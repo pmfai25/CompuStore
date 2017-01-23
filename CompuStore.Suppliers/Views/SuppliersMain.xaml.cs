@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace CompuStore.Purchases.Views
+namespace CompuStore.Suppliers.Views
 {
     /// <summary>
     /// Interaction logic for SuppliersMain
     /// </summary>
-    public partial class PurchasesMain : UserControl
+    public partial class SuppliersMain : UserControl
     {
-        public PurchasesMain()
+        public SuppliersMain()
         {
             InitializeComponent();
         }

@@ -4,18 +4,17 @@ using System;
 
 namespace CompuStore.Store
 {
-    public class StoresModule : IModule
+    public class StoreModule : IModule
     {
         IRegionManager _regionManager;
 
-        public StoresModule(RegionManager regionManager)
+        public StoreModule(RegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
         public void Initialize()
         {
-            this._regionManager.RegisterViewWithRegion(CompuStore.Infrastructure.RegionNames.MainContentRegion, typeof(Views.StoresMain));
         }
     }
 }

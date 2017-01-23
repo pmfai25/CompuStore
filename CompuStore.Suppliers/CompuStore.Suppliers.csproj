@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EF53595-C3F8-410E-8794-A45FB7000E0A}</ProjectGuid>
+    <ProjectGuid>{27F39196-187B-48EE-8494-1C4C9F09FB40}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CompuStore.Reports</RootNamespace>
-    <AssemblyName>CompuStore.Reports</AssemblyName>
+    <RootNamespace>CompuStore.Suppliers</RootNamespace>
+    <AssemblyName>CompuStore.Suppliers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -69,7 +69,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportsModule.cs" />
+    <Compile Include="SuppliersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -83,9 +83,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModels\ReportsMainViewModel.cs" />
-    <Compile Include="Views\ReportsMain.xaml.cs">
-      <DependentUpon>ReportsMain.xaml</DependentUpon>
+    <Compile Include="ViewModels\SuppliersMainViewModel.cs" />
+    <Compile Include="Views\SuppliersMain.xaml.cs">
+      <DependentUpon>SuppliersMain.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,7 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ReportsMain.xaml">
+    <Page Include="Views\SuppliersMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,13 +21,15 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding AddCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Add</Button>
-            <Button Command="{Binding EditCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Edit</Button>
-            <Button Command="{Binding DeleteCommand}" Style="{StaticResource AccentedSquareButtonStyle}">Delete</Button>
+            <Button Command="{Binding AddCommand}" >
+               Add
+            </Button>
+            <Button Command="{Binding EditCommand}">Edit</Button>
+            <Button Command="{Binding DeleteCommand}">Delete</Button>
             <Separator></Separator>
-            <Label >Search By Phone</Label>
+            <Label VerticalAlignment="Center" >Search By Phone</Label>
             <TextBox Width="150" Text="{Binding Path=SelectedClient.Name}" VerticalAlignment="Top"></TextBox>
-            <Button Style="{StaticResource AccentedSquareButtonStyle}">Search</Button>
+            <Button >Search</Button>
         </ToolBar>
         <ListBox HorizontalAlignment="Stretch" ItemTemplate="{StaticResource ListTemplate}" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}"></ListBox>
     </DockPanel>

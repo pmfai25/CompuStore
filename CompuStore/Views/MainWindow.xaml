@@ -1,116 +1,97 @@
-﻿<Controls:MetroWindow x:Class="CompuStore.Views.MainWindow"
+﻿<Window x:Class="CompuStore.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:infrastrucure="clr-namespace:CompuStore.Infrastructure;assembly=CompuStore.Infrastructure"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         prism:ViewModelLocator.AutoWireViewModel="True"        
-        Title="{Binding Title}" Height="600" Width="800"
-        ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
-        GlowBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Icon="/CompuStore;component/MainIcon.ico">
-    <Window.Resources>
-        <Style x:Key="TabButton" TargetType="Button">
-            <Setter Property="Height" Value="80"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="#CC119EDA"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="White"/>
-                    <Setter Property="Foreground" Value="#CC119EDA"/>
-                    <Setter Property="FontSize" Value="14"/>
-                    <Setter Property="BorderBrush" Value="#CC119EDA"/>                    
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-    <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
-            <Button>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20"
-                   Height="20"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Margin="4 0 0 0"
-                   VerticalAlignment="Center"
-                   Text="Settings" />
-                </StackPanel>
-            </Button>
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+        Title="CompuStore" Height="600" Width="800" WindowStartupLocation="CenterScreen"        
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/CompuStore;component/MainIcon.ico">
 
     <DockPanel LastChildFill="True">
+        <DockPanel.Background>
+        <RadialGradientBrush>
+            <GradientStop Color="#FF80B3D4" />
+            <GradientStop Color="#FF456AB4"
+                              Offset="1" />
+        </RadialGradientBrush>
+        </DockPanel.Background>
         <Image Width="auto" Stretch="Fill" Height="150" Source="{StaticResource Logo}" DockPanel.Dock="Top"></Image>
-        <Border Margin="1, 0, 0 ,0" Width="200" CornerRadius="5" BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" DockPanel.Dock="Left">
-            <StackPanel Orientation="Vertical">
-                <Button Command="{Binding SuppliersCommand}" Style="{StaticResource TabButton}">
+        <Border  Width="200"  BorderBrush="#FF4355C1"
+                BorderThickness="2,2,2,2"
+                CornerRadius="4,4,4,4"
+                Margin="8,2,2,8" DockPanel.Dock="Left" >
+           <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Command="{Binding SalesCommand}" Grid.Row="0" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
-                            <Rectangle Width="40" HorizontalAlignment="Left"
-                   Height="40"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_store}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Margin="10,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center">Purchases</TextBlock>
-
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="Sale" Width="40" Height="40" Foreground="Lime"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Sales"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding ClientsCommand}" Style="{StaticResource TabButton}">
-                    <Button.Content >
-                        <StackPanel Orientation="Horizontal" Width="170">
-                            <Rectangle Width="40" HorizontalAlignment="Left"
-                   Height="40"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Sales</TextBlock>
-
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Style="{StaticResource TabButton}">
+                <Button Command="{Binding PurchasesCommand}" Grid.Row="1" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
-                            <Rectangle Width="40" HorizontalAlignment="Right"
-                   Height="40"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_laptop}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Store</TextBlock>
-                            
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="Sale" Width="40" Height="40" Foreground="Red"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Purchases"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button  Style="{StaticResource TabButton}" Background="#CC119EDA">
+                <Button Command="{Binding StoreCommand}" Grid.Row="2" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Stretch" Width="170">
-                            <Rectangle Width="40" HorizontalAlignment="Right"
-                   Height="40"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cabinet_files}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Margin="20,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center">Reports</TextBlock>
-                           
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="Store" Width="40" Height="40" Foreground="Yellow"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Store"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-            </StackPanel>
+                <Button Command="{Binding ClientsCommand}" Grid.Row="3" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="Account" Width="40" Height="40" Foreground="Lime"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Clients"/></TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding SuppliersCommand}" Grid.Row="4" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="City" Width="40" Height="40" Foreground="Red"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Suppliers"/></TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding ReportsCommand}" Grid.Row="5" Height="Auto" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                            <materialDesign:PackIcon Margin="0,0,20,0" Kind="BookMultiple" Width="40" Height="40" Foreground="Yellow"/>
+                            <TextBlock VerticalAlignment="Center" ><Run Text="Reports"/></TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
         </Border>
-        <Border CornerRadius="5" BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}">
-            <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"></Controls:TransitioningContentControl>
+        <Border  BorderBrush="#FF4355C1"
+                BorderThickness="2,2,2,2"
+                CornerRadius="4,4,4,4"
+                Margin="8,2,2,8">
+            <materialDesign:TransitioningContent  OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}" prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"/>
         </Border>
     </DockPanel>
-</Controls:MetroWindow>
+</Window>

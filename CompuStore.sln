@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Store", "CompuSt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Purchases", "CompuStore.Purchases\CompuStore.Purchases.csproj", "{AB8B448C-DD74-4D60-A041-3E5D03A32180}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Clients", "CompuStore.Clients\CompuStore.Clients.csproj", "{901934ED-35B1-4D60-BA72-F66FDB30328A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Suppliers", "CompuStore.Suppliers\CompuStore.Suppliers.csproj", "{27F39196-187B-48EE-8494-1C4C9F09FB40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F39196-187B-48EE-8494-1C4C9F09FB40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F39196-187B-48EE-8494-1C4C9F09FB40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F39196-187B-48EE-8494-1C4C9F09FB40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F39196-187B-48EE-8494-1C4C9F09FB40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

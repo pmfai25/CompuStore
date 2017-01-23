@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompuStore.Suppliers.Model
+namespace CompuStore.Purchases.Model
 {
     public class Purchase
     {

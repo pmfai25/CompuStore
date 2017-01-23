@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompuStore.Sales.Model
+namespace CompuStore.Clients.Model
 {
     public class ClientPayment
     {

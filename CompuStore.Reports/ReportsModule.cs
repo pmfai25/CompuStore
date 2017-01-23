@@ -15,7 +15,6 @@ namespace CompuStore.Reports
 
         public void Initialize()
         {
-            this._regionManager.RegisterViewWithRegion(CompuStore.Infrastructure.RegionNames.MainContentRegion, typeof(Views.ReportsMain));
         }
     }
 }

@@ -4,19 +4,18 @@ using System;
 
 namespace CompuStore.Sales
 {
-    public class ClientsModule : IModule
+    public class SalesModule : IModule
     {
         IRegionManager _regionManager;
 
-        public ClientsModule(IRegionManager regionManager )
+        public SalesModule(IRegionManager regionManager )
         {
             _regionManager = regionManager;
         }
 
         public void Initialize()
         {
-            
-            this._regionManager.RegisterViewWithRegion(CompuStore.Infrastructure.RegionNames.MainContentRegion, typeof(Views.SalesMain));
+            _regionManager.RequestNavigate(Infrastructure.RegionNames.MainContentRegion, Infrastructure.RegionNames.SalesMain);
         }
     }
 }

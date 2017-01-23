@@ -2,21 +2,19 @@
 using Prism.Regions;
 using System;
 
-namespace CompuStore.Purchases
+namespace CompuStore.Suppliers
 {
-    public class PurchasesModule : IModule
+    public class SuppliersModule : IModule
     {
         IRegionManager _regionManager;
 
-        public PurchasesModule(RegionManager regionManager)
+        public SuppliersModule(RegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
         public void Initialize()
         {
-            
-
         }
     }
 }
