@@ -1,18 +1,62 @@
 ﻿<UserControl x:Class="CompuStore.Purchases.Views.PurchasesMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"     
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <DockPanel LastChildFill="True">
-        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding AddCommand}">Purchases</Button>
-            <Button Command="{Binding EditCommand}">Edit</Button>
-            <Button Command="{Binding DeleteCommand}">Delete</Button>
-            <Separator></Separator>
-            <Label >Search By Phone</Label>
-            <TextBox Width="150" Text="{Binding Path=SelectedClient.Name}" VerticalAlignment="Top"></TextBox>
-            <Button>Search</Button>
-        </ToolBar>
+    <UserControl.Resources>
 
+        <ResourceDictionary>
+            <Style TargetType="{x:Type DatePickerTextBox}">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <TextBox x:Name="PART_TextBox"
+     Text="{Binding Path=SelectedDate, StringFormat='dd - MM - yyyy', 
+     RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="ListTemplate">
+                <Grid x:Name="GridItem" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5,1,0,0" />
+                    <TextBlock Grid.Column="1" Text="{Binding Path=Phone}" Margin="5,1,0,0" />
+                    <TextBlock Grid.Column="2" Text="{Binding Path=Address}" Margin="5,1,0,0" />
+                    <TextBlock Grid.Column="3" Text="{Binding Path=Notes}" Margin="5,1,0,0" />
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
+            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Purchases" Foreground="White"/>
+        </Grid>
+        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="Plus" />
+            </Button>
+            <Button Command="{Binding EditCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="Pencil" />
+            </Button>
+            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="Delete" />
+            </Button>
+            <Separator></Separator>
+            <DatePicker Width="200"  Height="30"></DatePicker>
+            <!--<TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Search by Barcode or Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SelectedClient.Name}"></TextBox>-->
+            <Button  Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="Magnify" />
+            </Button>
+        </ToolBar>
+        <Separator DockPanel.Dock="Top"></Separator>
+        <ListBox HorizontalAlignment="Stretch" ItemTemplate="{StaticResource ListTemplate}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"></ListBox>
     </DockPanel>
 </UserControl>
