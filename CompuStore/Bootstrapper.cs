@@ -11,6 +11,7 @@ using CompuStore.Infrastructure;
 using CompuStore.Clients.Views;
 using CompuStore.Purchases.Views;
 using Prism.Regions;
+using System.Data.SqlClient;
 
 namespace CompuStore
 {
@@ -24,7 +25,7 @@ namespace CompuStore
         {
             base.ConfigureContainer();
             //Register Services
-
+            this.Container.RegisterInstance<SqlConnection>(Infrastructure.Manager.Connection);
             //Register Main Views
             this.Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
             this.Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);

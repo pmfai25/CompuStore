@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CompuStore.Suppliers.Model;
 namespace CompuStore.Suppliers.Service
 {
-    interface ISuppliersService
+    public interface ISuppliersService
     {
+        bool Add(Supplier supplier);
+        bool Update(Supplier supplier);
+        bool Delete(Supplier supplier);
+        SuppliersDetails SearchByName(string name);
+        IEnumerable<SuppliersDetails> GetAll();
     }
 }
