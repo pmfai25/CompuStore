@@ -11,7 +11,7 @@ namespace CompuStore.Suppliers.Service
         bool Add(Supplier supplier);
         bool Update(Supplier supplier);
         bool Delete(Supplier supplier);
-        SuppliersDetails SearchByName(string name);
+        IEnumerable<SuppliersDetails> SearchBy(string name);
         IEnumerable<SuppliersDetails> GetAll();
     }
 }

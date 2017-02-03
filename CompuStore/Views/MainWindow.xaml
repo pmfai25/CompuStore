@@ -12,6 +12,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         GlowBrush="{DynamicResource AccentColorBrush}"
+                      WindowState="Maximized"
         BorderThickness="2"  ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False"                      
         >
     <Controls:MetroWindow.IconTemplate>

@@ -11,7 +11,7 @@ namespace CompuStore.Clients.Model
         public int ID { get; set; }
         public int Number { get; set; }
         public DateTime Date { get; set; }
-        public double Money { get; set; }
+        public decimal Money { get; set; }
         public int ClientID { get; set; }
     }
 }

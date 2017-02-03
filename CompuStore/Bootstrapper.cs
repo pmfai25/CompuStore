@@ -25,6 +25,7 @@ namespace CompuStore
         {
             base.ConfigureContainer();
             //Register Services
+            Infrastructure.Manager.Connection.Open();
             this.Container.RegisterInstance<SqlConnection>(Infrastructure.Manager.Connection);
             //Register Main Views
             this.Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);

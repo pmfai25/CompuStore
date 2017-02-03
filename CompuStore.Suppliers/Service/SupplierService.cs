@@ -52,10 +52,10 @@ namespace CompuStore.Suppliers.Service
             return x;
         }
 
-        public SuppliersDetails SearchByName(string name)
+        public IEnumerable<SuppliersDetails> SearchBy(string name)
         {
             Connection.Open();
-            SuppliersDetails x = Connection.QuerySingle<SuppliersDetails>("Select * from SuppliersDetails where Name like \'@Name%\'",name);
+            IEnumerable<SuppliersDetails> x = Connection.Query<SuppliersDetails>("Select * from SuppliersDetails where Name like @Name +'%' or Phone like @Name+ '%'",name);
             Connection.Close();
             return x;
         }
