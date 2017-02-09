@@ -11,7 +11,7 @@ namespace CompuStore.Clients.ViewModels
     public class ClientsEditViewModel : BindableBase
     {
         private Client client;
-        public string PropertyName
+        public Client Client
         {
             get { return client; }
             set { SetProperty(ref client, value); }
