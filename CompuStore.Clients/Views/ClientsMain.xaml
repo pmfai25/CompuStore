@@ -2,38 +2,45 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"       
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Clients" Foreground="White"/>
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="العملاء" Foreground="White"/>
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" />
             </Button>
-            <Button Command="{Binding EditCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
                 <iconPacks:PackIconMaterial Kind="Pencil" />
             </Button>
-            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
                 <iconPacks:PackIconMaterial Kind="Delete" />
             </Button>
             <Separator></Separator>
-            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Search by Client Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SelectedClient.Name}"></TextBox>
-            <Button  Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
-                <iconPacks:PackIconMaterial Kind="Magnify" />
+            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="Search by Client Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
+            <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
+                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
+            </Button>
+            <Separator></Separator>
+            <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="مدفوعات">
+                <iconPacks:PackIconMaterial Kind="CurrencyUsd" />
+            </Button>
+            <Button Command="{Binding SalesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير شراء">
+                <iconPacks:PackIconMaterial Kind="File" />
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
         <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Phone" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="Initial" Width="100" Binding="{Binding Initial}"/>
-                <DataGridTextColumn Header="Sales" Width="100" Foreground="Red" Binding="{Binding Sales}"/>
-                <DataGridTextColumn Header="Payments" Width="100" Foreground="Blue" Binding="{Binding Payments}"/>
-                <DataGridTextColumn Header="Remaining" Width="100" Foreground="Green" FontWeight="DemiBold" Binding="{Binding Remaining}"/>
+                <DataGridTextColumn Header="اسم العميل" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Binding="{Binding Initial}"/>
+                <DataGridTextColumn Header="مشتريات العميل" Width="120" Foreground="Red" Binding="{Binding Sales}"/>
+                <DataGridTextColumn Header="سداد العميل" Width="120" Foreground="Blue" Binding="{Binding Payments}"/>
+                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Green" FontWeight="DemiBold" Binding="{Binding Remaining}"/>
             </DataGrid.Columns>
         </DataGrid>
        

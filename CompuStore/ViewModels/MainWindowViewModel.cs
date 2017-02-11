@@ -12,7 +12,7 @@ namespace CompuStore.ViewModels
         public DelegateCommand SalesCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SalesMain));
         public DelegateCommand PurchasesCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.PurchasesMain));
         public DelegateCommand StoreCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreMain));
-        public DelegateCommand ClientsCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain));
+        public DelegateCommand ClientsCommand => new DelegateCommand(() =>  this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain));
         public DelegateCommand SuppliersCommand => new DelegateCommand(()=>this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain));
         public DelegateCommand ReportsCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ReportsMain));
 

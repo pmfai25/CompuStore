@@ -44,16 +44,8 @@
       <HintPath>..\packages\MahApps.Metro.1.4.1\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.1.7.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.2.1.750, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.2.2.1.750\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.6.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -102,9 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientsModule.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClientPayment.cs" />
-    <Compile Include="Model\ClientsDetails.cs" />
+    <Compile Include="Model\ClientMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,12 +111,26 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Service\ClientPaymentService.cs" />
     <Compile Include="Service\ClientService.cs" />
+    <Compile Include="Service\IClientPaymentService.cs" />
     <Compile Include="Service\IClientService.cs" />
-    <Compile Include="ViewModels\ClientsEditViewModel.cs" />
+    <Compile Include="ViewModels\ClientPaymentEditViewModel.cs" />
+    <Compile Include="ViewModels\ClientPaymentMainViewModel.cs" />
+    <Compile Include="ViewModels\ClientSalesMainViewModel.cs" />
+    <Compile Include="ViewModels\ClientEditViewModel.cs" />
     <Compile Include="ViewModels\ClientsMainViewModel.cs" />
     <Compile Include="Views\ClientEdit.xaml.cs">
       <DependentUpon>ClientEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientPaymentMain.xaml.cs">
+      <DependentUpon>ClientPaymentMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientPaymentEdit.xaml.cs">
+      <DependentUpon>ClientPaymentEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientSalesMain.xaml.cs">
+      <DependentUpon>ClientSalesMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientsMain.xaml.cs">
       <DependentUpon>ClientsMain.xaml</DependentUpon>
@@ -139,9 +146,20 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ClientEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientPaymentMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientPaymentEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientSalesMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

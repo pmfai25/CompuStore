@@ -8,18 +8,19 @@ namespace CompuStore.Clients
 {
     public class ClientsModule : IModule
     {
-        IRegionManager RegionManager;
-        IUnityContainer Container;
+        IRegionManager _regionManager;
+        readonly IUnityContainer _container;
 
         public ClientsModule(RegionManager regionManager,IUnityContainer container)
         {
-            RegionManager = regionManager;
-            Container = container;
+            _regionManager = regionManager;
+            _container = container;
         }
 
         public void Initialize()
         {
-            Container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());
         }
     }
 }

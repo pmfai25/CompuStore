@@ -9,10 +9,12 @@ namespace CompuStore.Clients.Service
 {
     public interface IClientService
     {
-        bool Add(Client supplier);
-        bool Update(Client supplier);
-        bool Delete(int ID);
-        IEnumerable<ClientsDetails> SearchBy(string name);
-        IEnumerable<ClientsDetails> GetAll();
+        bool Add(Client client);
+        bool Update(Client client);
+        bool Delete(Client client);
+        bool IsClientWithOrders(int id);
+        IEnumerable<ClientMain> SearchBy(string name);
+        IEnumerable<ClientMain> GetAll();
+        Client Find(int id);
     }
 }

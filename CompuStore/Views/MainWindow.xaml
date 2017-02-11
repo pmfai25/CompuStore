@@ -15,6 +15,24 @@
                       WindowState="Maximized"
         BorderThickness="2"  ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False"                      
         >
+    <Window.Resources>
+        <Style x:Key="defaultStyle" TargetType="Button" BasedOn="{StaticResource AccentedSquareButtonStyle}" >
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="#CC119EDA"></SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+        <Style x:Key="activeStyle" TargetType="Button" BasedOn="{StaticResource AccentedSquareButtonStyle}" >
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="White"></SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="OrangeRed"></Setter>
+        </Style>
+    </Window.Resources>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Grid Width="{TemplateBinding Width}"
@@ -23,7 +41,7 @@
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
-    <DockPanel LastChildFill="True">        
+    <DockPanel FlowDirection="RightToLeft" LastChildFill="True">        
         <Image Width="auto" Stretch="Fill" Height="150" Source="{StaticResource Logo}" DockPanel.Dock="Top"></Image>
         <Border  Width="200"  BorderBrush="#FF4355C1"
                 BorderThickness="2,2,2,2"
@@ -38,51 +56,51 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Button BorderThickness="0" Command="{Binding SalesCommand}" Grid.Row="0" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button x:Name="btnSales" BorderThickness="0" Command="{Binding SalesCommand}" Grid.Row="0" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnSales_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="CurrencyDollar"/>
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Sales"/></TextBlock>
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="CurrencyDollar" Width="30" Height="30"/>
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="المبيعات"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button BorderThickness="0" Command="{Binding PurchasesCommand}" Grid.Row="1" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button x:Name="btnPurchases" BorderThickness="0" Command="{Binding PurchasesCommand}" Grid.Row="1" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnPurchases_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Forsale" />
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Purchases"/></TextBlock>
+                            <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Forsale" Width="30" Height="30" />
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="المشتريات"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button BorderThickness="0" Command="{Binding StoreCommand}" Grid.Row="2" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button x:Name="btnItems" BorderThickness="0" Command="{Binding StoreCommand}" Grid.Row="2" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnItems_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Store" />
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Store"/></TextBlock>
+                            <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Store" Width="30" Height="30"/>
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الاصناف"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button BorderThickness="0" Command="{Binding ClientsCommand}" Grid.Row="3" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button Name="btnClients" BorderThickness="0" Command="{Binding ClientsCommand}" Grid.Row="3" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnClients_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="UserTie" />
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Clients"/></TextBlock>
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="UserTie"  Width="30" Height="30"/>
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="العملاء"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button BorderThickness="0" Command="{Binding SuppliersCommand}" Grid.Row="4" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button x:Name="btnSuppliers" BorderThickness="0" Command="{Binding SuppliersCommand}" Grid.Row="4" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnSuppliers_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="Domain" />
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Suppliers"/></TextBlock>
+                            <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="Domain" Width="30" Height="30" />
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الموزعين"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button BorderThickness="0" Command="{Binding ReportsCommand}" Grid.Row="5" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}">
+                <Button x:Name="btnReports" BorderThickness="0" Command="{Binding ReportsCommand}" Grid.Row="5" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnReports_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="FileChart" />
-                            <TextBlock VerticalAlignment="Center" ><Run Text="Reports"/></TextBlock>
+                            <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="FileChart" Width="30" Height="30"/>
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="التقارير"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>

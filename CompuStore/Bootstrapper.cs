@@ -1,17 +1,21 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Unity;
-using CompuStore.Views;
-using System.Windows;
-using Prism.Modularity;
-using CompuStore.Suppliers.Views;
-using CompuStore.Sales.Views;
-using CompuStore.Store.Views;
-using CompuStore.Reports.Views;
-using CompuStore.Infrastructure;
+﻿using System.Windows;
+using CompuStore.Clients;
 using CompuStore.Clients.Views;
+using CompuStore.Infrastructure;
+using CompuStore.Purchases;
 using CompuStore.Purchases.Views;
-using Prism.Regions;
-using System.Data.SqlClient;
+using CompuStore.Reports;
+using CompuStore.Reports.Views;
+using CompuStore.Sales;
+using CompuStore.Sales.Views;
+using CompuStore.Store;
+using CompuStore.Store.Views;
+using CompuStore.Suppliers;
+using CompuStore.Suppliers.Views;
+using CompuStore.Views;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
+using Prism.Unity;
 
 namespace CompuStore
 {
@@ -25,15 +29,20 @@ namespace CompuStore
         {
             base.ConfigureContainer();
             //Register Services
-            Infrastructure.Manager.Connection.Open();
-            this.Container.RegisterInstance<SqlConnection>(Infrastructure.Manager.Connection);
-            //Register Main Views
-            this.Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
-            this.Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
-            this.Container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
-            this.Container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
-            this.Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
-            this.Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
+            Manager.Connection.Open();
+            Container.RegisterInstance(Manager.Connection);
+            #region Client Module Names
+            Container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
+            Container.RegisterTypeForNavigation<ClientEdit>(RegionNames.ClientEdit);
+            Container.RegisterTypeForNavigation<ClientPaymentMain>(RegionNames.ClientPaymentMain);
+            Container.RegisterTypeForNavigation<ClientPaymentEdit>(RegionNames.ClientPaymentEdit);
+            Container.RegisterTypeForNavigation<ClientSalesMain>(RegionNames.ClientSalesMain);
+            #endregion
+            Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
+            Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
+            Container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
+            Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
+            Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
             //Register Editing Views
         }
         
@@ -44,13 +53,13 @@ namespace CompuStore
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
-            ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
-            moduleCatalog.AddModule(typeof(CompuStore.Sales.SalesModule));
-            moduleCatalog.AddModule(typeof(CompuStore.Purchases.PurchasesModule));
-            moduleCatalog.AddModule(typeof(CompuStore.Store.StoreModule));
-            moduleCatalog.AddModule(typeof(CompuStore.Clients.ClientsModule));
-            moduleCatalog.AddModule(typeof(CompuStore.Suppliers.SuppliersModule));
-            moduleCatalog.AddModule(typeof(CompuStore.Reports.ReportsModule));
+            ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
+            moduleCatalog.AddModule(typeof(SalesModule));
+            moduleCatalog.AddModule(typeof(PurchasesModule));
+            moduleCatalog.AddModule(typeof(StoreModule));
+            moduleCatalog.AddModule(typeof(ClientsModule));
+            moduleCatalog.AddModule(typeof(SuppliersModule));
+            moduleCatalog.AddModule(typeof(ReportsModule));
         }
     }
 }

@@ -10,39 +10,55 @@ using Dapper.Contrib.Extensions;
 
 namespace CompuStore.Clients.Service
 {
+    
     class ClientService : IClientService
     {
         SqlConnection Connection;
         public ClientService(SqlConnection con)
         {
-            this.Connection = con;
+            Connection = con;
         }
         public bool Add(Client client)
-        {            
-            long x = Connection.Insert(client);  
-            return x != 0;
+        {
+            return Connection.Insert(client) != 0;
+            
         }
         public bool Update(Client client)
         {
             bool x = Connection.Update(client);            
             return x;
         }
-        public bool Delete(int id)
+        public bool Delete(Client client)
         {            
-            bool x = Connection.Delete(new Client() { ID = id });            
-            return x;
+            return Connection.Delete(client);            
         }
 
-        public IEnumerable<ClientsDetails> GetAll()
+        public IEnumerable<ClientMain> GetAll()
         {
-            IEnumerable<ClientsDetails> x = Connection.GetAll<ClientsDetails>();            
+            IEnumerable<ClientMain> x = Connection.GetAll<ClientMain>();            
             return x;
         }
 
-        public IEnumerable<ClientsDetails> SearchBy(string name)
-        {            
-            IEnumerable<ClientsDetails> x = Connection.Query<ClientsDetails>("Select * from SuppliersDetails where Name like @Name +'%' or Phone like @Name+ '%'", name);            
+        public IEnumerable<ClientMain> SearchBy(string name)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("Name", name);
+            IEnumerable<ClientMain> x = Connection.Query<ClientMain>("Select * from ClientMain where Name like @Name +'%' or Phone like @Name+ '%'", args);            
             return x;
-        }       
+        }
+
+        public bool IsClientWithOrders(int id)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", id);
+            return Connection.QuerySingle<decimal>("Select Sales from ClientMain where ID=@ID", args) != 0;
+        }
+
+        public Client Find(int id)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", id);
+            return Connection.QuerySingle<Client>("Select * from Client where ID=@ID", args);
+        }
     }
 }
