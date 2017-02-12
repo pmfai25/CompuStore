@@ -12,4 +12,5 @@ namespace CompuStore.Clients
     public class ClientPaymentAdded : PubSubEvent<ClientPayment> { }
     public class ClientPaymentUpdated : PubSubEvent<ClientPayment> { }
     public class ClientPaymentDeleted : PubSubEvent<ClientPayment> { }
+    
 }

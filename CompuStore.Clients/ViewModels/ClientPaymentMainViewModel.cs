@@ -25,6 +25,7 @@ namespace CompuStore.Clients.ViewModels
         private IClientPaymentService _clientPaymentService;
         private IRegionManager _regionManager;
         private NavigationContext _navigationContext;
+        private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
         public decimal Total
@@ -81,20 +82,24 @@ namespace CompuStore.Clients.ViewModels
         private void Update()
         {
             var parameters = new NavigationParameters();
-            parameters.Add("ClientID", clientID);
-            parameters.Add("ClientPaymentID", SelectedItem.ID);
+            parameters.Add("ClientPayment", SelectedItem);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentEdit, parameters);
         }
         private void Delete()
         {
             if (!Messages.Delete("فاتورة الشراء رقم " + SelectedItem.Number.ToString())) return;
-            _clientPaymentService.Delete(SelectedItem);
+            if(!_clientPaymentService.Delete(SelectedItem))
+            {
+                Messages.ErrorDataNotSaved();
+                return;
+            }
+            _eventAggregator.GetEvent<ClientPaymentDeleted>().Publish(SelectedItem);
             Items.Remove(SelectedItem);
-            Total = Items.Sum(x => x.Money);
+            Total = Items.Sum(x => x.Money);            
         }
         private void Search()
         {
-            Items = new ObservableCollection<ClientPayment>( _clientPaymentService.SearchByInterval(DateFrom, DateTo));
+            Items = new ObservableCollection<ClientPayment>( _clientPaymentService.SearchByInterval(clientID, DateFrom, DateTo));
             Total = Items.Sum(x => x.Money);
         }
         #endregion
@@ -102,15 +107,20 @@ namespace CompuStore.Clients.ViewModels
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
         {
             clientID = (int)(navigationContext.Parameters["ClientID"]);
-            Title = (string)(navigationContext.Parameters["ClientName"]);
-            DateTo = DateTime.Now;
-            DateFrom = DateTime.Now;
+            Title = (string)(navigationContext.Parameters["ClientName"]);            
             _navigationContext = navigationContext;
         }
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
         {
-            return true;
+            int id= (int)(navigationContext.Parameters["ClientID"]);
+            bool same = id == clientID;
+            //if(!same)
+            //{
+            //    DateTo = DateTime.Today;
+            //    DateFrom = DateTime.Today;
+            //}
+            return same;
         }
 
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
@@ -118,10 +128,25 @@ namespace CompuStore.Clients.ViewModels
         public ClientPaymentMainViewModel(IClientPaymentService clientPaymentService,IRegionManager regionManager,IEventAggregator eventAggregator)
         {
             _clientPaymentService = clientPaymentService;
-            _regionManager = regionManager;            
-            eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(c => SearchCommand.Execute());
-            eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(c => SearchCommand.Execute());
-            eventAggregator.GetEvent<ClientPaymentDeleted>().Subscribe(c => SearchCommand.Execute());
+            _regionManager = regionManager;
+            _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(OnClientAdded);
+            _eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(OnClientPaymentUpdated);
+            DateTo = DateTime.Today;
+            DateFrom = DateTime.Today;
+        }
+        private void OnClientPaymentUpdated(ClientPayment obj)
+        {
+            Total = Items.Sum(i => i.Money);
+        }
+
+        private void OnClientAdded(ClientPayment obj)
+        {
+            if (obj.Date <= DateTo && obj.Date >= DateFrom)
+            {
+                Items.Add(obj);
+                Total = Items.Sum(i => i.Money);
+            }
         }
     }
 }

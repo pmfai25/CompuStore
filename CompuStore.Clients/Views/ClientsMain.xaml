@@ -37,10 +37,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="اسم العميل" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Binding="{Binding Initial}"/>
-                <DataGridTextColumn Header="مشتريات العميل" Width="120" Foreground="Red" Binding="{Binding Sales}"/>
-                <DataGridTextColumn Header="سداد العميل" Width="120" Foreground="Blue" Binding="{Binding Payments}"/>
-                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Green" FontWeight="DemiBold" Binding="{Binding Remaining}"/>
+                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Binding="{Binding Initial, StringFormat=N2}"/>
+                <DataGridTextColumn Header="مشتريات العميل" Width="120" Foreground="Red" Binding="{Binding Sales, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سداد العميل" Width="120" Foreground="Blue" Binding="{Binding Payments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Green" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
             </DataGrid.Columns>
         </DataGrid>
        

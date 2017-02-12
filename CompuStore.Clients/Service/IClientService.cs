@@ -16,5 +16,6 @@ namespace CompuStore.Clients.Service
         IEnumerable<ClientMain> SearchBy(string name);
         IEnumerable<ClientMain> GetAll();
         Client Find(int id);
+        ClientMain FindClientMain(int iD);
     }
 }

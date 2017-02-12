@@ -13,10 +13,9 @@ using Prism.Events;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientEditViewModel : BindableBase, INavigationAware,IConfirmNavigationRequest
+    public class ClientEditViewModel : BindableBase, INavigationAware
     {
         #region Fields
-        private bool _saved;
         private bool _edit;
         private Client _client;
         private readonly IRegionManager _regionManager;
@@ -63,17 +62,11 @@ namespace CompuStore.Clients.ViewModels
             
         }
 
-        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
-        {
-            if (_saved)
-                continuationCallback(true);
-            else
-                continuationCallback(MessageBox.Show("الغاء التعديلات?","Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK);
-        }
         #endregion
         #region Methods
         private void Save()
         {
+            bool _saved;
             if (CanSave())
             {
                 if (_edit)
@@ -82,7 +75,7 @@ namespace CompuStore.Clients.ViewModels
                     _saved = ClientService.Add(Client);
                 if (!_saved)
                 {
-                    Messages.Error("حدث خطأ اثناء حفظ العميل في قاعدة البيانات");
+                    Messages.ErrorDataNotSaved();
                     return;
                 }
                 _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain);

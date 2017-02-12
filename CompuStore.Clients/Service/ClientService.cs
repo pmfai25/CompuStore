@@ -60,5 +60,12 @@ namespace CompuStore.Clients.Service
             args.Add("ID", id);
             return Connection.QuerySingle<Client>("Select * from Client where ID=@ID", args);
         }
+
+        public ClientMain FindClientMain(int iD)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", iD);
+            return Connection.QuerySingle<ClientMain>("Select * from ClientMain where ID=@ID", args);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace CompuStore.Clients.Service
         bool Add(ClientPayment clientPayment);
         bool Update(ClientPayment clientPayment);
         bool Delete(ClientPayment clientPayment);
-        IEnumerable<ClientPayment> SearchByInterval(DateTime from, DateTime to);
-
+        IEnumerable<ClientPayment> SearchByInterval(int clientID,DateTime from, DateTime to);
+        ClientPayment Find(int iD);
     }
 }

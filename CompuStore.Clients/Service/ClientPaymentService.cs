@@ -23,18 +23,27 @@ namespace CompuStore.Clients.Service
             return Connection.Delete(clientPayment);
         }
 
-        public IEnumerable<ClientPayment> SearchByInterval(DateTime from, DateTime to)
+        public IEnumerable<ClientPayment> SearchByInterval(int clientID,DateTime from, DateTime to)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("From", from);
             args.Add("To", to);
-            return Connection.Query<ClientPayment>("Select * from ClientPayment where [Date] >= @From and [Date] <= @To", args);
+            args.Add("ClientID", clientID);
+            return Connection.Query<ClientPayment>("Select * from ClientPayment where ClientID=@ClientID and [Date] >= @From and [Date] <= @To", args);
         }
 
         public bool Update(ClientPayment clientPayment)
         {
             return Connection.Update(clientPayment);
         }
+
+        public ClientPayment Find(int iD)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", iD);
+            return Connection.QuerySingle<ClientPayment>("Select * from ClientPayment where ID=@ID", args);
+        }
+
         public ClientPaymentService(SqlConnection connection)
         {
             Connection = connection;

@@ -22,5 +22,9 @@ namespace CompuStore.Infrastructure
         {
             return Question("هل تريد حذف " + name + " ?");
         }
+        public static void ErrorDataNotSaved()
+        {
+            Error("حدث خطأ اثناء حفظ العميل في قاعدة البيانات");
+        }
     }
 }

@@ -91,8 +91,18 @@ namespace CompuStore.Clients.ViewModels
             _clientService = clientService;
             _regionManager = regionManager;
             eventAggregator.GetEvent<ClientAddedOrUpdated>().Subscribe(c=> SearchCommand.Execute());
+            eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(RefreshClientPayment);
+            eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(RefreshClientPayment);
+            eventAggregator.GetEvent<ClientPaymentDeleted>().Subscribe(RefreshClientPayment);
             Items = new ObservableCollection<ClientMain>();
             _searchText = "";
+        }
+
+        private void RefreshClientPayment(ClientPayment obj)
+        {
+            var client = Items.Single(x => x.ID == obj.ClientID);
+            ClientMain newClient = _clientService.FindClientMain(client.ID);
+            DataUtils.Copy(client, newClient);
         }
     }
 }
