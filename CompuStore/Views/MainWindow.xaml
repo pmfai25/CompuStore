@@ -41,8 +41,11 @@
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
-    <DockPanel FlowDirection="RightToLeft" LastChildFill="True">        
-        <Image Width="auto" Stretch="Fill" Height="150" Source="{StaticResource Logo}" DockPanel.Dock="Top"></Image>
+    <DockPanel FlowDirection="RightToLeft" LastChildFill="True">
+        <Grid DockPanel.Dock="Top">
+            <Image Stretch="Fill" Margin="100,5" Height="180" Source="{StaticResource Logo}"></Image>
+        </Grid>
+        
         <Border  Width="200"  BorderBrush="#FF4355C1"
                 BorderThickness="2,2,2,2"
                 CornerRadius="4,4,4,4"
@@ -92,7 +95,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
                             <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="Domain" Width="30" Height="30" />
-                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الموزعين"/></TextBlock>
+                            <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الشركات"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>

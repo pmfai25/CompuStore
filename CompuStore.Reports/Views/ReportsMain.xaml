@@ -7,7 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" BorderThickness="0, 0, 0, 1" BorderBrush="Black">
-            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Reports" Foreground="White"/>
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="التقارير" Foreground="White" Height="60"/>
         </Border>
 
         <ListBox></ListBox>

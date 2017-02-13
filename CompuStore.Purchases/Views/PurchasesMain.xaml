@@ -35,9 +35,9 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Purchases" Foreground="White"/>
+    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
+        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="60">
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="المشتريات" Foreground="White"/>
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">

@@ -33,25 +33,23 @@ namespace CompuStore.Clients.Service
             return Connection.Delete(client);            
         }
 
-        public IEnumerable<ClientMain> GetAll()
+        public IEnumerable<Client> GetAll()
         {
-            IEnumerable<ClientMain> x = Connection.GetAll<ClientMain>();            
-            return x;
+            return  Connection.GetAll<Client>();            
         }
 
-        public IEnumerable<ClientMain> SearchBy(string name)
+        public IEnumerable<Client> SearchBy(string name)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("Name", name);
-            IEnumerable<ClientMain> x = Connection.Query<ClientMain>("Select * from ClientMain where Name like @Name +'%' or Phone like @Name+ '%'", args);            
-            return x;
+            return Connection.Query<Client>("Select * from Client where Name like @Name +'%' or Phone like @Name+ '%'", args);            
         }
 
-        public bool IsClientWithOrders(int id)
+        public bool IsClientWithOrders(Client client)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("ID", id);
-            return Connection.QuerySingle<decimal>("Select Sales from ClientMain where ID=@ID", args) != 0;
+            args.Add("ID", client.ID);
+            return Connection.QuerySingle<decimal>("Select Sales from Client where ID=@ID", args) != 0;
         }
 
         public Client Find(int id)
@@ -59,13 +57,6 @@ namespace CompuStore.Clients.Service
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", id);
             return Connection.QuerySingle<Client>("Select * from Client where ID=@ID", args);
-        }
-
-        public ClientMain FindClientMain(int iD)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("ID", iD);
-            return Connection.QuerySingle<ClientMain>("Select * from ClientMain where ID=@ID", args);
         }
     }
 }

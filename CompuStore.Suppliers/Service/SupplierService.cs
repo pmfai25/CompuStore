@@ -13,7 +13,7 @@ using Dapper.Contrib.Extensions;
 
 namespace CompuStore.Suppliers.Service
 {
-    public class SupplierService : ISuppliersService
+    public class SupplierService : ISupplierService
     {
         SqlConnection Connection;
         public SupplierService(SqlConnection con)
@@ -22,42 +22,39 @@ namespace CompuStore.Suppliers.Service
         }
         public bool Add(Supplier supplier)
         {
-            Connection.Open();
-            long x=Connection.Insert(supplier);
-            Connection.Close();
-            return x != 0;
+            return Connection.Insert(supplier) != 0;            
         }
-
         public bool Delete(Supplier supplier)
         {
-            Connection.Open();
-            bool x = Connection.Delete(supplier);
-            Connection.Close();
-            return x;
+            return Connection.Delete(supplier);
         }
-
         public bool Update(Supplier supplier)
         {
-            Connection.Open();
-            bool x = Connection.Update(supplier);
-            Connection.Close();
-            return x;
+            return Connection.Update(supplier);
+        }
+        public IEnumerable<Supplier> GetAll()
+        {
+            return Connection.GetAll<Supplier>();
+        }
+        public IEnumerable<Supplier> SearchBy(string name)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("Name", name);
+            return Connection.Query<Supplier>("Select * from Supplier where Name like @Name +'%' or Phone like @Name+ '%'", args);
+
+        }
+        public Supplier Find(int id)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", id);
+            return Connection.QuerySingle<Supplier>("Select * from Supplier where ID=@ID", args);
         }
 
-        public IEnumerable<SuppliersDetails> GetAll()
+        public bool IsSupplierWithPurchases(Supplier selectedItem)
         {
-            Connection.Open();
-            IEnumerable<SuppliersDetails> x = Connection.GetAll<SuppliersDetails>();
-            Connection.Close();
-            return x;
-        }
-
-        public IEnumerable<SuppliersDetails> SearchBy(string name)
-        {
-            Connection.Open();
-            IEnumerable<SuppliersDetails> x = Connection.Query<SuppliersDetails>("Select * from SuppliersDetails where Name like @Name +'%' or Phone like @Name+ '%'",name);
-            Connection.Close();
-            return x;
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ID", selectedItem.ID);
+            return Connection.QuerySingle<decimal>("Select Purchases from Suppliers where ID=@ID", args) != 0;
         }
     }
 }

@@ -1,49 +1,58 @@
 ﻿<UserControl x:Class="CompuStore.Suppliers.Views.SuppliersMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="ListTemplate">
-                <Grid x:Name="GridItem" HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="1" Text="{Binding Path=Phone}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="2" Text="{Binding Path=Address}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="3" Text="{Binding Path=Notes}" Margin="5,1,0,0" />
-                </Grid>
-            </DataTemplate>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Suppliers" Foreground="White"/>
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="الشركات" Foreground="White" Height="60"/>
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" />
             </Button>
-            <Button Command="{Binding EditCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
                 <iconPacks:PackIconMaterial Kind="Pencil" />
             </Button>
-            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
                 <iconPacks:PackIconMaterial Kind="Delete" />
             </Button>
             <Separator></Separator>
-            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Search by Supplier Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SelectedClient.Name}"></TextBox>
-            <Button  Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
-                <iconPacks:PackIconMaterial Kind="Magnify" />
+            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
+            <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
+                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
+            </Button>
+            <Separator></Separator>
+            <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="ايصالات النقدية">
+                <iconPacks:PackIconMaterial Kind="ClockAlert" />
+            </Button>
+            <Button Command="{Binding PurchasesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير المشتريات">
+                <iconPacks:PackIconMaterial Kind="File" />
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
-        <ListBox HorizontalAlignment="Stretch" ItemTemplate="{StaticResource ListTemplate}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"></ListBox>
+        <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="اسم الشركة" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Foreground="Orange" Binding="{Binding Initial, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
+                <DataGridTextColumn Header="العنوان" Width="300" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="250" Binding="{Binding Notes}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </DockPanel>
 </UserControl>

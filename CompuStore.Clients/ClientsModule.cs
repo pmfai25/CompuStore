@@ -1,8 +1,10 @@
 ﻿using CompuStore.Clients.Service;
+using CompuStore.Clients.Views;
+using CompuStore.Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
-using System;
+using Prism.Unity;
 
 namespace CompuStore.Clients
 {
@@ -21,6 +23,12 @@ namespace CompuStore.Clients
         {
             _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());
+
+            _container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
+            _container.RegisterTypeForNavigation<ClientEdit>(RegionNames.ClientEdit);
+            _container.RegisterTypeForNavigation<ClientPaymentMain>(RegionNames.ClientPaymentMain);
+            _container.RegisterTypeForNavigation<ClientPaymentEdit>(RegionNames.ClientPaymentEdit);
+            _container.RegisterTypeForNavigation<ClientSalesMain>(RegionNames.ClientSalesMain);
         }
     }
 }

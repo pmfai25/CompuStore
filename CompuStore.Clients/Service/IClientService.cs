@@ -12,10 +12,9 @@ namespace CompuStore.Clients.Service
         bool Add(Client client);
         bool Update(Client client);
         bool Delete(Client client);
-        bool IsClientWithOrders(int id);
-        IEnumerable<ClientMain> SearchBy(string name);
-        IEnumerable<ClientMain> GetAll();
+        bool IsClientWithOrders(Client client);
+        IEnumerable<Client> SearchBy(string name);
+        IEnumerable<Client> GetAll();
         Client Find(int id);
-        ClientMain FindClientMain(int iD);
     }
 }

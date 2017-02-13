@@ -23,9 +23,9 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Store" Foreground="White"/>
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="الاصناف" Foreground="White" Height="60"/>
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
@@ -38,12 +38,21 @@
                 <iconPacks:PackIconMaterial Kind="Delete" />
             </Button>
             <Separator></Separator>
-            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Search by Barcode or Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SelectedClient.Name}"></TextBox>
+            <TextBlock VerticalAlignment="Center" Margin="2">اختار نوع</TextBlock>
+            <ComboBox Margin="2,0,4,0" Width="150" ItemsSource="{Binding Categories}" ></ComboBox>
+            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding Path=SelectedClient.Name}"></TextBox>
             <Button  Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
                 <iconPacks:PackIconMaterial Kind="Magnify" />
             </Button>
+            <Separator></Separator>
+            <Button Command="{Binding EditCategories}">
+            <StackPanel Orientation="Vertical" Margin="2">
+                <iconPacks:PackIconMaterial Kind="Settings" HorizontalAlignment="Center"/>
+                <TextBlock> الانواع</TextBlock>
+            </StackPanel>
+            </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
-        <ListBox HorizontalAlignment="Stretch" ItemTemplate="{StaticResource ListTemplate}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"></ListBox>
+        <ListBox></ListBox>
     </DockPanel>
 </UserControl>

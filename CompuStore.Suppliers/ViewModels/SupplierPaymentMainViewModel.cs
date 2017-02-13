@@ -1,6 +1,6 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
-using CompuStore.Infrastructure;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Suppliers.Model;
+using CompuStore.Suppliers.Service;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -10,19 +10,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace CompuStore.Clients.ViewModels
+namespace CompuStore.Suppliers.ViewModels
 {
-    public class ClientPaymentMainViewModel : BindableBase, INavigationAware
+    public class SupplierPaymentMainViewModel : BindableBase,INavigationAware
     {
         #region Fields
-        private Client _client;
-        
+        private Supplier _supplier;
+
         private decimal _total;
-        private DateTime _dateFrom;       
-        private DateTime _dateTo;       
-        private ClientPayment _selectedItem;        
-        private ObservableCollection<ClientPayment> _items;        
-        private IClientPaymentService _clientPaymentService;
+        private DateTime _dateFrom;
+        private DateTime _dateTo;
+        private SupplierPayment _selectedItem;
+        private ObservableCollection<SupplierPayment> _items;
+        private ISupplierPaymentService _supplierPaymentService;
         private IRegionManager _regionManager;
         private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
@@ -33,10 +33,10 @@ namespace CompuStore.Clients.ViewModels
             get { return _total; }
             set { SetProperty(ref _total, value); }
         }
-        public Client Client
+        public Supplier Supplier
         {
-            get { return _client; }
-            set { SetProperty(ref _client, value); }
+            get { return _supplier; }
+            set { SetProperty(ref _supplier, value); }
         }
         public DateTime DateFrom
         {
@@ -48,12 +48,12 @@ namespace CompuStore.Clients.ViewModels
             get { return _dateTo; }
             set { SetProperty(ref _dateTo, value); }
         }
-        public ClientPayment SelectedItem
+        public SupplierPayment SelectedItem
         {
             get { return _selectedItem; }
             set { SetProperty(ref _selectedItem, value); }
         }
-        public ObservableCollection<ClientPayment> Items
+        public ObservableCollection<SupplierPayment> Items
         {
             get { return _items; }
             set { SetProperty(ref _items, value); }
@@ -70,79 +70,76 @@ namespace CompuStore.Clients.ViewModels
 
         private void Back()
         {
-            if(_navigationContext.NavigationService.Journal.CanGoBack)
+            if (_navigationContext.NavigationService.Journal.CanGoBack)
                 _navigationContext.NavigationService.Journal.GoBack();
         }
         private void Add()
         {
-            var parameters = new NavigationParameters { { "Client", _client } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentEdit, parameters);
+            var parameters = new NavigationParameters { { "Supplier", _supplier } };
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentEdit, parameters);
         }
         private void Update()
         {
-            var parameters = new NavigationParameters { { "ClientPayment", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentEdit, parameters);
+            var parameters = new NavigationParameters { { "SupplierPayment", SelectedItem } };
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentEdit, parameters);
         }
         private void Delete()
         {
             if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number.ToString())) return;
-            if(!_clientPaymentService.Delete(SelectedItem))
+            if (!_supplierPaymentService.Delete(SelectedItem))
             {
                 Messages.ErrorDataNotSaved();
                 return;
             }
-            _eventAggregator.GetEvent<ClientPaymentDeleted>().Publish(SelectedItem);
+            _eventAggregator.GetEvent<SupplierPaymentDeleted>().Publish(SelectedItem);
             Items.Remove(SelectedItem);
-            Total = Items.Sum(x => x.Money);            
+            Total = Items.Sum(x => x.Money);
         }
         private void Search()
         {
-            Items = new ObservableCollection<ClientPayment>( _clientPaymentService.SearchByInterval(_client, DateFrom, DateTo));
+            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(_supplier, DateFrom, DateTo));
             Total = Items.Sum(x => x.Money);
         }
         #endregion
         #region Interfaces
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
         {
-            var c2 = (Client)(navigationContext.Parameters["Client"]);
-            DataUtils.Copy(_client, c2);
-            Items = new ObservableCollection<ClientPayment>(_clientPaymentService.GetAll(_client));
+            var c2 = (Supplier)(navigationContext.Parameters["Supplier"]);
+            DataUtils.Copy(_supplier, c2);
+            Items = new ObservableCollection<Model.SupplierPayment>(_supplierPaymentService.GetAll(_supplier));
             Total = Items.Sum(s => s.Money);
             _navigationContext = navigationContext;
         }
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
         {
-            var c2= (Client)(navigationContext.Parameters["Client"]);
-            return c2.ID == _client.ID;
+            var c2 = (Supplier)(navigationContext.Parameters["Supplier"]);
+            return c2.ID == _supplier.ID;
         }
 
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
         #endregion
-        public ClientPaymentMainViewModel(IClientPaymentService clientPaymentService,IRegionManager regionManager,IEventAggregator eventAggregator)
+        public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
-            Items = new ObservableCollection<Model.ClientPayment>();
-            _client = new Client();
-            _clientPaymentService = clientPaymentService;
+            _supplier = new Supplier();
+            _supplierPaymentService = supplierPaymentService;
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(OnClientAdded);
-            _eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(OnClientPaymentUpdated);
+            _eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(OnSupplierPaymentAdded);
+            _eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(OnSupplierPaymentUpdated);
             DateTo = DateTime.Today;
             DateFrom = DateTime.Today;
         }
-        private void OnClientPaymentUpdated(ClientPayment obj)
+
+        private void OnSupplierPaymentUpdated(SupplierPayment obj)
         {
             Total = Items.Sum(i => i.Money);
         }
 
-        private void OnClientAdded(ClientPayment obj)
+        private void OnSupplierPaymentAdded(SupplierPayment obj)
         {
-            if (obj.Date <= DateTo && obj.Date >= DateFrom)
-            {
-                Items.Add(obj);
-                Total = Items.Sum(i => i.Money);
-            }
+            Items.Add(obj);
+            Total = Items.Sum(i => i.Money);
         }
     }
 }

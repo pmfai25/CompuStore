@@ -68,6 +68,10 @@
       <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.6.2.0\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -93,10 +97,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\SupplierPayment.cs" />
-    <Compile Include="Model\SuppliersDetails.cs" />
-    <Compile Include="Service\ISuppliersService.cs" />
+    <Compile Include="Service\ISupplierPaymentService.cs" />
+    <Compile Include="Service\ISupplierService.cs" />
+    <Compile Include="Service\SupplierPaymentService.cs" />
     <Compile Include="Service\SupplierService.cs" />
     <Compile Include="SuppliersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -112,7 +118,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\SupplierEditViewModel.cs" />
+    <Compile Include="ViewModels\SupplierPaymentEditViewModel.cs" />
+    <Compile Include="ViewModels\SupplierPaymentMainViewModel.cs" />
+    <Compile Include="ViewModels\SupplierPurchasesMainViewModel.cs" />
     <Compile Include="ViewModels\SuppliersMainViewModel.cs" />
+    <Compile Include="Views\SupplierEdit.xaml.cs">
+      <DependentUpon>SupplierEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SupplierPaymentEdit.xaml.cs">
+      <DependentUpon>SupplierPaymentEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SupplierPaymentMain.xaml.cs">
+      <DependentUpon>SupplierPaymentMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SupplierPurchasesMain.xaml.cs">
+      <DependentUpon>SupplierPurchasesMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SuppliersMain.xaml.cs">
       <DependentUpon>SuppliersMain.xaml</DependentUpon>
     </Compile>
@@ -135,6 +157,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\SupplierEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplierPaymentEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplierPaymentMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplierPurchasesMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SuppliersMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

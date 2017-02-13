@@ -31,20 +31,12 @@ namespace CompuStore
             //Register Services
             Manager.Connection.Open();
             Container.RegisterInstance(Manager.Connection);
-            #region Client Module Names
-            Container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
-            Container.RegisterTypeForNavigation<ClientEdit>(RegionNames.ClientEdit);
-            Container.RegisterTypeForNavigation<ClientPaymentMain>(RegionNames.ClientPaymentMain);
-            Container.RegisterTypeForNavigation<ClientPaymentEdit>(RegionNames.ClientPaymentEdit);
-            Container.RegisterTypeForNavigation<ClientSalesMain>(RegionNames.ClientSalesMain);
-            #endregion
             Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
             Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
-            Container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
-            Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
+            Container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);            
             Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
-            //Register Editing Views
         }
+
         
         protected override void InitializeShell()
         {

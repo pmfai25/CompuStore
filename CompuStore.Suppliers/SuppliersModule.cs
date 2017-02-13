@@ -1,8 +1,10 @@
-﻿using CompuStore.Suppliers.Service;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Suppliers.Service;
+using CompuStore.Suppliers.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
-using System;
+using Prism.Unity;
 
 namespace CompuStore.Suppliers
 {
@@ -19,7 +21,13 @@ namespace CompuStore.Suppliers
 
         public void Initialize()
         {
-            Container.RegisterType<ISuppliersService, SupplierService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
+            Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
+            Container.RegisterTypeForNavigation<SupplierEdit>(RegionNames.SupplierEdit);
+            Container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentMain);
+            Container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
+            Container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesMain);
         }
     }
 }

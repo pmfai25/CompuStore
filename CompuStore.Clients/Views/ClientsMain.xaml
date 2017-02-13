@@ -5,9 +5,16 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <DockPanel LastChildFill="True">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="العملاء" Foreground="White"/>
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="العملاء" Foreground="White" Height="60"/>
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
@@ -20,15 +27,15 @@
                 <iconPacks:PackIconMaterial Kind="Delete" />
             </Button>
             <Separator></Separator>
-            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="Search by Client Name" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
+            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
                 <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
             </Button>
             <Separator></Separator>
-            <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="مدفوعات">
-                <iconPacks:PackIconMaterial Kind="CurrencyUsd" />
+            <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="ايصالات النقدية">
+                <iconPacks:PackIconMaterial Kind="ClockAlert" />
             </Button>
-            <Button Command="{Binding SalesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير شراء">
+            <Button Command="{Binding SalesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير المبيعات">
                 <iconPacks:PackIconMaterial Kind="File" />
             </Button>
         </ToolBar>
@@ -37,10 +44,13 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="اسم العميل" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Binding="{Binding Initial, StringFormat=N2}"/>
-                <DataGridTextColumn Header="مشتريات العميل" Width="120" Foreground="Red" Binding="{Binding Sales, StringFormat=N2}"/>
-                <DataGridTextColumn Header="سداد العميل" Width="120" Foreground="Blue" Binding="{Binding Payments, StringFormat=N2}"/>
-                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Green" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Foreground="Orange" Binding="{Binding Initial, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبيعات" Width="120" Foreground="Green" Binding="{Binding Sales, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سداد المبيعات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
+                <DataGridTextColumn Header="العنوان" Width="300" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="250" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
        

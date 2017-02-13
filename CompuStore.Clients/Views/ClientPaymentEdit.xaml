@@ -5,8 +5,8 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="اضافة او تعديل فاتورة شراء" Foreground="White"/>
+        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="60">
+            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="اضافة او تعديل ايصال نقدية" Foreground="White"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

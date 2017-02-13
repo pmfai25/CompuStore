@@ -5,42 +5,62 @@ namespace CompuStore.Clients.Model
     [Table("Client")]
     public class Client:BindableBase
     {
-        private int id;
+        private string name;
+        private string phone;
+        private string address;
+        private string notes;
+        private decimal initial;
+        private decimal instantPayments;
+        private decimal delayedPayments;
+        private decimal sales;
+
+      
         public int ID
         {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
-        private string name;
+            get;set;
+        }        
         public string Name
         {
             get { return name; }
             set { SetProperty(ref name, value);
             }
-        }
-        private string phone;
+        }       
         public string Phone
         {
             get { return phone; }
             set { SetProperty(ref phone, value); }
-        }
-        private string address;
+        }       
         public string Address
         {
             get { return address; }
             set { SetProperty(ref address, value); }
-        }
-        private string notes;
+        }        
         public string Notes
         {
             get { return notes; }
             set { SetProperty(ref notes, value); }
-        }
-        private decimal initial;
+        }        
         public decimal Initial
         {
             get { return initial; }
-            set { SetProperty(ref initial, value); }
+            set { SetProperty(ref initial, value); OnPropertyChanged("Remaining"); }
         }
+        public decimal InstantPayments
+        {
+            get { return instantPayments; }
+            set { SetProperty(ref instantPayments, value); OnPropertyChanged("Remaining"); }
+        }
+        public decimal DelayedPayments
+        {
+            get { return delayedPayments; }
+            set { SetProperty(ref delayedPayments, value); OnPropertyChanged("Remaining"); }
+        }
+        public decimal Sales
+        {
+            get { return sales; }
+            set { SetProperty(ref sales, value); OnPropertyChanged("Remaining"); }
+        }
+        [Computed]
+        public decimal Remaining { get { return Initial + Sales - DelayedPayments - InstantPayments; } }
     }
 }

@@ -1,6 +1,6 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
-using CompuStore.Infrastructure;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Suppliers.Model;
+using CompuStore.Suppliers.Service;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -9,23 +9,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CompuStore.Clients.ViewModels
+namespace CompuStore.Suppliers.ViewModels
 {
-    public class ClientPaymentEditViewModel : BindableBase,INavigationAware
+    public class SupplierPaymentEditViewModel : BindableBase, INavigationAware
     {
         #region Fields
         private bool _edit;
-        private ClientPayment _clientPayment;
+        private SupplierPayment _supplierPayment;
         private NavigationContext _navigationContext;
         private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
-        private IClientPaymentService _clientPaymentService;
+        private ISupplierPaymentService _supplierPaymentService;
         #endregion
         #region Properties
-        public ClientPayment ClientPayment
+        public SupplierPayment SupplierPayment
         {
-            get { return _clientPayment; }
-            set { SetProperty(ref _clientPayment, value); }
+            get { return _supplierPayment; }
+            set { SetProperty(ref _supplierPayment, value); }
         }
         #endregion
         #region Commands
@@ -35,11 +35,11 @@ namespace CompuStore.Clients.ViewModels
         #region Methods
         private void Save()
         {
-            if (_edit && _clientPaymentService.Update(ClientPayment))
-                _eventAggregator.GetEvent<ClientPaymentUpdated>().Publish(ClientPayment);
+            if (_edit && _supplierPaymentService.Update(SupplierPayment))
+                _eventAggregator.GetEvent<SupplierPaymentUpdated>().Publish(SupplierPayment);
             else
-                if (!_edit && _clientPaymentService.Add(ClientPayment))
-                _eventAggregator.GetEvent<ClientPaymentAdded>().Publish(ClientPayment);
+                if (!_edit && _supplierPaymentService.Add(SupplierPayment))
+                _eventAggregator.GetEvent<SupplierPaymentAdded>().Publish(SupplierPayment);
             else
                 Messages.ErrorDataNotSaved();
 
@@ -50,8 +50,8 @@ namespace CompuStore.Clients.ViewModels
         {
             if (_edit)
             {
-                var c = _clientPaymentService.Find(ClientPayment.ID);
-                DataUtils.Copy(ClientPayment,c);
+                var c = _supplierPaymentService.Find(SupplierPayment.ID);
+                DataUtils.Copy(SupplierPayment, c);
             }
             if (_navigationContext.NavigationService.Journal.CanGoBack)
                 _navigationContext.NavigationService.Journal.GoBack();
@@ -61,37 +61,36 @@ namespace CompuStore.Clients.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _navigationContext = navigationContext;
-            var client = (Client)(navigationContext.Parameters["Client"]);
-            if (client == null)
+            var supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
+            if (supplier == null)
             {
-                ClientPayment = (ClientPayment)(navigationContext.Parameters["ClientPayment"]);
+                SupplierPayment = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]);
                 _edit = true;
             }
             else
-                ClientPayment = new ClientPayment() { ClientID = client.ID };
-                    
+                SupplierPayment = new SupplierPayment() { SupplierID = supplier.ID };
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var client = (Client)(navigationContext.Parameters["Client"]);
-            if (client != null)
+            var supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
+            if (supplier != null)
                 return false;
-            var clientPayment2 = (ClientPayment)(navigationContext.Parameters["ClientPayment"]);
-            return ClientPayment.ID == clientPayment2.ID;
+            var supplierPayment2 = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]);
+            return SupplierPayment.ID == supplierPayment2.ID;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
         #endregion
-
-        public ClientPaymentEditViewModel(IRegionManager regionManager,IEventAggregator eventAggregator,IClientPaymentService clientPaymentService)
+        public SupplierPaymentEditViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ISupplierPaymentService supplierPaymentService)
         {
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
-            _clientPaymentService = clientPaymentService;
+            _supplierPaymentService = supplierPaymentService;
         }
     }
 }
