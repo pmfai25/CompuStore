@@ -77,6 +77,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events.cs" />
+    <Compile Include="Service\IItemService.cs" />
+    <Compile Include="Service\ItemService.cs" />
     <Compile Include="StoreModule.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Item.cs" />
@@ -108,9 +111,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CompuStore.Infrastructure\CompuStore.Infrastructure.csproj">
       <Project>{cb38702b-7e25-4896-b74d-727f3486db86}</Project>

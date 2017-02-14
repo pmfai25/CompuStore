@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using CompuStore.Clients;
-using CompuStore.Clients.Views;
 using CompuStore.Infrastructure;
 using CompuStore.Purchases;
 using CompuStore.Purchases.Views;
@@ -11,7 +10,6 @@ using CompuStore.Sales.Views;
 using CompuStore.Store;
 using CompuStore.Store.Views;
 using CompuStore.Suppliers;
-using CompuStore.Suppliers.Views;
 using CompuStore.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -40,6 +38,7 @@ namespace CompuStore
         
         protected override void InitializeShell()
         {
+            
             Application.Current.MainWindow.Show();
         }
         protected override void ConfigureModuleCatalog()
