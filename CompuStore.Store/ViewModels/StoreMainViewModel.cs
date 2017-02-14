@@ -1,4 +1,5 @@
-﻿using CompuStore.Store.Model;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Store.Model;
 using CompuStore.Store.Service;
 using Prism.Commands;
 using Prism.Events;
@@ -64,19 +65,29 @@ namespace CompuStore.Store.ViewModels
         }
         private void Delete()
         {
+            if (!_itemService.IsDeletable(SelectedItem))
+                Messages.Error("لايمكن حذف صنف له عمليات بيع او شراء الا بعد حذف المبيعات والمشتريات اولا");
+            else
+            {
+                if (!Messages.Delete(SelectedItem.Name)) return;
+                _itemService.Delete(SelectedItem);
+                Items.Remove(SelectedItem);
+            }
         }
         private void SearchItems()
         {
+            Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
         }
         private void EditCategories()
         {
         }
-        public StoreMainViewModel(IItemService itemService, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public StoreMainViewModel(IItemService itemService,ICategoryService categoryService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             _itemService = itemService;
             _regionManager = regionManager;
             _searchText = "";
-            Categories = new ObservableCollection<Model.Category>();
+            Categories = new ObservableCollection<Model.Category>(categoryService.GetAll());
+            SelectedCategory = Categories.FirstOrDefault();
         }
     }
 }

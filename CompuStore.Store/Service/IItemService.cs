@@ -12,7 +12,7 @@ namespace CompuStore.Store.Service
         bool Add(Item item);
         bool Update(Item item);
         bool Delete(Item item);
-        bool IsItemDeletable(Item item);
+        bool IsDeletable(Item item);
         IEnumerable<Item> SearchBy(string name, long serial);
         IEnumerable<Item> GetAll();
         IEnumerable<Item> GetAll(int categoryID);

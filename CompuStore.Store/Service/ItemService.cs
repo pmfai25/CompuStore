@@ -10,7 +10,7 @@ using Dapper;
 
 namespace CompuStore.Store.Service
 {
-    class ItemService : IItemService
+    public class ItemService : IItemService
     {
         SqlConnection Connection;
         public bool Add(Item item)
@@ -42,7 +42,7 @@ namespace CompuStore.Store.Service
             return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID", args);
         }
 
-        public bool IsItemDeletable(Item item)
+        public bool IsDeletable(Item item)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ItemID", item.ID);

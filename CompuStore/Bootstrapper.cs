@@ -31,7 +31,7 @@ namespace CompuStore
             Container.RegisterInstance(Manager.Connection);
             Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
             Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
-            Container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);            
+                       
             Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
         }
 

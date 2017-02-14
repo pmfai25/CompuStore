@@ -45,7 +45,7 @@ namespace CompuStore.Clients.Service
             return Connection.Query<Client>("Select * from Client where Name like @Name +'%' or Phone like @Name+ '%'", args);            
         }
 
-        public bool IsClientWithOrders(Client client)
+        public bool IsDeletable(Client client)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", client.ID);

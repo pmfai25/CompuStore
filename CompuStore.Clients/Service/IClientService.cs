@@ -12,7 +12,7 @@ namespace CompuStore.Clients.Service
         bool Add(Client client);
         bool Update(Client client);
         bool Delete(Client client);
-        bool IsClientWithOrders(Client client);
+        bool IsDeletable(Client client);
         IEnumerable<Client> SearchBy(string name);
         IEnumerable<Client> GetAll();
         Client Find(int id);
