@@ -9,7 +9,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <TextBox IsReadOnly="True" x:Name="PART_TextBox" VerticalAlignment="Center" Text="{Binding Path=SelectedDate, StringFormat='dd-MM-yyyy', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                        <TextBox  x:Name="PART_TextBox" VerticalAlignment="Center" Text="{Binding Path=SelectedDate, StringFormat=d, ConverterCulture=ar-EG, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="60">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="60" Margin="233,-10,209,10">
                 <Label FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ايصالات النقدية للشركة /" Foreground="White"/>
                 <Label FontSize="24" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" Content="{Binding Supplier.Name}"/>
             </StackPanel>
@@ -42,9 +42,9 @@
             </Button>
             <Separator></Separator>
             <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
-            <DatePicker SelectedDate="{Binding DateFrom, StringFormat=dd-MM-yyyy}" Width="150"/>
+            <TextBox VerticalAlignment="Center" Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Label Content="الى: " VerticalAlignment="Center"/>
-            <DatePicker  SelectedDate="{Binding DateTo, StringFormat=dd-MM-yyyy}" Width="150"/>
+            <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Separator/>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
                 <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
@@ -58,7 +58,7 @@
         <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd-MM-yyyy}"/>
+                <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
                 <DataGridTextColumn Header="المبلغ" Width="150" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
             </DataGrid.Columns>
         </DataGrid>

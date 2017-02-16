@@ -14,6 +14,7 @@ using CompuStore.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
+using System.Threading;
 
 namespace CompuStore
 {
@@ -38,7 +39,6 @@ namespace CompuStore
         
         protected override void InitializeShell()
         {
-            
             Application.Current.MainWindow.Show();
         }
         protected override void ConfigureModuleCatalog()

@@ -23,7 +23,7 @@
             <TextBox Text="{Binding  SupplierPayment.Number, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="التاريخ" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding SupplierPayment.Date, StringFormat=dd-MM-yyyy}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding SupplierPayment.Date,StringFormat=d, ConverterCulture=ar-EG}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="المبلغ" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding SupplierPayment.Money, StringFormat=N2}" Grid.Row="2" Grid.Column="1" Margin="4,6"/>
