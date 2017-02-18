@@ -14,6 +14,12 @@ namespace CompuStore.Clients.Model
         private int number;
         private DateTime date;
         private decimal money;
+        private string _notes;
+        public string Notes
+        {
+            get { return _notes; }
+            set { SetProperty(ref _notes, value); }
+        }
 
         public int ID
         {

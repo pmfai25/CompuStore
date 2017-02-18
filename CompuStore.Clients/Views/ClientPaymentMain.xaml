@@ -60,6 +60,7 @@
                 <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
                 <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
                 <DataGridTextColumn Header="المبلغ" Width="150" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
 

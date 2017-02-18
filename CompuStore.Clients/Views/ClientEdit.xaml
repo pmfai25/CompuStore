@@ -12,7 +12,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>
                 <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="50" ></RowDefinition>
@@ -27,14 +26,11 @@
             <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Client.Phone}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
 
-            <Label Content="الدين الابتدائي" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Client.Initial, StringFormat=N2}" Grid.Row="2" Grid.Column="1" Margin="4,6"/>
+            <Label Content="العنوان" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Text="{Binding Client.Address}" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
-            <Label Content="العنوان" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Client.Address}" Grid.Row="3" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
-
-            <Label Content="ملاحظات" Grid.Row="4" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Client.Notes}" Grid.Row="4" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
+            <Label Content="ملاحظات" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Text="{Binding Client.Notes}" Grid.Row="3" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
             <StackPanel Margin="10" Grid.Column="1" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">

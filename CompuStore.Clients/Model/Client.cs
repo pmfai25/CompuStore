@@ -9,7 +9,6 @@ namespace CompuStore.Clients.Model
         private string phone;
         private string address;
         private string notes;
-        private decimal initial;
         private decimal instantPayments;
         private decimal delayedPayments;
         private decimal sales;
@@ -40,11 +39,6 @@ namespace CompuStore.Clients.Model
             get { return notes; }
             set { SetProperty(ref notes, value); }
         }        
-        public decimal Initial
-        {
-            get { return initial; }
-            set { SetProperty(ref initial, value); OnPropertyChanged("Remaining"); }
-        }
         public decimal InstantPayments
         {
             get { return instantPayments; }
@@ -61,6 +55,6 @@ namespace CompuStore.Clients.Model
             set { SetProperty(ref sales, value); OnPropertyChanged("Remaining"); }
         }
         [Computed]
-        public decimal Remaining { get { return Initial + Sales - DelayedPayments - InstantPayments; } }
+        public decimal Remaining { get { return Sales - DelayedPayments - InstantPayments; } }
     }
 }
