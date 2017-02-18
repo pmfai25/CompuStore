@@ -1,5 +1,5 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
+﻿using Model;
+using Service;
 using CompuStore.Infrastructure;
 using Prism.Commands;
 using Prism.Events;
@@ -8,6 +8,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model.Events;
 
 namespace CompuStore.Clients.ViewModels
 {

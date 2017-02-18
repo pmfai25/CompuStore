@@ -42,7 +42,7 @@
             </Button>
             <Separator></Separator>
             <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
-            <TextBox VerticalAlignment="Center" Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
+            <TextBox VerticalAlignment="Center" Text="{Binding DateFrom, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Label Content="الى: " VerticalAlignment="Center"/>
             <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Separator/>

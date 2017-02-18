@@ -97,13 +97,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events.cs" />
-    <Compile Include="Model\Supplier.cs" />
-    <Compile Include="Model\SupplierPayment.cs" />
-    <Compile Include="Service\ISupplierPaymentService.cs" />
-    <Compile Include="Service\ISupplierService.cs" />
-    <Compile Include="Service\SupplierPaymentService.cs" />
-    <Compile Include="Service\SupplierService.cs" />
     <Compile Include="SuppliersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -149,11 +142,18 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CompuStore.Infrastructure\CompuStore.Infrastructure.csproj">
       <Project>{cb38702b-7e25-4896-b74d-727f3486db86}</Project>
       <Name>CompuStore.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{e3090564-2b83-4b09-948e-a9f1ca887e97}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{0f394864-9d78-4d49-bc72-29cdd5131b54}</Project>
+      <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

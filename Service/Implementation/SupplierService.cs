@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompuStore.Suppliers.Model;
-using CompuStore.Infrastructure;
-using System.Data;
-using Dapper.Contrib;
+﻿using System.Collections.Generic;
+using Model;
 using Dapper;
 using System.Data.SqlClient;
 using Dapper.Contrib.Extensions;
+using System.Data;
 
-namespace CompuStore.Suppliers.Service
+namespace Service
 {
     public class SupplierService : ISupplierService
     {
-        SqlConnection Connection;
-        public SupplierService(SqlConnection con)
+        IDbConnection Connection;
+        public SupplierService(IDbConnection con)
         {
             Connection = con;
         }

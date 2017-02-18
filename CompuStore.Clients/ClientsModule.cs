@@ -1,4 +1,4 @@
-﻿using CompuStore.Clients.Service;
+﻿using Service;
 using CompuStore.Clients.Views;
 using CompuStore.Infrastructure;
 using Microsoft.Practices.Unity;
@@ -21,8 +21,6 @@ namespace CompuStore.Clients
 
         public void Initialize()
         {
-            _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());
 
             _container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
             _container.RegisterTypeForNavigation<ClientEdit>(RegionNames.ClientEdit);

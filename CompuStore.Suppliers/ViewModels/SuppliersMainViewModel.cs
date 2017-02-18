@@ -1,14 +1,13 @@
 ﻿using CompuStore.Infrastructure;
-using CompuStore.Suppliers.Model;
-using CompuStore.Suppliers.Service;
+using Model;
+using Service;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -89,7 +88,7 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentDeleted>().Subscribe(RefreshSupplierPayments);
-            Items = new ObservableCollection<Model.Supplier>(_supplierService.GetAll());
+            Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
         }
 
         private void RefreshSupplierPayments(SupplierPayment obj)

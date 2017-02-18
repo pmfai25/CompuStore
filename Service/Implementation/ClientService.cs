@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompuStore.Clients.Model;
+﻿using System.Collections.Generic;
+using Model;
 using System.Data.SqlClient;
-using Dapper;
 using Dapper.Contrib.Extensions;
+using Dapper;
+using System.Data;
 
-namespace CompuStore.Clients.Service
-{
-    
-    class ClientService : IClientService
+namespace Service{
+    public class ClientService : IClientService
     {
-        SqlConnection Connection;
-        public ClientService(SqlConnection con)
+        IDbConnection Connection;
+        public ClientService(IDbConnection con)
         {
             Connection = con;
         }

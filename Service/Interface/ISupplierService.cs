@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CompuStore.Suppliers.Model;
-namespace CompuStore.Suppliers.Service
+using Model;
+namespace Service
 {
     public interface ISupplierService
     {

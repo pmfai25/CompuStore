@@ -1,34 +1,45 @@
-using System;
-using System.Collections.Generic;
-using Dapper.Contrib.Extensions;
+﻿using Dapper.Contrib.Extensions;
 using Prism.Mvvm;
+using System;
 
-namespace CompuStore.Suppliers.Model
+namespace Model
 {
-    [Table("SupplierPayment")]
-    public class SupplierPayment:BindableBase
+    [Table("ClientPayment")]
+    public class ClientPayment : BindableBase
     {
         private int number;
         private DateTime date;
         private decimal money;
-        public int ID { get; set; }
+        private string _notes;
+        public int ID
+        {
+            get;set;
+        }        
         public int Number
         {
             get { return number; }
             set { SetProperty(ref number, value); }
-        }
+        }        
         public DateTime Date
         {
             get { return date; }
             set { SetProperty(ref date, value); }
-        }
+        }        
         public decimal Money
         {
             get { return money; }
             set { SetProperty(ref money, value); }
-        }        
-        public int SupplierID { get; set; }
-        public SupplierPayment()
+        }
+        public string Notes
+        {
+            get { return _notes; }
+            set { SetProperty(ref _notes, value); }
+        }
+        public int ClientID
+        {
+            get; set;
+        }
+        public ClientPayment()
         {
             Date = DateTime.Today;
         }

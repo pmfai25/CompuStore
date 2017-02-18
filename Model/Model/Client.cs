@@ -1,37 +1,34 @@
-using System;
-using System.Collections.Generic;
+﻿using Prism.Mvvm;
 using Dapper.Contrib.Extensions;
-using Prism.Mvvm;
-
-namespace CompuStore.Suppliers.Model
+namespace Model
 {
-    [Table("Supplier")]
-    public class Supplier:BindableBase
+    [Table("Client")]
+    public class Client:BindableBase
     {
-
         private string name;
         private string phone;
         private string address;
         private string notes;
-        private decimal initial;
-        private decimal purchase;
         private decimal instantPayments;
         private decimal delayedPayments;
+        private decimal sales;
 
+      
         public int ID
         {
             get;set;
-        }       
+        }        
         public string Name
         {
             get { return name; }
-            set { SetProperty(ref name, value); }
-        }        
+            set { SetProperty(ref name, value);
+            }
+        }       
         public string Phone
         {
             get { return phone; }
             set { SetProperty(ref phone, value); }
-        }      
+        }       
         public string Address
         {
             get { return address; }
@@ -42,16 +39,6 @@ namespace CompuStore.Suppliers.Model
             get { return notes; }
             set { SetProperty(ref notes, value); }
         }        
-        public decimal Initial
-        {
-            get { return initial; }
-            set { SetProperty(ref initial, value); OnPropertyChanged("Remaining"); }
-        }
-        public decimal Purchases
-        {
-            get { return purchase; }
-            set { SetProperty(ref purchase, value); OnPropertyChanged("Remaining"); }
-        }
         public decimal InstantPayments
         {
             get { return instantPayments; }
@@ -62,7 +49,12 @@ namespace CompuStore.Suppliers.Model
             get { return delayedPayments; }
             set { SetProperty(ref delayedPayments, value); OnPropertyChanged("Remaining"); }
         }
+        public decimal Sales
+        {
+            get { return sales; }
+            set { SetProperty(ref sales, value); OnPropertyChanged("Remaining"); }
+        }
         [Computed]
-        public decimal Remaining { get { return Initial + Purchases - InstantPayments - DelayedPayments; } }
+        public decimal Remaining { get { return Sales - DelayedPayments - InstantPayments; } }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CompuStore.Infrastructure;
-using CompuStore.Suppliers.Service;
+using Service;
 using CompuStore.Suppliers.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;

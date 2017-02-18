@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CompuStore.Clients.Model;
+using Model;
 using Dapper.Contrib.Extensions;
 using System.Data.SqlClient;
 using Dapper;
+using System.Data;
 
-namespace CompuStore.Clients.Service
+namespace Service
 {
     public class ClientPaymentService : IClientPaymentService
     {
-        private SqlConnection Connection;
+        private IDbConnection Connection;
         public bool Add(ClientPayment clientPayment)
         {
             return Connection.Insert(clientPayment) != 0;
@@ -51,7 +52,7 @@ namespace CompuStore.Clients.Service
             return Connection.Query<ClientPayment>("Select * from ClientPayment where ClientID=@ClientID", args);
         }
 
-        public ClientPaymentService(SqlConnection connection)
+        public ClientPaymentService(IDbConnection connection)
         {
             Connection = connection;
         }

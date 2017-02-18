@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompuStore.Suppliers.Model;
+using Model;
 using System.Data.SqlClient;
 using Dapper.Contrib.Extensions;
 using Dapper;
+using System.Data;
 
-namespace CompuStore.Suppliers.Service
+namespace Service
 {
     public class SupplierPaymentService : ISupplierPaymentService
     {
-        private SqlConnection Connection;
+        private IDbConnection Connection;
         public bool Add(SupplierPayment supplierPayment)
         {
             return Connection.Insert(supplierPayment) != 0;
@@ -51,7 +49,7 @@ namespace CompuStore.Suppliers.Service
             return Connection.Query<SupplierPayment>("Select * from SupplierPayment where SupplierID=@SupplierID", args);
         }
 
-        public SupplierPaymentService(SqlConnection connection)
+        public SupplierPaymentService(IDbConnection connection)
         {
             Connection = connection;
         }

@@ -15,6 +15,7 @@ using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
 using System.Threading;
+using Service;
 
 namespace CompuStore
 {
@@ -28,8 +29,6 @@ namespace CompuStore
         {
             base.ConfigureContainer();
             //Register Services
-            Manager.Connection.Open();
-            Container.RegisterInstance(Manager.Connection);
             Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
             Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
                        
@@ -45,6 +44,7 @@ namespace CompuStore
         {
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
+            moduleCatalog.AddModule(typeof(ServiceModule));
             moduleCatalog.AddModule(typeof(SalesModule));
             moduleCatalog.AddModule(typeof(PurchasesModule));
             moduleCatalog.AddModule(typeof(StoreModule));

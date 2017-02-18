@@ -1,11 +1,11 @@
-﻿using CompuStore.Suppliers.Model;
+﻿using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompuStore.Suppliers.Service
+namespace Service
 {
     public interface ISupplierPaymentService
     {

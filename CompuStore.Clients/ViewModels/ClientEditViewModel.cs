@@ -1,5 +1,5 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
+﻿using Model;
+using Service;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Windows;
 using CompuStore.Infrastructure;
 using Prism.Events;
+using Model.Events;
 
 namespace CompuStore.Clients.ViewModels
 {
@@ -60,15 +61,22 @@ namespace CompuStore.Clients.ViewModels
             if (CanSave())
             {
                 if (_edit)
+                {
                     _saved = _clientService.Update(Client);
+                    if (_saved)
+                        _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
+                }
                 else
+                {
                     _saved = _clientService.Add(Client);
+                    if (_saved)
+                        _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
+                }
                 if (!_saved)
                 {
                     Messages.ErrorDataNotSaved();
                     return;
                 }
-                _eventAggregator.GetEvent<ClientAddedOrUpdated>().Publish(Client);
                 _navigationContext.NavigationService.Journal.GoBack();               
             }
             else

@@ -1,5 +1,5 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
+﻿using Model;
+using Service;
 using CompuStore.Infrastructure;
 using Prism.Commands;
 using Prism.Events;
@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using Model.Events;
 
 namespace CompuStore.Clients.ViewModels
 {
@@ -86,7 +87,7 @@ namespace CompuStore.Clients.ViewModels
             _searchText = "";
             _clientService = clientService;
             _regionManager = regionManager;
-            eventAggregator.GetEvent<ClientAddedOrUpdated>().Subscribe(c=> SearchCommand.Execute());
+            eventAggregator.GetEvent<ClientAdded>().Subscribe(c=> Items.Add(c));
             eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(RefreshClientPayment);
             eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(RefreshClientPayment);
             eventAggregator.GetEvent<ClientPaymentDeleted>().Subscribe(RefreshClientPayment);

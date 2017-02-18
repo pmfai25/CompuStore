@@ -1,5 +1,5 @@
-﻿using CompuStore.Clients.Model;
-using CompuStore.Clients.Service;
+﻿using Model;
+using Service;
 using CompuStore.Infrastructure;
 using Prism.Commands;
 using Prism.Events;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Model.Events;
 
 namespace CompuStore.Clients.ViewModels
 {
@@ -104,11 +105,11 @@ namespace CompuStore.Clients.ViewModels
         #region Interfaces
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
         {
+            _navigationContext = navigationContext;
             var c2 = (Client)(navigationContext.Parameters["Client"]);
             DataUtils.Copy(_client, c2);
             Items = new ObservableCollection<ClientPayment>(_clientPaymentService.GetAll(_client));
-            Total = Items.Sum(s => s.Money);
-            _navigationContext = navigationContext;
+            Total = Items.Sum(s => s.Money);            
         }
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
