@@ -17,14 +17,12 @@ namespace CompuStore.Suppliers.ViewModels
     {
         #region Fields
         private Supplier _supplier;
-
         private decimal _total;
         private DateTime _dateFrom;
         private DateTime _dateTo;
         private SupplierPayment _selectedItem;
         private ObservableCollection<SupplierPayment> _items;
         private ISupplierPaymentService _supplierPaymentService;
-        private IRegionManager _regionManager;
         private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         #endregion
@@ -77,12 +75,12 @@ namespace CompuStore.Suppliers.ViewModels
         private void Add()
         {
             var parameters = new NavigationParameters { { "Supplier", _supplier } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentEdit, parameters);
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPaymentEdit, parameters);
         }
         private void Update()
         {
             var parameters = new NavigationParameters { { "SupplierPayment", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentEdit, parameters);
+            _navigationContext.NavigationService.RequestNavigate( RegionNames.SupplierPaymentEdit, parameters);
         }
         private void Delete()
         {
@@ -100,6 +98,16 @@ namespace CompuStore.Suppliers.ViewModels
         {
             Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(_supplier, DateFrom, DateTo));
             Total = Items.Sum(x => x.Money);
+        }
+        private void OnSupplierPaymentUpdated(SupplierPayment obj)
+        {
+            Total = Items.Sum(i => i.Money);
+        }
+
+        private void OnSupplierPaymentAdded(SupplierPayment obj)
+        {
+            Items.Add(obj);
+            Total = Items.Sum(i => i.Money);
         }
         #endregion
         #region Interfaces
@@ -120,11 +128,10 @@ namespace CompuStore.Suppliers.ViewModels
 
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
         #endregion
-        public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IEventAggregator eventAggregator)
         {
             _supplier = new Supplier();
             _supplierPaymentService = supplierPaymentService;
-            _regionManager = regionManager;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(OnSupplierPaymentAdded);
             _eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(OnSupplierPaymentUpdated);
@@ -132,15 +139,6 @@ namespace CompuStore.Suppliers.ViewModels
             DateFrom = DateTime.Today;
         }
 
-        private void OnSupplierPaymentUpdated(SupplierPayment obj)
-        {
-            Total = Items.Sum(i => i.Money);
-        }
 
-        private void OnSupplierPaymentAdded(SupplierPayment obj)
-        {
-            Items.Add(obj);
-            Total = Items.Sum(i => i.Money);
-        }
     }
 }

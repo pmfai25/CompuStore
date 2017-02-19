@@ -11,6 +11,8 @@ namespace Model
         private int number;
         private DateTime date;
         private decimal money;
+        private string notes;
+        
         public int ID { get; set; }
         public int Number
         {
@@ -26,7 +28,12 @@ namespace Model
         {
             get { return money; }
             set { SetProperty(ref money, value); }
-        }        
+        }
+        public string Notes
+        {
+            get { return notes; }
+            set { SetProperty(ref notes, value); }
+        }
         public int SupplierID { get; set; }
         public SupplierPayment()
         {

@@ -14,5 +14,8 @@ namespace Model.Events
     public class SupplierPaymentAdded : PubSubEvent<SupplierPayment> { }
     public class SupplierPaymentUpdated : PubSubEvent<SupplierPayment> { }
     public class SupplierPaymentDeleted : PubSubEvent<SupplierPayment> { }
+    public class ItemAdded : PubSubEvent<Item> { }
+    public class ItemUpdated : PubSubEvent<Item> { }
+    public class ItemDeleted : PubSubEvent<Item> { }
 
 }

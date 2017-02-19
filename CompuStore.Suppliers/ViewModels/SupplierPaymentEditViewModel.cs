@@ -1,15 +1,10 @@
 ﻿using CompuStore.Infrastructure;
 using Model;
 using Service;
-using Model;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels
@@ -20,7 +15,6 @@ namespace CompuStore.Suppliers.ViewModels
         private bool _edit;
         private SupplierPayment _supplierPayment;
         private NavigationContext _navigationContext;
-        private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
         private ISupplierPaymentService _supplierPaymentService;
         #endregion
@@ -77,10 +71,9 @@ namespace CompuStore.Suppliers.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
-            if (supplier != null)
-                return false;
             var supplierPayment2 = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]);
+            if (supplierPayment2 == null)
+                return false;
             return SupplierPayment.ID == supplierPayment2.ID;
         }
 
@@ -89,9 +82,8 @@ namespace CompuStore.Suppliers.ViewModels
 
         }
         #endregion
-        public SupplierPaymentEditViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ISupplierPaymentService supplierPaymentService)
+        public SupplierPaymentEditViewModel(IEventAggregator eventAggregator, ISupplierPaymentService supplierPaymentService)
         {
-            _regionManager = regionManager;
             _eventAggregator = eventAggregator;
             _supplierPaymentService = supplierPaymentService;
         }

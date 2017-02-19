@@ -1,5 +1,5 @@
 ﻿using CompuStore.Infrastructure;
-using CompuStore.Store.Service;
+using Service;
 using CompuStore.Store.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -21,12 +21,9 @@ namespace CompuStore.Store
 
         public void Initialize()
         {
-            _container.RegisterType<IItemService, ItemService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
-
             _container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
             _container.RegisterTypeForNavigation<StoreEdit>(RegionNames.StoreEdit);
-            _container.RegisterTypeForNavigation<CategoryEdit>(RegionNames.CategoryEdit);
+            _container.RegisterTypeForNavigation<CategoryMain>(RegionNames.CategoryMain);
         }
     }
 }

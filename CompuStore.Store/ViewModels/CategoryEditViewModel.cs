@@ -1,67 +1,72 @@
-﻿using CompuStore.Store.Model;
-using CompuStore.Store.Service;
+﻿using CompuStore.Store.Notification;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
-using Prism.Regions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace CompuStore.Store.ViewModels
 {
-    public class CategoryEditViewModel : BindableBase, INavigationAware
+    public class CategoryEditViewModel : BindableBase, IInteractionRequestAware
     {
-        private NavigationContext _navigationContext;
-        private ICategoryService _categoryService;
-        private Category _selectedCategory;
-        private ObservableCollection<Category> _categories;
-        public ObservableCollection<Category> Categories
+        private string name;
+        public string Name
         {
-            get { return _categories; }
-            set { SetProperty(ref _categories, value); }
-        }        
-        public Category SelectedCategory
-        {
-            get { return _selectedCategory; }
-            set { SetProperty(ref _selectedCategory, value); }
-        }
-        public DelegateCommand AddCommand => new DelegateCommand(Add);
-        public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedCategory != null).ObservesProperty(() => SelectedCategory);
-        public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedCategory != null).ObservesProperty(() => SelectedCategory);
-        private void Add()
-        {
-            
-        }
-        private void Update()
-        {
-            
-        }
-        private void Delete()
-        {
-            
+            get { return name; }
+            set { SetProperty(ref name, value); }
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        CategoryEditNotification notification;
+        public DelegateCommand SaveCommand => new DelegateCommand(Save,()=>!string.IsNullOrWhiteSpace(Name)).ObservesProperty(() => Name);
+
+        private void Save()
         {
-            _navigationContext = navigationContext;
-            Categories = (ObservableCollection<Category>)navigationContext.Parameters["Categories"];
-            SelectedCategory = Categories.FirstOrDefault();
+            if(notification!=null)
+            {
+                notification.Name = name;
+                notification.Confirmed = true;
+                FinishInteraction?.Invoke();
+            }
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
+        public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
+
+        private void Cancel()
         {
-            return true;
+            if (notification != null)
+            {
+                notification.Confirmed = false;
+                FinishInteraction?.Invoke();
+            }
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
+        public CategoryEditViewModel()
         {
-            
+
         }
 
-        public CategoryEditViewModel(ICategoryService categoryService)
+        public Action FinishInteraction
         {
-            _categoryService = categoryService;
+            get;set;
+        }
+
+        public INotification Notification
+        {
+            get
+            {
+                return notification;
+            }
+
+            set
+            {
+                if (value is CategoryEditNotification)
+                {
+                    notification = value as CategoryEditNotification;
+                    Name = notification.Name;
+                    OnPropertyChanged(() => Notification);
+                }
+            }
         }
     }
 }

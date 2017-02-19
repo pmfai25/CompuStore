@@ -5,15 +5,6 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <Style TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <TextBox  x:Name="PART_TextBox" VerticalAlignment="Center" Text="{Binding Path=SelectedDate, StringFormat=d, ConverterCulture=ar-EG, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
@@ -27,7 +18,7 @@
         </Grid>
 
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="Black" Width="40" Height="40" BorderBrush="Black" ToolTip="الرجوع للخلف">
+            <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
                 <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
             </Button>
             <Separator/>
@@ -60,6 +51,7 @@
                 <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
                 <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
                 <DataGridTextColumn Header="المبلغ" Width="150" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
 

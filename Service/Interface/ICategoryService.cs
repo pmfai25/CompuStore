@@ -1,11 +1,7 @@
-﻿using CompuStore.Store.Model;
-using System;
+﻿using Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CompuStore.Store.Service
+namespace Service
 {
     public interface ICategoryService
     {
@@ -14,5 +10,6 @@ namespace CompuStore.Store.Service
         bool Delete(Category category);
         bool IsDeletable(Category category);
         IEnumerable<Category> GetAll();
+        List<string> GetNamesOfItemsForCategory(Category selectedItem);
     }
 }

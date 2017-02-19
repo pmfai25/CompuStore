@@ -1,6 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 using Prism.Mvvm;
-namespace CompuStore.Store.Model
+namespace Model
 {
     [Table("Item")]
     public class Item:BindableBase
@@ -9,7 +9,6 @@ namespace CompuStore.Store.Model
         private string description;
         private int limit;
         private long serial;
-        private int quantity;
         private decimal price;
         
         public int ID { get; set; }

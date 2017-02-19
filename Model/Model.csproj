@@ -95,6 +95,8 @@
     <Compile Include="Model\PurchaseItem.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\SupplierPayment.cs" />
+    <Compile Include="Views\ClientOrders.cs" />
+    <Compile Include="Views\OrderDetails.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

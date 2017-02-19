@@ -1,6 +1,6 @@
 ﻿using CompuStore.Infrastructure;
-using CompuStore.Store.Model;
-using CompuStore.Store.Service;
+using Model;
+using Service;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Model.Events;
 
 namespace CompuStore.Store.ViewModels
 {
@@ -22,6 +23,7 @@ namespace CompuStore.Store.ViewModels
         private ObservableCollection<Item> _items;
         private ObservableCollection<Category> _categories;
         private Category _selectedCategory;
+        private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
         public Category SelectedCategory
@@ -59,9 +61,13 @@ namespace CompuStore.Store.ViewModels
         #endregion
         private void Add()
         {
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit);
         }
         private void Update()
         {
+            NavigationParameters parameter = new NavigationParameters();
+            parameter.Add("Item", SelectedItem);
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit, parameter);
         }
         private void Delete()
         {
@@ -71,23 +77,46 @@ namespace CompuStore.Store.ViewModels
             {
                 if (!Messages.Delete(SelectedItem.Name)) return;
                 _itemService.Delete(SelectedItem);
+                _eventAggregator.GetEvent<ItemDeleted>().Publish(SelectedItem);
                 Items.Remove(SelectedItem);
             }
         }
         private void SearchItems()
         {
-            Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
+            SearchText.Trim();
+            long n;
+            if(long.TryParse(SearchText, out n))
+                Items = new ObservableCollection<Item>(_itemService.SearchBy(SelectedCategory.ID,n));
+            else
+                Items = new ObservableCollection<Item>(_itemService.SearchBy(SelectedCategory.ID, SearchText));
         }
         private void EditCategories()
         {
+            NavigationParameters parameters = new NavigationParameters { { "Categories", Categories } };
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.CategoryMain,parameters);
         }
         public StoreMainViewModel(IItemService itemService,ICategoryService categoryService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             _itemService = itemService;
             _regionManager = regionManager;
+            _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
+            _eventAggregator.GetEvent<ItemUpdated>().Subscribe(OnItemUpdated);
             _searchText = "";
-            Categories = new ObservableCollection<Model.Category>(categoryService.GetAll());
+            Categories = new ObservableCollection<Category>(categoryService.GetAll());
             SelectedCategory = Categories.FirstOrDefault();
+        }
+
+        private void OnItemUpdated(Item obj)
+        {
+            if (obj.CategoryID != SelectedCategory.ID)
+                Items.Remove(obj);
+        }
+
+        private void OnItemAdded(Item obj)
+        {
+            if (obj.CategoryID == SelectedCategory.ID)
+                Items.Add(obj);
         }
     }
 }

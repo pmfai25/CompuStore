@@ -11,8 +11,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>
+                <RowDefinition Height="40" ></RowDefinition>                
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="50" ></RowDefinition>
@@ -22,21 +21,19 @@
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Label Content="اسم الشركة" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding  Supplier.Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding  Supplier.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Supplier.Phone}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
 
-            <Label Content="الدين الابتدائي" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Supplier.Initial, StringFormat=N2}" Grid.Row="2" Grid.Column="1" Margin="4,6"/>
 
-            <Label Content="العنوان" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Supplier.Address}" Grid.Row="3" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
+            <Label Content="العنوان" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Text="{Binding Supplier.Address}" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
-            <Label Content="ملاحظات" Grid.Row="4" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Supplier.Notes}" Grid.Row="4" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
+            <Label Content="ملاحظات" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Text="{Binding Supplier.Notes}" Grid.Row="3" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
-            <StackPanel Margin="10" Grid.Column="1" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <StackPanel Margin="10" Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">

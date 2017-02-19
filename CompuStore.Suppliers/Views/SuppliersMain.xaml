@@ -44,13 +44,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="اسم الشركة" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="الدين الابتدائي" Width="120" Foreground="Orange" Binding="{Binding Initial, StringFormat=N2}"/>
                 <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
                 <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
                 <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
                 <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
-                <DataGridTextColumn Header="العنوان" Width="300" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="الملاحظات" Width="250" Binding="{Binding Notes}"/>
+                <DataGridTextColumn Header="العنوان" Width="*" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
 

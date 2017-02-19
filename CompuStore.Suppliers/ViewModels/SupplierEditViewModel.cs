@@ -1,15 +1,11 @@
 ﻿using CompuStore.Infrastructure;
 using Model;
 using Service;
-using Model;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels

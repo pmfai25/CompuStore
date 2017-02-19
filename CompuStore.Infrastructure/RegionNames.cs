@@ -16,7 +16,7 @@ namespace CompuStore.Infrastructure
         #region Store Module
         public const string StoreMain = "StoreMain";
         public const string StoreEdit = "StoreEdit";
-        public const string CategoryEdit = "CategoryEdit";
+        public const string CategoryMain = "CategoryMain";
         #endregion
         #region Client Module 
         public const string ClientsMain = "ClientsMain";

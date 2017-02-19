@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CompuStore.Store.Model;
-using System.Data.SqlClient;
+using Model;
 using Dapper.Contrib.Extensions;
 using Dapper;
+using System.Data;
 
-namespace CompuStore.Store.Service
+namespace Service
 {
     public class ItemService : IItemService
     {
-        SqlConnection Connection;
+        IDbConnection Connection;
         public bool Add(Item item)
         {
             return Connection.Insert(item) != 0;
@@ -49,19 +49,32 @@ namespace CompuStore.Store.Service
             return Connection.QuerySingle<int>("Select count(*) from OrderItem oi, PurchaseItem pi where oi.ItemID=@ItemID or pi.ItemID=@ItemID", args) == 0;
         }
 
-        public IEnumerable<Item> SearchBy(string name,long serial)
+        public IEnumerable<Item> SearchBy(int categoryID, long serial)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("Name", name);
+            args.Add("CategoryID", categoryID);
             args.Add("Serial", serial);
-            return Connection.Query<Item>("Select * from Item where Serial=@Serial or Name likes @Name+'%'", args);
+            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and Serial=@Serial", args);
+        }
+        public IEnumerable<Item> SearchBy(int categoryID, string name)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("CategoryID", categoryID);
+            args.Add("Name", name);
+            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and  Name likes @Name+'%'", args);
         }
 
         public bool Update(Item item)
         {
             return Connection.Update(item);
         }
-        public ItemService(SqlConnection connection)
+
+        public List<Item> GetAll(int iD, string searchText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ItemService(IDbConnection connection)
         {
             Connection = connection;
         }

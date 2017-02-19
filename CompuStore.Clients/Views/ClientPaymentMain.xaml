@@ -27,7 +27,7 @@
         </Grid>
        
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="Black" Width="40" Height="40" BorderBrush="Black" ToolTip="الرجوع للخلف">
+            <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
                 <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
             </Button>
             <Separator/>

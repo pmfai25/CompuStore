@@ -18,7 +18,6 @@ namespace CompuStore.Clients.ViewModels
         private bool _edit;
         private ClientPayment _clientPayment;
         private NavigationContext _navigationContext;
-        private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
         private IClientPaymentService _clientPaymentService;
         #endregion
@@ -75,10 +74,9 @@ namespace CompuStore.Clients.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var client = (Client)(navigationContext.Parameters["Client"]);
-            if (client != null)
-                return false;
             var clientPayment2 = (ClientPayment)(navigationContext.Parameters["ClientPayment"]);
+            if (clientPayment2 == null)
+                return false;
             return ClientPayment.ID == clientPayment2.ID;
         }
 
@@ -87,10 +85,8 @@ namespace CompuStore.Clients.ViewModels
             
         }
         #endregion
-
-        public ClientPaymentEditViewModel(IRegionManager regionManager,IEventAggregator eventAggregator,IClientPaymentService clientPaymentService)
+        public ClientPaymentEditViewModel(IEventAggregator eventAggregator,IClientPaymentService clientPaymentService)
         {
-            _regionManager = regionManager;
             _eventAggregator = eventAggregator;
             _clientPaymentService = clientPaymentService;
         }

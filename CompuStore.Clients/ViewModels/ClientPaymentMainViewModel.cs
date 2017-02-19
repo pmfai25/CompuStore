@@ -16,15 +16,13 @@ namespace CompuStore.Clients.ViewModels
     public class ClientPaymentMainViewModel : BindableBase, INavigationAware
     {
         #region Fields
-        private Client _client;
-        
+        private Client _client;        
         private decimal _total;
         private DateTime _dateFrom;       
         private DateTime _dateTo;       
         private ClientPayment _selectedItem;        
         private ObservableCollection<ClientPayment> _items;        
         private IClientPaymentService _clientPaymentService;
-        private IRegionManager _regionManager;
         private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         #endregion
@@ -77,12 +75,12 @@ namespace CompuStore.Clients.ViewModels
         private void Add()
         {
             var parameters = new NavigationParameters { { "Client", _client } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentEdit, parameters);
+            _navigationContext.NavigationService.RequestNavigate( RegionNames.ClientPaymentEdit, parameters);
         }
         private void Update()
         {
             var parameters = new NavigationParameters { { "ClientPayment", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentEdit, parameters);
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.ClientPaymentEdit, parameters);
         }
         private void Delete()
         {
@@ -125,7 +123,6 @@ namespace CompuStore.Clients.ViewModels
             Items = new ObservableCollection<Model.ClientPayment>();
             _client = new Client();
             _clientPaymentService = clientPaymentService;
-            _regionManager = regionManager;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(OnClientAdded);
             _eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(OnClientPaymentUpdated);

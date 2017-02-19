@@ -1,11 +1,11 @@
-﻿using CompuStore.Store.Model;
+﻿using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompuStore.Store.Service
+namespace Service
 {
     public interface IItemService
     {
@@ -13,7 +13,8 @@ namespace CompuStore.Store.Service
         bool Update(Item item);
         bool Delete(Item item);
         bool IsDeletable(Item item);
-        IEnumerable<Item> SearchBy(string name, long serial);
+        IEnumerable<Item> SearchBy(int categoryID,long serial);
+        IEnumerable<Item> SearchBy(int categoryID, string name);
         IEnumerable<Item> GetAll();
         IEnumerable<Item> GetAll(int categoryID);
         Item Find(int id);

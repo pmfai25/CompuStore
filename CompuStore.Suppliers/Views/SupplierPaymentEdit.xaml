@@ -13,6 +13,7 @@
                 <RowDefinition Height="40" ></RowDefinition>
                 <RowDefinition Height="40" ></RowDefinition>
                 <RowDefinition Height="40" ></RowDefinition>
+                <RowDefinition Height="80" ></RowDefinition>
                 <RowDefinition Height="50" ></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -28,7 +29,10 @@
             <Label Content="المبلغ" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding SupplierPayment.Money, StringFormat=N2}" Grid.Row="2" Grid.Column="1" Margin="4,6"/>
 
-            <StackPanel Margin="10" Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Label Content="ملاحظات" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Text="{Binding SupplierPayment.Notes}" Grid.Row="3" Grid.Column="1" Margin="4,6" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+            <StackPanel Margin="10" Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">

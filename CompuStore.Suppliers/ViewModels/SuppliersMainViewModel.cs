@@ -13,12 +13,14 @@ namespace CompuStore.Suppliers.ViewModels
 {
     public class SuppliersMainViewModel : BindableBase
     {
+        #region Fields
         private Supplier _selectedItem;
         private string _searchText;
         private ObservableCollection<Supplier> items;
         private readonly ISupplierService _supplierService;
         private readonly IRegionManager _regionManager;
-
+        #endregion
+        #region Properties
         public Supplier SelectedItem
         {
             get { return _selectedItem; }
@@ -34,15 +36,15 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _searchText; }
             set { SetProperty(ref _searchText, value); }
         }
+        #endregion
+        #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
         public DelegateCommand PaymentsCommand => new DelegateCommand(ShowPayments, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand PurchasesCommand => new DelegateCommand(ShowPurchases, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
-
-        
-
+        #endregion
         #region Methods
         private void Add()
         {
@@ -66,7 +68,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Search()
         {
-            Items = new ObservableCollection<Model.Supplier>(_supplierService.SearchBy(SearchText));
+            Items = new ObservableCollection<Supplier>(_supplierService.SearchBy(SearchText));
         }
         private void ShowPurchases()
         {
@@ -77,6 +79,12 @@ namespace CompuStore.Suppliers.ViewModels
         {
             NavigationParameters parameters = new NavigationParameters { { "Supplier", SelectedItem } };
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentMain, parameters);
+        }
+        private void RefreshSupplierPayments(SupplierPayment obj)
+        {
+            var supplier = Items.Single(x => x.ID == obj.SupplierID);
+            Supplier newSupplier = _supplierService.Find(supplier.ID);
+            DataUtils.Copy(supplier, newSupplier);
         }
         #endregion
         public SuppliersMainViewModel(ISupplierService supplierService, IEventAggregator eventAggregator, IRegionManager regionManager)
@@ -89,13 +97,6 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentDeleted>().Subscribe(RefreshSupplierPayments);
             Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
-        }
-
-        private void RefreshSupplierPayments(SupplierPayment obj)
-        {
-            var supplier = Items.Single(x => x.ID == obj.SupplierID);
-            Supplier newSupplier = _supplierService.Find(supplier.ID);
-            DataUtils.Copy(supplier, newSupplier);
-        }
+        }     
     }
 }

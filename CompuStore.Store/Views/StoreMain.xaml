@@ -34,7 +34,7 @@
                 <iconPacks:PackIconMaterial Kind="Magnify" />
             </Button>
             <Separator></Separator>
-            <Button Command="{Binding EditCategories}">
+            <Button Command="{Binding EditCategoriesCommand}">
             <StackPanel Orientation="Vertical" Margin="2">
                 <iconPacks:PackIconMaterial Kind="Settings" HorizontalAlignment="Center"/>
                 <TextBlock> الانواع</TextBlock>
@@ -47,9 +47,7 @@
                 <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>
                 <DataGridTextColumn Header="حد الطلب" Width="120" Binding="{Binding Limit}"/>
-                <DataGridTextColumn Header="الكمية" Width="120" Foreground="Green"  Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Header="سعر البيع" Width="120" Foreground="Blue" Binding="{Binding SalePrice, StringFormat=N2}"/>
-                <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Total, StringFormat=N2}"/>
                 <DataGridTextColumn Header="الوصف" Width="*" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>

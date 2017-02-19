@@ -13,7 +13,6 @@ namespace Model
         private string phone;
         private string address;
         private string notes;
-        private decimal initial;
         private decimal purchase;
         private decimal instantPayments;
         private decimal delayedPayments;

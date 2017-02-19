@@ -97,14 +97,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events.cs" />
-    <Compile Include="Service\CategoryService.cs" />
-    <Compile Include="Service\ICategoryService.cs" />
-    <Compile Include="Service\IItemService.cs" />
-    <Compile Include="Service\ItemService.cs" />
+    <Compile Include="Notification\CategoryEditNotification.cs" />
     <Compile Include="StoreModule.cs" />
-    <Compile Include="Model\Category.cs" />
-    <Compile Include="Model\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -119,10 +113,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\CategoryEditViewModel.cs" />
+    <Compile Include="ViewModels\CategoryMainViewModel.cs" />
     <Compile Include="ViewModels\StoreEditViewModel.cs" />
     <Compile Include="ViewModels\StoreMainViewModel.cs" />
     <Compile Include="Views\CategoryEdit.xaml.cs">
       <DependentUpon>CategoryEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryMain.xaml.cs">
+      <DependentUpon>CategoryMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StoreEdit.xaml.cs">
       <DependentUpon>StoreEdit.xaml</DependentUpon>
@@ -160,6 +158,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CategoryMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StoreEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +171,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

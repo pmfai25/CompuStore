@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompuStore.Store.Model;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using Model;
 using Dapper;
 using Dapper.Contrib.Extensions;
-namespace CompuStore.Store.Service
+using System.Data;
+using System;
+
+namespace Service
 {
     public class CategoryService : ICategoryService
     {
-        SqlConnection Connection;
+        IDbConnection Connection;
         public bool Add(Category category)
         {
             return Connection.Insert(category) != 0;
@@ -39,7 +37,15 @@ namespace CompuStore.Store.Service
         {
             return Connection.Update(category);
         }
-        public CategoryService(SqlConnection connection)
+
+        public List<string> GetNamesOfItemsForCategory(Category category)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("CategoryID", category.ID);
+            return Connection.Query<string>("Select Name from Item where CategoryID=@CategoryID", args).AsList();
+        }
+
+        public CategoryService(IDbConnection connection)
         {
             Connection = connection;
         }

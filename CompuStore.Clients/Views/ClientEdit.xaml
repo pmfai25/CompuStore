@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Label Content="اسم العميل" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding  Client.Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding  Client.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Client.Phone}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>

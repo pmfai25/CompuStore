@@ -24,6 +24,9 @@ namespace Service
             _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IOrderService, OrderService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IItemService, ItemService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
         }
     }
 }

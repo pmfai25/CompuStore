@@ -95,8 +95,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\CategoryService.cs" />
     <Compile Include="Implementation\ClientPaymentService.cs" />
     <Compile Include="Implementation\ClientService.cs" />
+    <Compile Include="Implementation\ItemService.cs" />
+    <Compile Include="Implementation\OrderService.cs" />
+    <Compile Include="Interface\ICategoryService.cs" />
+    <Compile Include="Interface\IItemService.cs" />
+    <Compile Include="Interface\IOrderService.cs" />
     <Compile Include="Interface\ISupplierPaymentService.cs" />
     <Compile Include="Interface\ISupplierService.cs" />
     <Compile Include="Implementation\SupplierPaymentService.cs" />
