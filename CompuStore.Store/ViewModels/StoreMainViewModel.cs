@@ -61,12 +61,20 @@ namespace CompuStore.Store.ViewModels
         #endregion
         private void Add()
         {
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit);
+            if(Categories.Count==0)
+            {
+                Messages.Error("يجب اضافة انواع الاصناف اولا");
+                return;
+            }
+            NavigationParameters parameter = new NavigationParameters();
+            parameter.Add("Categories", Categories);
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit,parameter);
         }
         private void Update()
         {
             NavigationParameters parameter = new NavigationParameters();
             parameter.Add("Item", SelectedItem);
+            parameter.Add("Categories", Categories);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit, parameter);
         }
         private void Delete()
@@ -105,6 +113,10 @@ namespace CompuStore.Store.ViewModels
             _searchText = "";
             Categories = new ObservableCollection<Category>(categoryService.GetAll());
             SelectedCategory = Categories.FirstOrDefault();
+            if (SelectedCategory != null)
+                Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
+            else
+                Items = new ObservableCollection<Item>();
         }
 
         private void OnItemUpdated(Item obj)

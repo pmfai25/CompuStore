@@ -33,8 +33,8 @@ namespace Service
         public IEnumerable<Supplier> SearchBy(string name)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("Name", name);
-            return Connection.Query<Supplier>("Select * from Supplier where Name like @Name +'%' or Phone like @Name+ '%'", args);
+            args.Add("Name", name+"%");
+            return Connection.Query<Supplier>("Select * from Supplier where Name like @Name or Phone like @Name", args);
 
         }
         public Supplier Find(int id)

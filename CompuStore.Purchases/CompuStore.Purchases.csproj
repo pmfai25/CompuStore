@@ -81,10 +81,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Purchase.cs" />
-    <Compile Include="Model\PurchaseItem.cs" />
-    <Compile Include="Model\Supplier.cs" />
-    <Compile Include="Model\SupplierPayment.cs" />
+    <Compile Include="PurchaseEditViewModel.cs" />
     <Compile Include="PurchasesModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -100,6 +97,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\PurchasesMainViewModel.cs" />
+    <Compile Include="Views\PurchaseEdit.xaml.cs">
+      <DependentUpon>PurchaseEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PurchasesMain.xaml.cs">
       <DependentUpon>PurchasesMain.xaml</DependentUpon>
     </Compile>
@@ -114,10 +114,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Views\PurchaseEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PurchasesMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

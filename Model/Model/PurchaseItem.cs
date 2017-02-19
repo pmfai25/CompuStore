@@ -20,7 +20,7 @@ namespace Model
             get { return quantity; }
             set { SetProperty(ref quantity, value); OnPropertyChanged("Total"); }
         }
-        public int PatchID { get; set; }
+        public int ItemID { get; set; }
         public int PurchaseID { get; set; }
         [Computed]
         public decimal Total { get { return Price * Quantity; } }

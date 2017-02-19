@@ -60,8 +60,8 @@ namespace Service
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("CategoryID", categoryID);
-            args.Add("Name", name);
-            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and  Name likes @Name+'%'", args);
+            args.Add("Name", name+"%");
+            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and  Name like @Name", args);
         }
 
         public bool Update(Item item)
@@ -69,9 +69,11 @@ namespace Service
             return Connection.Update(item);
         }
 
-        public List<Item> GetAll(int iD, string searchText)
+        public Item SearchBySerial(long serial)
         {
-            throw new NotImplementedException();
+            DynamicParameters args = new DynamicParameters();
+            args.Add("Serial", serial);
+            return Connection.QueryFirstOrDefault<Item>("Select * from Item where Serial=@Serial limit 1", args);
         }
 
         public ItemService(IDbConnection connection)

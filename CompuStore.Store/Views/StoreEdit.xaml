@@ -8,78 +8,65 @@
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
             <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Content="اضافة او تعديل صنف" Foreground="White"/>
         </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="80" ></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"  SharedSizeGroup="A"/>
-                <ColumnDefinition Width="200"  SharedSizeGroup="B"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="200"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="اسم الصنف" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding  Item.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
-
-            <Label Content="الباركود" Grid.Column="2" Margin="4,6"/>
-            <TextBox Text="{Binding Item.Serial}" Grid.Column="3" Margin="4,6"/>
-
-            <Label Content="النوع" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <ComboBox ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="ID" SelectedValue="{Binding CategoryID}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
-
-            <Label Content="حد الطلب" Grid.Row="1" Grid.Column="2" Margin="4,6" Grid.ColumnSpan="3"></Label>
-            <TextBox Text="{Binding Item.Limit}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
-
-            <Label Content="الوصف" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Item.Description}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
-
-            <Label Content="سعر البيع" Grid.Row="3" Grid.Column="0" Margin="4,6" ></Label>
-            <TextBox Text="{Binding Item.SalePrice, StringFormat=N2}" Grid.Row="3" Grid.Column="1" Margin="4,6"  />
-            
-            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,6" Name="chkBox">اضافة او تعديل الكمية المتاحة في المخزن</CheckBox>
-
-            <GroupBox Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="4" Margin="4,6" Header="ملحوظة هذة الكمية ليس لها علاقة بالكميات التي اتت عن طريق الشراء من الشركات">
+        <StackPanel Orientation="Vertical">
+            <GroupBox Width="550" Header="بيانات الصنف">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="80" ></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"  SharedSizeGroup="A"/>
-                        <ColumnDefinition  SharedSizeGroup="B"/>
+                        <ColumnDefinition Width="200"  SharedSizeGroup="B"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="سعر الشراء" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
+                    <Label Content="اسم الصنف" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
                     <TextBox Text="{Binding  Item.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
-                    <Label Content="الكمية" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-                    <TextBox Text="{Binding  Item.Name}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+                    <Label Content="الباركود" Grid.Column="2" Margin="4,6"/>
+                    <TextBox Text="{Binding Item.Serial}" Grid.Column="3" Margin="4,6"/>
+
+                    <Label Content="النوع" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
+                    <ComboBox ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedValuePath="ID" SelectedValue="{Binding Item.CategoryID}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+
+                    <Label Content="حد الطلب" Grid.Row="1" Grid.Column="2" Margin="4,6" Grid.ColumnSpan="3"></Label>
+                    <TextBox Text="{Binding Item.Limit}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
+
+                    <Label Content="الوصف" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
+                    <TextBox Text="{Binding Item.Description}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
+
+                    <Label Content="سعر البيع" Grid.Row="3" Grid.Column="0" Margin="4,6" ></Label>
+                    <TextBox Text="{Binding Item.Price, StringFormat=N2}" Grid.Row="3" Grid.Column="1" Margin="4,6"  />
+
+                    <StackPanel Grid.Row="4" Grid.ColumnSpan="4"  Margin="10" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
+                                    <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
+                                    <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+
+
                 </Grid>
             </GroupBox>
-            <StackPanel Margin="10" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
-                            <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
-                            <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </Grid>
+            
+        </StackPanel>
+        
     </DockPanel>
 
 </UserControl>

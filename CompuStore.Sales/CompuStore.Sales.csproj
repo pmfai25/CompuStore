@@ -82,8 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SalesModule.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,7 +95,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\SalesEditViewModel.cs" />
     <Compile Include="ViewModels\SalesMainViewModel.cs" />
+    <Compile Include="Views\SalesEdit.xaml.cs">
+      <DependentUpon>SalesEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SalesMain.xaml.cs">
       <DependentUpon>SalesMain.xaml</DependentUpon>
     </Compile>
@@ -111,30 +113,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Resources\Icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\SalesEdit.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SalesMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompuStore.Infrastructure\CompuStore.Infrastructure.csproj">

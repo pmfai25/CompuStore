@@ -66,8 +66,11 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Cancel()
         {
-            var s2 = _supplierService.Find(Supplier.ID);
-            DataUtils.Copy(Supplier, s2);
+            if (_edit)
+            {
+                var s2 = _supplierService.Find(Supplier.ID);
+                DataUtils.Copy(Supplier, s2);
+            }
             _navigationContext.NavigationService.Journal.GoBack();
         }
 

@@ -15,6 +15,7 @@ namespace Service
         bool IsDeletable(Item item);
         IEnumerable<Item> SearchBy(int categoryID,long serial);
         IEnumerable<Item> SearchBy(int categoryID, string name);
+        Item SearchBySerial(long serial);       
         IEnumerable<Item> GetAll();
         IEnumerable<Item> GetAll(int categoryID);
         Item Find(int id);

@@ -36,8 +36,8 @@ namespace Service{
         public IEnumerable<Client> SearchBy(string name)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("Name", name);
-            return Connection.Query<Client>("Select * from Client where Name like @Name +'%' or Phone like @Name+ '%'", args);            
+            args.Add("Name", name+"%");
+            return Connection.Query<Client>("Select * from Client where Name like @Name or Phone like @Name", args);            
         }
 
         public bool IsDeletable(Client client)

@@ -106,10 +106,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ReportsMain.xaml">
       <SubType>Designer</SubType>

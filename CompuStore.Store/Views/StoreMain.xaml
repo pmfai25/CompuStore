@@ -5,13 +5,6 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Style TargetType="DataGridColumnHeader">
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
             <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="الاصناف" Foreground="White" Height="60"/>
@@ -20,7 +13,7 @@
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
                 <iconPacks:PackIconMaterial Kind="Plus" />
             </Button>
-            <Button Command="{Binding EditCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
                 <iconPacks:PackIconMaterial Kind="Pencil" />
             </Button>
             <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
@@ -29,8 +22,8 @@
             <Separator></Separator>
             <TextBlock VerticalAlignment="Center" Margin="2">اختار نوع</TextBlock>
             <ComboBox Margin="2,0,4,0" Width="150" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" ></ComboBox>
-            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding Path=SelectedClient.Name}"></TextBox>
-            <Button  Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
+            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding Path=SearchText}"></TextBox>
+            <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
                 <iconPacks:PackIconMaterial Kind="Magnify" />
             </Button>
             <Separator></Separator>
@@ -47,7 +40,7 @@
                 <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>
                 <DataGridTextColumn Header="حد الطلب" Width="120" Binding="{Binding Limit}"/>
-                <DataGridTextColumn Header="سعر البيع" Width="120" Foreground="Blue" Binding="{Binding SalePrice, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سعر البيع" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
                 <DataGridTextColumn Header="الوصف" Width="*" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>

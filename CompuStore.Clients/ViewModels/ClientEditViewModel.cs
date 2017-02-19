@@ -85,8 +85,11 @@ namespace CompuStore.Clients.ViewModels
         }
         private void Cancel()
         {
-            var c2 = _clientService.Find(Client.ID);
-            DataUtils.Copy(Client, c2);
+            if (_edit)
+            {
+                var c2 = _clientService.Find(Client.ID);
+                DataUtils.Copy(Client, c2);
+            }
             _navigationContext.NavigationService.Journal.GoBack();
         }
         private bool CanSave()
