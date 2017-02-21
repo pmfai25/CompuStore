@@ -11,8 +11,7 @@ namespace Service
         
         public ServiceModule(IUnityContainer container)
         {
-            _container = container;
-            
+            _container = container;            
         }
 
         public void Initialize()
@@ -25,6 +24,7 @@ namespace Service
             _container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IOrderService, OrderService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IPurchaseService, PurchaseService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IItemService, ItemService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
         }

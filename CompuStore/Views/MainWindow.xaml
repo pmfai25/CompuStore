@@ -6,7 +6,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:infrastrucure="clr-namespace:CompuStore.Infrastructure;assembly=CompuStore.Infrastructure"
         prism:ViewModelLocator.AutoWireViewModel="True"        
-        Title="CompuStore" Height="600" Width="800" WindowStartupLocation="CenterScreen"        
+        Title="CompuStore" Height="700" Width="1000" WindowStartupLocation="CenterScreen"        
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
@@ -46,7 +46,7 @@
             <Image Stretch="Fill" Margin="100,5" Height="180" Source="{StaticResource Logo}"></Image>
         </Grid>
         
-        <Border  Width="200"  BorderBrush="#FF4355C1"
+        <Border  Width="300"  BorderBrush="#FF4355C1"
                 BorderThickness="2,2,2,2"
                 CornerRadius="4,4,4,4"
                 Margin="8,2,2,8" DockPanel.Dock="Left" >
