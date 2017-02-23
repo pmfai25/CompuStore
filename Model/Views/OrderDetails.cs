@@ -16,6 +16,13 @@ namespace Model.Views
         private decimal sale;
         private int qunatity;
         private decimal discount;
+        private decimal total;
+        [Computed]
+        public decimal Total
+        {
+            get { return Sale * Quantity - Discount;}
+            set { SetProperty(ref total, value); }
+        }
         public string Name
         {
             get { return name; }
@@ -41,8 +48,6 @@ namespace Model.Views
             get { return discount; }
             set { SetProperty(ref discount, value); OnPropertyChanged("Total"); }
         }
-        [Computed]
-        public decimal Total { get { return Sale * Quantity - Discount; } }
         public int OrderID { get; set; }
         public int OrderItemID { get; set; }
         public int PatchID { get; set; }

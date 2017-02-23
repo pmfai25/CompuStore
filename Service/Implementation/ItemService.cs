@@ -30,11 +30,13 @@ namespace Service
             return Connection.QuerySingle<Item>("Select * from Item where ID=@ID", args);
         }
 
-        public IEnumerable<Item> GetAll()
+        public IEnumerable<Item> GetAll(bool simple=false)
         {
+            if (simple)
+                return Connection.Query<Item>("Select ID, Name, Serial from Item");
             return Connection.Query<Item>("Select * from Item");
         }
-
+        
         public IEnumerable<Item> GetAll(int categoryID)
         {
             DynamicParameters args = new DynamicParameters();

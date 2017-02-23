@@ -23,13 +23,13 @@
             </Button>
             <Separator/>
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
-                <iconPacks:PackIconMaterial Kind="Plus" />
+                <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
             </Button>
             <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
-                <iconPacks:PackIconMaterial Kind="Pencil" />
+                <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
             </Button>
             <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
-                <iconPacks:PackIconMaterial Kind="Delete" />
+                <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
             </Button>
             <Separator></Separator>
             <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
@@ -38,7 +38,7 @@
             <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Separator/>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
+                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
             </Button>
             <Separator/>
             <TextBlock Text="الاجمالي" VerticalAlignment="Center"></TextBlock>

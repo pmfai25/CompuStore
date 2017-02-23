@@ -14,6 +14,13 @@ namespace Model.Views
         private string name;
         private decimal price;
         private int qunatity;
+        private decimal total;
+        [Computed]
+        public decimal Total
+        {
+            get { return Price * Quantity; }
+            set { SetProperty(ref total, value); }
+        }
         public string Name
         {
             get { return name; }
@@ -22,17 +29,16 @@ namespace Model.Views
         public decimal Price
         {
             get { return price; }
-            set { SetProperty(ref price, value); OnPropertyChanged("Total"); }
+            set { SetProperty(ref price, value); OnPropertyChanged("Total"); if (UpdateValues != null) UpdateValues(); }
         }
         public int Quantity
         {
             get { return qunatity; }
-            set { SetProperty(ref qunatity, value); OnPropertyChanged("Total"); }
+            set { SetProperty(ref qunatity, value); OnPropertyChanged("Total");if (UpdateValues != null) UpdateValues(); }
         }
-        [Computed]
-        public decimal Total { get { return Price * Quantity ; } }
         public int PurchaseID { get; set; }
         public int PurchaseItemID { get; set; }
         public int ItemID { get; set; }
+        public event Action UpdateValues;
     }
 }

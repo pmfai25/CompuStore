@@ -13,6 +13,13 @@ namespace Model.Views
         private DateTime date;
         private decimal total;
         private decimal paid;
+        private decimal remaining;
+        [Computed]
+        public decimal Remaining
+        {
+            get { return Total - Paid; }
+            set { SetProperty(ref remaining, value); }
+        }
         public string Name
         {
             get { return name; }
@@ -38,8 +45,6 @@ namespace Model.Views
             get { return paid; }
             set { SetProperty(ref paid, value); OnPropertyChanged("Remaining"); }
         }
-        [Computed]
-        public decimal Remaining { get { return Total - Paid; } }
 
         public int ClientID { get; set; }
         public int OrderID { get; set; }

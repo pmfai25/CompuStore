@@ -12,6 +12,19 @@ namespace Model.Views
         private DateTime date;
         private decimal total;
         private decimal paid;
+        private decimal remaining;
+        private int suppliedID;
+        public int SupplierID
+        {
+            get { return suppliedID; }
+            set { SetProperty(ref suppliedID, value); }
+        }
+        [Computed]
+        public decimal Remaining
+        {
+            get {  return Total - Paid;  }
+            set { SetProperty(ref remaining, value); }
+        }
         public string Name
         {
             get { return name; }
@@ -37,9 +50,8 @@ namespace Model.Views
             get { return paid; }
             set { SetProperty(ref paid, value); OnPropertyChanged("Remaining"); }
         }
-        [Computed]
-        public decimal Remaining { get { return Total - Paid; } }
+        
         public int PurchaseID { get; set; }
-        public int SupplierID { get; set; }
+        
     }
 }

@@ -35,16 +35,16 @@
             <StackPanel Margin="10" Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
                             <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
                 <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel" Foreground="Red"/>
                             <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
                         </StackPanel>
                     </Button.Content>

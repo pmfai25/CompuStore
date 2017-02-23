@@ -32,13 +32,13 @@
             </Button>
             <Separator/>
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
-                <iconPacks:PackIconMaterial Kind="Plus" />
+                <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
             </Button>
             <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
-                <iconPacks:PackIconMaterial Kind="Pencil" />
+                <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
             </Button>
             <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
-                <iconPacks:PackIconMaterial Kind="Delete" />
+                <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>

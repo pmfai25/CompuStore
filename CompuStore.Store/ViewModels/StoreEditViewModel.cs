@@ -20,6 +20,7 @@ namespace CompuStore.Store.ViewModels
         private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         private IItemService _itemService;
+        private ICategoryService _categoryService;
         public Item Item
         {
             get { return _item; }
@@ -38,7 +39,7 @@ namespace CompuStore.Store.ViewModels
             if (CanSave())
             {
                 var x = _itemService.SearchBySerial(Item.Serial);
-                if(_edit&&x.ID!=Item.ID ||!_edit)
+                if(x!=null&& _edit&&x.ID!=Item.ID ||!_edit)
                 {
                     Messages.Error(" هذا الباركود مستخدم من قبل مع الصنف " + x.Name);
                     return;
@@ -79,9 +80,10 @@ namespace CompuStore.Store.ViewModels
             _navigationContext.NavigationService.Journal.GoBack();
         }
 
-        public StoreEditViewModel(IEventAggregator eventAggregator, IItemService itemService)
+        public StoreEditViewModel(IEventAggregator eventAggregator,ICategoryService categoryService, IItemService itemService)
         {
             _eventAggregator = eventAggregator;
+            _categoryService = categoryService;            
             _itemService = itemService;
         }
 
@@ -101,7 +103,7 @@ namespace CompuStore.Store.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _navigationContext = navigationContext;
-            Categories = (ObservableCollection<Category>)navigationContext.Parameters["Categories"];
+            Categories = (ObservableCollection<Category>)navigationContext.Parameters["Categories"] ?? new ObservableCollection<Category>(_categoryService.GetAll());
             Item = (Item)navigationContext.Parameters["Item"] ?? new Item() { CategoryID = Categories.First().ID };
             _edit = Item.ID != 0;
         }

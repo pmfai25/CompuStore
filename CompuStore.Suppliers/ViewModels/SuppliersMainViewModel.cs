@@ -14,6 +14,7 @@ namespace CompuStore.Suppliers.ViewModels
     public class SuppliersMainViewModel : BindableBase
     {
         #region Fields
+        private IEventAggregator _eventAggregator;
         private Supplier _selectedItem;
         private string _searchText;
         private ObservableCollection<Supplier> items;
@@ -64,6 +65,7 @@ namespace CompuStore.Suppliers.ViewModels
                 if (!Messages.Delete(SelectedItem.Name)) return;
                 _supplierService.Delete(SelectedItem);
                 Items.Remove(SelectedItem);
+                _eventAggregator.GetEvent<SupplierDeleted>().Publish(SelectedItem);
             }
         }
         private void Search()
@@ -92,6 +94,7 @@ namespace CompuStore.Suppliers.ViewModels
             _searchText = "";
             _regionManager = regionManager;
             _supplierService = supplierService;
+            _eventAggregator = eventAggregator;
             eventAggregator.GetEvent<SupplierAdded>().Subscribe(x=>Items.Add(x));
             eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);

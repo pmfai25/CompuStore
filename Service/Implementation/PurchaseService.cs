@@ -19,7 +19,7 @@ namespace Service
             return Connection.Insert(purchase) != 0;
         }
 
-        public bool AddPurchaseDetail(PurchaseItem purchaseItem)
+        public bool AddPurchaseItems(List<PurchaseItem> purchaseItem)
         {
             return Connection.Insert(purchaseItem) != 0;
         }
@@ -29,7 +29,7 @@ namespace Service
             return Connection.Delete(purchase);
         }
 
-        public bool DeletePurchaseDetail(PurchaseItem purchaseItem)
+        public bool DeletePurchaseItems(List<PurchaseItem> purchaseItem)
         {
             return Connection.Delete(purchaseItem);
         }
@@ -70,10 +70,18 @@ namespace Service
             return Connection.Update(purchase);
         }
 
-        public bool UpdatePurchaseDetail(PurchaseItem purchaseItem)
+        public bool UpdatePurchaseItems(List<PurchaseItem> purchaseItem)
         {
             return Connection.Update(purchaseItem);
         }
+
+        public SupplierPurchases FindPurchaseDetails(int purchaseID)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("PurchaseID", purchaseID);
+            return Connection.QuerySingle<SupplierPurchases>("Select * from SupplierPurchases where PurchaseID=@PurchaseID", args);
+        }
+
         public PurchaseService(IDbConnection connection)
         {
             Connection = connection;

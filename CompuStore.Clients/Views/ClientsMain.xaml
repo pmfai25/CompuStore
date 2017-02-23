@@ -18,18 +18,18 @@
         </Grid>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
-                <iconPacks:PackIconMaterial Kind="Plus" />
+                <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
             </Button>
             <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
-                <iconPacks:PackIconMaterial Kind="Pencil" />
+                <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
             </Button>
             <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
-                <iconPacks:PackIconMaterial Kind="Delete" />
+                <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
             </Button>
             <Separator></Separator>
             <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
+                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
             </Button>
             <Separator></Separator>
             <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="ايصالات النقدية">

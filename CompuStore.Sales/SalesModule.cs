@@ -1,21 +1,28 @@
-﻿using Prism.Modularity;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Sales.Views;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
 using Prism.Regions;
+using Prism.Unity;
 using System;
 
 namespace CompuStore.Sales
 {
     public class SalesModule : IModule
     {
-        IRegionManager _regionManager;
-
-        public SalesModule(IRegionManager regionManager )
+        IUnityContainer _container;
+        IRegionManager regionManager;
+        public SalesModule(IUnityContainer container, IRegionManager regionManager )
         {
-            _regionManager = regionManager;
+            this.regionManager = regionManager;
+            _container = container;
         }
-
         public void Initialize()
         {
-            _regionManager.RequestNavigate(Infrastructure.RegionNames.MainContentRegion, Infrastructure.RegionNames.SalesMain);
+            _container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
+            _container.RegisterTypeForNavigation<SalesEdit>(RegionNames.SalesEdit);
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SalesMain);
+            
         }
     }
 }

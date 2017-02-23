@@ -8,7 +8,7 @@
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
             <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Content="اضافة او تعديل صنف" Foreground="White"/>
         </Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
             <GroupBox Width="550" Header="بيانات الصنف">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -46,7 +46,7 @@
                         <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
                                     <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
                                 </StackPanel>
                             </Button.Content>
@@ -54,7 +54,7 @@
                         <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel" Foreground="Red"/>
                                     <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
                                 </StackPanel>
                             </Button.Content>

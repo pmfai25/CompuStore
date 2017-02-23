@@ -27,7 +27,7 @@
             <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Separator/>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" />
+                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>

@@ -27,11 +27,7 @@ namespace CompuStore
         }
         protected override void ConfigureContainer()
         {
-            base.ConfigureContainer();
-            //Register Services
-            Container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
-            Container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
-                       
+            base.ConfigureContainer();                      
             Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
         }
 
@@ -39,6 +35,7 @@ namespace CompuStore
         protected override void InitializeShell()
         {
             Application.Current.MainWindow.Show();
+            
         }
         protected override void ConfigureModuleCatalog()
         {
@@ -51,6 +48,7 @@ namespace CompuStore
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));
             moduleCatalog.AddModule(typeof(ReportsModule));
+            
         }
     }
 }

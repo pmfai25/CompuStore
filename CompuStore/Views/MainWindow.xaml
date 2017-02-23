@@ -61,7 +61,7 @@
                 </Grid.RowDefinitions>
                 <Button x:Name="btnSales" BorderThickness="0" Command="{Binding SalesCommand}" Grid.Row="0" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnSales_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconModern Margin="0,0,20,0" Kind="CurrencyDollar" Width="30" Height="30"/>
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="المبيعات"/></TextBlock>
                         </StackPanel>
@@ -69,7 +69,7 @@
                 </Button>
                 <Button x:Name="btnPurchases" BorderThickness="0" Command="{Binding PurchasesCommand}" Grid.Row="1" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnPurchases_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Forsale" Width="30" Height="30" />
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="المشتريات"/></TextBlock>
                         </StackPanel>
@@ -77,7 +77,7 @@
                 </Button>
                 <Button x:Name="btnItems" BorderThickness="0" Command="{Binding StoreCommand}" Grid.Row="2" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnItems_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconModern Margin="0,0,20,0"  Kind="Store" Width="30" Height="30"/>
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الاصناف"/></TextBlock>
                         </StackPanel>
@@ -85,7 +85,7 @@
                 </Button>
                 <Button Name="btnClients" BorderThickness="0" Command="{Binding ClientsCommand}" Grid.Row="3" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnClients_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconModern Margin="0,0,20,0" Kind="UserTie"  Width="30" Height="30"/>
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="العملاء"/></TextBlock>
                         </StackPanel>
@@ -93,7 +93,7 @@
                 </Button>
                 <Button x:Name="btnSuppliers" BorderThickness="0" Command="{Binding SuppliersCommand}" Grid.Row="4" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnSuppliers_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="Domain" Width="30" Height="30" />
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="الشركات"/></TextBlock>
                         </StackPanel>
@@ -101,7 +101,7 @@
                 </Button>
                 <Button x:Name="btnReports" BorderThickness="0" Command="{Binding ReportsCommand}" Grid.Row="5" Height="Auto" Style="{DynamicResource AccentedSquareButtonStyle}" Click="btnReports_Click">
                     <Button.Content>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="150">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconMaterial Margin="0,0,20,0" Kind="FileChart" Width="30" Height="30"/>
                             <TextBlock FontSize="20" VerticalAlignment="Center" ><Run Text="التقارير"/></TextBlock>
                         </StackPanel>
