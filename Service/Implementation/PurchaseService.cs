@@ -53,7 +53,17 @@ namespace Service
             DynamicParameters args = new DynamicParameters();
             args.Add("DateFrom", dateFrom);
             args.Add("DateTo", dateTo);
-            return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where Date<=@DateTo and Date >=@DateFrom", args);
+            Dictionary<int, SupplierPurchases> dict = new Dictionary<int, SupplierPurchases>();
+            Connection.Query<SupplierPurchases, PurchaseDetails, SupplierPurchases>("Select p.*,d.* from SupplierPurchases p inner join PurchaseDetails d on p.PurchaseID=d.PurchaseID where  Date<=@DateTo and Date >=@DateFrom",
+                   (c, d) =>
+                   {
+                       if (!dict.ContainsKey(c.PurchaseID))
+                           dict.Add(c.PurchaseID, c);
+                       dict[c.PurchaseID].Details.Add(d);
+                       return c;
+                   }, args, splitOn: "PurchaseID");
+            return dict.Values;
+            
         }
 
         public IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier, DateTime dateFrom, DateTime dateTo)
@@ -79,7 +89,16 @@ namespace Service
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("PurchaseID", purchaseID);
-            return Connection.QuerySingle<SupplierPurchases>("Select * from SupplierPurchases where PurchaseID=@PurchaseID", args);
+            SupplierPurchases x = null;
+            Connection.Query<SupplierPurchases, PurchaseDetails, SupplierPurchases>("Select p.*,d.* from SupplierPurchases p inner join PurchaseDetails d on p.PurchaseID=d.PurchaseID where  p.PurchaseID=@PurchaseID",
+                  (c, d) =>
+                  {
+                      if (x == null)
+                          x = c;
+                      x.Details.Add(d);
+                      return c;
+                  }, args, splitOn: "PurchaseID");
+            return x;
         }
 
         public PurchaseService(IDbConnection connection)

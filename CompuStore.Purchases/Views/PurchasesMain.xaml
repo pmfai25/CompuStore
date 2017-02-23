@@ -81,7 +81,7 @@
                 </DataGrid>
             </GroupBox>
             <GroupBox Header="تفاصيل الفاتورة" Grid.Column="1" Margin="4,6">
-                <DataGrid ItemsSource="{Binding Details}"  IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid ItemsSource="{Binding SelectedItem.Details}"  IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="الصنف" Width="2.5*" FontWeight="DemiBold" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="السعر" Width="*" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>

@@ -36,6 +36,7 @@ namespace Model.Views
             get { return qunatity; }
             set { SetProperty(ref qunatity, value); OnPropertyChanged("Total");if (UpdateValues != null) UpdateValues(); }
         }
+
         public int PurchaseID { get; set; }
         public int PurchaseItemID { get; set; }
         public int ItemID { get; set; }

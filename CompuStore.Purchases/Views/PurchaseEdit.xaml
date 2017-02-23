@@ -70,7 +70,7 @@
                     </Button>
                 </ToolBar>
                     <Separator DockPanel.Dock="Top"></Separator>
-                <DataGrid ItemsSource="{Binding Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding Purchase.Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>

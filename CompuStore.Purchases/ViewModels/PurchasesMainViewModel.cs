@@ -23,7 +23,6 @@ namespace CompuStore.Purchases.ViewModels
         private decimal total;
         private DateTime dateFrom;
         private DateTime dateTo;
-        private ObservableCollection<PurchaseDetails> details;
         
         public DateTime DateTo
         {
@@ -43,22 +42,12 @@ namespace CompuStore.Purchases.ViewModels
         public SupplierPurchases SelectedItem
         {
             get { return selectedItem; }
-            set
-            {
-                SetProperty(ref selectedItem, value);
-                if (SelectedItem != null)
-                    Details = new ObservableCollection<PurchaseDetails>(purchaseService.GetPurchaseDetails(SelectedItem));
-            }
+            set { SetProperty(ref selectedItem, value); }
         }       
         public ObservableCollection<SupplierPurchases> Items
         {
             get { return items; }
             set { SetProperty(ref items, value); }
-        }
-        public ObservableCollection<PurchaseDetails> Details
-        {
-            get { return details; }
-            set { SetProperty(ref details, value); }
         }
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
@@ -112,12 +101,14 @@ namespace CompuStore.Purchases.ViewModels
         private void OnPurchaseUpdated(SupplierPurchases obj)
         {
             Total = Items.Sum(i => i.Total);
+            SelectedItem = obj;
         }
 
         private void OnPurchaseAdded(SupplierPurchases obj)
         {
             Items.Add(obj);
             Total = Items.Sum(i => i.Total);
+            SelectedItem = obj;
         }
     }
 }

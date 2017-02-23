@@ -39,7 +39,7 @@ namespace CompuStore.Store.ViewModels
             if (CanSave())
             {
                 var x = _itemService.SearchBySerial(Item.Serial);
-                if(x!=null&& _edit&&x.ID!=Item.ID ||!_edit)
+                if(x!=null&&( _edit&&x.ID!=Item.ID ||!_edit))
                 {
                     Messages.Error(" هذا الباركود مستخدم من قبل مع الصنف " + x.Name);
                     return;

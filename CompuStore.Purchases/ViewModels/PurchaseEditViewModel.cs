@@ -24,13 +24,15 @@ namespace CompuStore.Purchases.ViewModels
         private IPurchaseService purchaseService;
         private ISupplierService supplierService;
         private NavigationContext navigationContext;
-        private ObservableCollection<PurchaseDetails> details;
+        
         private long searchText;
         private ObservableCollection<Item> items;
         private PurchaseDetails selectedDetail;
         private ObservableCollection<Supplier> suppliers;
         private IEventAggregator eventAggregator;
         private Supplier selectedSupplier;
+        private bool open;
+
         public PurchaseDetails SelectedDetail
         {
             get { return selectedDetail; }
@@ -39,7 +41,7 @@ namespace CompuStore.Purchases.ViewModels
         public Supplier SelectedSupplier
         {
             get { return selectedSupplier; }
-            set { SetProperty(ref selectedSupplier, value); }
+            set { SetProperty(ref selectedSupplier, value);}
         }
 
         public ObservableCollection<Supplier> Suppliers
@@ -57,11 +59,7 @@ namespace CompuStore.Purchases.ViewModels
             get { return items; ; }
             set { SetProperty(ref items, value); }
         }
-        public ObservableCollection<PurchaseDetails> Details
-        {
-            get { return details; }
-            set { SetProperty(ref details, value); }
-        }
+
         public SupplierPurchases Purchase
         {
             get { return purchase; }
@@ -85,8 +83,8 @@ namespace CompuStore.Purchases.ViewModels
         {
             if(SelectedDetail.PurchaseItemID!=0)
                 lstDeleted.Add(new PurchaseItem() { ID = SelectedDetail.PurchaseItemID });
-            Details.Remove(SelectedDetail);
-            Purchase.Total = Details.Sum(i => i.Total);
+            Purchase.Details.Remove(SelectedDetail);
+            Purchase.Total = Purchase.Details.Sum(i => i.Total);
         }
         private void Cancel()
         {
@@ -96,14 +94,19 @@ namespace CompuStore.Purchases.ViewModels
                 DataUtils.Copy(Purchase, p2);
             }
             completed = true;
-            navigationContext.NavigationService.Journal.GoBack();
+            navigationContext.NavigationService.RequestNavigate(RegionNames.PurchasesMain);
         }
 
         private void Save()
         {
-            if(Purchase.Total<=0)
+            if (Purchase.Total <= 0)
             {
                 Messages.Error("لا يمكن حفظ فاتورة بهذا الاجمالي " + Purchase.Total);
+                return;
+            }
+            if (SelectedSupplier == null)
+            {
+                Messages.Error("يجب اضافة شركة للفاتورة اولا");
                 return;
             }
             Purchase p = new Purchase();
@@ -113,14 +116,13 @@ namespace CompuStore.Purchases.ViewModels
             p.Number = Purchase.Number;
             p.Total = Purchase.Total;
             p.Paid = Purchase.Paid;
-            if(!purchaseService.AddPurchase(p))
-            {
-                Messages.ErrorDataNotSaved();
-                return;
-            }
+            if (p.ID == 0)
+                purchaseService.AddPurchase(p);
+            else
+                purchaseService.UpdatePurchase(p);
             List<PurchaseItem> lstInsert = new List<PurchaseItem>();
             List<PurchaseItem> lstUpdate = new List<PurchaseItem>();
-            foreach (var d in Details)
+            foreach (var d in Purchase.Details)
             {
                 var pi = new PurchaseItem()
                 {
@@ -141,7 +143,13 @@ namespace CompuStore.Purchases.ViewModels
                 purchaseService.UpdatePurchaseItems(lstUpdate);
             if (lstDeleted.Count > 0)
                 purchaseService.DeletePurchaseItems(lstDeleted);
-            completed = true;            
+            completed = true;
+            Purchase.Name = SelectedSupplier.Name;
+            if (_edit)
+                eventAggregator.GetEvent<PurchaseUpdated>().Publish(Purchase);
+            else
+                eventAggregator.GetEvent<PurchaseAdded>().Publish(Purchase);
+            navigationContext.NavigationService.RequestNavigate(RegionNames.PurchasesMain);
         }
 
 
@@ -151,8 +159,8 @@ namespace CompuStore.Purchases.ViewModels
             if (item == null)
                 return;
             var p = new PurchaseDetails() { Name = item.Name, ItemID = item.ID };
-            p.UpdateValues += () => Purchase.Total = Details.Sum(x => x.Total);
-            Details.Add(p);
+            p.UpdateValues += () => Purchase.Total = Purchase.Details.Sum(x => x.Total);
+            Purchase.Details.Add(p);
            
         }        
         private void AddItem()
@@ -167,21 +175,18 @@ namespace CompuStore.Purchases.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if (_edit)
+            if (open)
                 return;
             this.navigationContext = navigationContext;
             Purchase = (SupplierPurchases)navigationContext.Parameters["SupplierPurchase"] ?? new SupplierPurchases() { Date = DateTime.Today };
             _edit = Purchase.PurchaseID != 0;
             if (_edit)
             {
-                var lst = purchaseService.GetPurchaseDetails(Purchase);
-                foreach (var p in lst)
-                {
-                    p.UpdateValues += () => Purchase.Total = Details.Sum(x => x.Total);
-                    Details.Add(p);
-                }
+                foreach (var p in Purchase.Details)
+                    p.UpdateValues += () => Purchase.Total = Purchase.Details.Sum(x => x.Total);
                 SelectedSupplier = Suppliers.Single(x => x.ID == Purchase.SupplierID);
             }
+            open = true;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -203,7 +208,6 @@ namespace CompuStore.Purchases.ViewModels
             Suppliers = new ObservableCollection<Supplier>(supplierService.GetAll(true));
             SelectedSupplier = Suppliers.FirstOrDefault();
             Items = new ObservableCollection<Item>(itemService.GetAll(true));
-            Details = new ObservableCollection<PurchaseDetails>();
             eventAggregator.GetEvent<SupplierAdded>().Subscribe(OnSupplierAdded);
             eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
         }
@@ -211,7 +215,10 @@ namespace CompuStore.Purchases.ViewModels
         private void OnItemAdded(Item obj)
         {
             Items.Add(obj);
-            Details.Add(new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name });
+            var x = new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name };
+            Purchase.Details.Add(x);
+            SelectedDetail = x;
+
         }
 
         private void OnSupplierAdded(Supplier obj)
