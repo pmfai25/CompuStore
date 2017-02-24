@@ -23,9 +23,8 @@ namespace CompuStore.Purchases.ViewModels
         private SupplierPurchases purchase;
         private IPurchaseService purchaseService;
         private ISupplierService supplierService;
-        private NavigationContext navigationContext;
-        
-        private long searchText;
+        private NavigationContext navigationContext;        
+        private string searchText;
         private ObservableCollection<Item> items;
         private PurchaseDetails selectedDetail;
         private ObservableCollection<Supplier> suppliers;
@@ -49,7 +48,7 @@ namespace CompuStore.Purchases.ViewModels
             get { return suppliers; }
             set { SetProperty(ref suppliers, value); }
         }
-        public long SearchText
+        public string SearchText
         {
             get { return searchText; }
             set { SetProperty(ref searchText, value); Search(); }
@@ -145,6 +144,7 @@ namespace CompuStore.Purchases.ViewModels
                 purchaseService.DeletePurchaseItems(lstDeleted);
             completed = true;
             Purchase.Name = SelectedSupplier.Name;
+            Purchase.SupplierID = SelectedSupplier.ID;
             if (_edit)
                 eventAggregator.GetEvent<PurchaseUpdated>().Publish(Purchase);
             else
@@ -155,7 +155,10 @@ namespace CompuStore.Purchases.ViewModels
 
         private void Search()
         {
-            var item = Items.SingleOrDefault(x => x.Serial == SearchText);
+            long s;
+            if (!long.TryParse(SearchText, out s))
+                return;
+            var item = Items.SingleOrDefault(x => x.Serial == s);
             if (item == null)
                 return;
             var p = new PurchaseDetails() { Name = item.Name, ItemID = item.ID };
@@ -197,7 +200,6 @@ namespace CompuStore.Purchases.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
-
         public PurchaseEditViewModel(ISupplierService supplierService,IPurchaseService purchaseService,IItemService itemService,IEventAggregator eventAggregator)
         {
             lstDeleted = new List<PurchaseItem>();
@@ -211,16 +213,13 @@ namespace CompuStore.Purchases.ViewModels
             eventAggregator.GetEvent<SupplierAdded>().Subscribe(OnSupplierAdded);
             eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
         }
-
         private void OnItemAdded(Item obj)
         {
             Items.Add(obj);
             var x = new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name };
             Purchase.Details.Add(x);
             SelectedDetail = x;
-
         }
-
         private void OnSupplierAdded(Supplier obj)
         {
             Suppliers.Add(obj);

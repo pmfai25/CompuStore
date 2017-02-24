@@ -8,6 +8,8 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
+using Model.Views;
+using System;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -99,7 +101,17 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentDeleted>().Subscribe(RefreshSupplierPayments);
+            eventAggregator.GetEvent<PurchaseAdded>().Subscribe(RefreshPurchases);
+            eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(RefreshPurchases);
+            eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(RefreshPurchases);
             Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
-        }     
+        }
+
+        private void RefreshPurchases(SupplierPurchases obj)
+        {
+            var supplier = Items.Single(x => x.ID == obj.SupplierID);
+            Supplier newSupplier = _supplierService.Find(supplier.ID);
+            DataUtils.Copy(supplier, newSupplier);
+        }
     }
 }

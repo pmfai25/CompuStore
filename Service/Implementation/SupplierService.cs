@@ -26,7 +26,7 @@ namespace Service
         {
             return Connection.Update(supplier);
         }
-        public IEnumerable<Supplier> GetAll(bool simple=true)
+        public IEnumerable<Supplier> GetAll(bool simple=false)
         {
             if (simple)
                 return Connection.Query<Supplier>("Select ID, Name from Supplier");
