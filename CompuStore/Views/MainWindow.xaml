@@ -46,7 +46,7 @@
             <Image Stretch="Fill" Margin="100,5" Height="180" Source="{StaticResource Logo}"></Image>
         </Grid>
         
-        <Border  Width="300"  BorderBrush="#FF4355C1"
+        <Border  Width="250"  BorderBrush="#FF4355C1"
                 BorderThickness="2,2,2,2"
                 CornerRadius="4,4,4,4"
                 Margin="8,2,2,8" DockPanel.Dock="Left" >

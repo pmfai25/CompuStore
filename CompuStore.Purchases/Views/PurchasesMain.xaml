@@ -53,42 +53,59 @@
             <TextBox VerticalAlignment="Center" Text="{Binding DateFrom, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
             <Label Content="الى: " VerticalAlignment="Center"/>
             <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
-            <Separator/>
             <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
                 <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
             </Button>
             <Separator/>
-            <TextBlock Text="الاجمالي" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Margin="4,0" VerticalAlignment="Center" Foreground="Blue" Text="{Binding Total,StringFormat=N2}"></TextBlock>
-            <iconPacks:PackIconMaterial VerticalAlignment="Center" Foreground="Green" Kind="CashUsd"></iconPacks:PackIconMaterial>
-        </ToolBar>
+            </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="فواتير المشتريات" Grid.Column="0" Margin="4,6">
-                <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="الشركة" Width="2.5*" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="1.5*" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
-                        <DataGridTextColumn Header="المبلغ" Width="*" Foreground="Green" Binding="{Binding Total, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="المدفوع" Width="*" Foreground="Blue" Binding="{Binding Paid, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="المتبقي" Width="*" Foreground="Red" Binding="{Binding Remaining, StringFormat=N2}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <GroupBox Header="الشركات" Grid.Column="0" Margin="4,6">
+                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsSynchronizedWithCurrentItem="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Margin="2" Text="{Binding Name}" Foreground="Red" FontSize="16" FontFamily="Arial"></TextBlock>
+                                <TextBlock Margin="4" Text="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}" FontSize="12" FontFamily="Arial"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </GroupBox>
             <GroupBox Header="تفاصيل الفاتورة" Grid.Column="1" Margin="4,6">
-                <DataGrid ItemsSource="{Binding SelectedItem.Details}"  IsReadOnly="True" AutoGenerateColumns="False">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="200"/>
+                            <ColumnDefinition MinWidth="200"/>
+                            <ColumnDefinition MinWidth="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="المبلغ" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="المدفوع" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="المتبقي" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Text="{Binding SelectedItem.Total,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Green"/>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" Background="Yellow" Grid.Column="1" Text="{Binding SelectedItem.Paid,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Blue"/>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Grid.Column="2" Text="{Binding SelectedItem.Remaining,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Red"/>
+                    </Grid>
+                    <Separator/>
+                    <DataGrid ItemsSource="{Binding SelectedItem.Details}"  IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="الصنف" Width="2.5*" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="السعر" Width="*" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="الكمية" Width="*" Foreground="Blue" Binding="{Binding Quantity, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="الاجمالي" Width="*" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+                    
+                </StackPanel>
             </GroupBox>
         </Grid>
 

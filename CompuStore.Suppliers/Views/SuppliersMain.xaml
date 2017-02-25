@@ -40,18 +40,19 @@
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
-        <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="اسم الشركة" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
-                <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
-                <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
-                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
-                <DataGridTextColumn Header="العنوان" Width="*" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+            <DataGrid ScrollViewer.CanContentScroll="True" MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="اسم الشركة" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
+                    <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="العنوان" Width="300" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="الملاحظات" Width="300" Binding="{Binding Notes}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>
