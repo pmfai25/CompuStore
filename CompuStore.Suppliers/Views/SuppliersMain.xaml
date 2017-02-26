@@ -12,10 +12,9 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="الشركات" Foreground="White" Height="60"/>
-        </Grid>
+    <DockPanel LastChildFill="True">
+        
+      
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />

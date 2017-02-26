@@ -20,9 +20,7 @@ namespace CompuStore.Sales
         public void Initialize()
         {
             _container.RegisterTypeForNavigation<SalesMain>(RegionNames.SalesMain);
-            _container.RegisterTypeForNavigation<SalesEdit>(RegionNames.SalesEdit);
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SalesMain);
-            
+            _container.RegisterTypeForNavigation<SalesEdit>(RegionNames.SalesEdit);           
         }
     }
 }

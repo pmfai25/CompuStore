@@ -12,9 +12,10 @@ namespace Model.Events
     public class SupplierAdded : PubSubEvent<Supplier> { }
     public class SupplierUpdated : PubSubEvent<Supplier> { }
     public class SupplierDeleted : PubSubEvent<Supplier> { }
+    public class SupplierSelected : PubSubEvent<Supplier> { }
     public class SupplierPaymentAdded : PubSubEvent<SupplierPayment> { }
     public class SupplierPaymentUpdated : PubSubEvent<SupplierPayment> { }
-    public class SupplierPaymentDeleted : PubSubEvent<SupplierPayment> { }
+    public class SupplierPaymentDeleted : PubSubEvent<SupplierPayment> { }    
     public class ItemAdded : PubSubEvent<Item> { }
     public class ItemUpdated : PubSubEvent<Item> { }
     public class ItemDeleted : PubSubEvent<Item> { }

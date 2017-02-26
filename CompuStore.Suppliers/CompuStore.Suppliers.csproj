@@ -116,6 +116,7 @@
     <Compile Include="ViewModels\SupplierPaymentMainViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchasesMainViewModel.cs" />
     <Compile Include="ViewModels\SuppliersMainViewModel.cs" />
+    <Compile Include="ViewModels\SuppliersNavigationViewModel.cs" />
     <Compile Include="Views\SupplierEdit.xaml.cs">
       <DependentUpon>SupplierEdit.xaml</DependentUpon>
     </Compile>
@@ -130,6 +131,9 @@
     </Compile>
     <Compile Include="Views\SuppliersMain.xaml.cs">
       <DependentUpon>SuppliersMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SuppliersNavigation.xaml.cs">
+      <DependentUpon>SuppliersNavigation.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -174,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SuppliersMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SuppliersNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

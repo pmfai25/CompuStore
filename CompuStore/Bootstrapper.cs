@@ -42,8 +42,8 @@ namespace CompuStore
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             moduleCatalog.AddModule(typeof(ServiceModule));
-            moduleCatalog.AddModule(typeof(SalesModule));
-            moduleCatalog.AddModule(typeof(PurchasesModule));
+           // moduleCatalog.AddModule(typeof(SalesModule));
+            //moduleCatalog.AddModule(typeof(PurchasesModule));
             moduleCatalog.AddModule(typeof(StoreModule));
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));
