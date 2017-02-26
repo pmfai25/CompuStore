@@ -10,12 +10,6 @@
         </Style>
     </UserControl.Resources>
     <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="60" Margin="233,-10,209,10">
-                <Label FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ايصالات النقدية للشركة /" Foreground="White"/>
-                <Label FontSize="24" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" Content="{Binding Supplier.Name}"/>
-            </StackPanel>
-        </Grid>
 
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
@@ -48,10 +42,10 @@
         <Separator DockPanel.Dock="Top"></Separator>
         <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="رقم الفاتورة" Width="120" FontWeight="DemiBold" Binding="{Binding Number}"/>
                 <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
-                <DataGridTextColumn Header="المبلغ" Width="150" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
-                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
+                <DataGridTextColumn Header="المبلغ" Width="120" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الملاحظات" Width="300" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
 

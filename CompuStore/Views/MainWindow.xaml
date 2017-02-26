@@ -49,10 +49,13 @@
         <Border Background="{DynamicResource AccentColorBrush}"
                 BorderBrush="{DynamicResource AccentColorBrush}"
                 BorderThickness="2,2,2,2"
-                CornerRadius="4,4,4,4"
-                Padding="3"
-                Margin="10,10,10,5" DockPanel.Dock="Top" >
-            <StackPanel Orientation="Horizontal">
+                CornerRadius="20"
+                Padding="8"
+                Margin="5" DockPanel.Dock="left" >
+            <Border.Effect>
+                <DropShadowEffect Color="Silver" />
+            </Border.Effect>
+            <StackPanel Orientation="Vertical">
                 <Button x:Name="btnSuppliers" Style="{DynamicResource defaultStyle}" Command="{Binding SuppliersCommand}" Click="btnSuppliers_Click">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -115,19 +118,11 @@
                 </Button>
             </StackPanel>
         </Border>
-        <Border BorderBrush="{DynamicResource AccentColorBrush}"
-                Background="{DynamicResource AccentColorBrush}"
-                DockPanel.Dock="Left"
-                BorderThickness="8,5,2,5"
-                CornerRadius="0,20,20,0"
-                Margin="10,1,5,10"
-                Width="300">
-            <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.NavContentRegion}"/>
-        </Border>
-        <Border  BorderBrush="{DynamicResource AccentColorBrush2}"
-                BorderThickness="2,5,8,5"
-                CornerRadius="20,0,0,20"
-                Margin="5,1,10,10">
+        <Border  BorderBrush="{DynamicResource AccentColorBrush}"
+                 Padding="3"
+                BorderThickness="10,10,10,10"
+                CornerRadius="20"
+                Margin="5">
             <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"/>
         </Border>
     </DockPanel>

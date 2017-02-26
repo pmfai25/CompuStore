@@ -13,9 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        
-      
-        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">           
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
             </Button>
@@ -42,7 +40,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
             <DataGrid ScrollViewer.CanContentScroll="True" MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="اسم الشركة" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
                     <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
                     <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
