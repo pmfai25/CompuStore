@@ -20,7 +20,7 @@ namespace CompuStore.Purchases
         public void Initialize()
         {
             _container.RegisterTypeForNavigation<PurchasesMain>(RegionNames.PurchasesMain);
-            _container.RegisterTypeForNavigation<PurchaseEdit>(RegionNames.PurchaseEdit);
+            _container.RegisterTypeForNavigation<PurchaseEdit>(RegionNames.SupplierPurchaseEdit);
         }
     }
 }

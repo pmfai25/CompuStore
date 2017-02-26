@@ -5,9 +5,6 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Content="اضافة او تعديل مورد" Foreground="White"/>
-        </Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>

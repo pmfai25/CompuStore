@@ -4,6 +4,7 @@ using Dapper;
 using System.Data.SqlClient;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using System;
 
 namespace Service
 {
@@ -51,6 +52,22 @@ namespace Service
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", selectedItem.ID);
             return Connection.QuerySingle<decimal>("Select Purchases from Supplier where ID=@ID", args) != 0;
+        }
+
+        public List<Purchase> GetPurchases(Supplier supplier,DateTime dateFrom, DateTime dateTo)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("SupplierID", supplier.ID);
+            args.Add("DateFrom", dateFrom);
+            args.Add("DateTo", dateTo);
+            return new List<Purchase>(Connection.Query<Purchase>("Select * from Purchase where SupplierID=@SupplierID and Date <=@DateTo and Date>=@DateFrom", args));
+        }
+
+        public List<Purchase> GetPurchases(Supplier supplier)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("SupplierID", supplier.ID);
+            return new List<Purchase>(Connection.Query<Purchase>("Select * from Purchase where SupplierID=@SupplierID", args));
         }
     }
 }

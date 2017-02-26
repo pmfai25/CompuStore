@@ -1,9 +1,119 @@
 ﻿<UserControl x:Class="CompuStore.Suppliers.Views.SupplierPurchasesMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:prism="http://prismlibrary.com/"            
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-            
-    </Grid>
+    <DockPanel LastChildFill="True">
+            <Label Margin="0,-5"  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="المشتريات"/>
+            <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Supplier.Name}"/>
+
+            <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+                <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
+                    <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
+                </Button>
+                <Separator/>
+                <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
+                    <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
+                </Button>
+                <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
+                    <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
+                </Button>
+                <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
+                    <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
+                </Button>
+                <Separator></Separator>
+                <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
+                <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="150">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+
+                <Label Content="الى: " VerticalAlignment="Center"/>
+                <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="150">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+                <Separator/>
+                <Button Command="{Binding RefreshCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
+                    <iconPacks:PackIconMaterial Kind="Refresh" Foreground="Blue" />
+                </Button>
+                <Separator/>
+                <TextBlock Text="الاجمالي" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="4,0" VerticalAlignment="Center" Foreground="Blue" Text="{Binding Total,StringFormat=N2}"></TextBlock>
+                <iconPacks:PackIconMaterial VerticalAlignment="Center" Foreground="Green" Kind="CashUsd"></iconPacks:PackIconMaterial>
+            </ToolBar>
+            <Separator DockPanel.Dock="Top"></Separator>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="الفواتير" Grid.Column="0" Margin="4,6">
+                <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"  IsReadOnly="True" AutoGenerateColumns="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedItemChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="التاريخ" Width="150" Foreground="Blue" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <GroupBox Header="تفاصيل الفاتورة" Grid.Column="1" Margin="4,6">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="200"/>
+                            <ColumnDefinition MinWidth="200"/>
+                            <ColumnDefinition MinWidth="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="المبلغ" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="المدفوع" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="المتبقي" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Text="{Binding SelectedItem.Total,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Green"/>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" Background="Yellow" Grid.Column="1" Text="{Binding SelectedItem.Paid,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Blue">
+                            <TextBox.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                            <Setter Property="TextBox.Background" Value="White"></Setter>
+                                            <Setter Property="TextBox.IsReadOnly" Value="True"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Grid.Column="2" Text="{Binding SelectedItem.Remaining,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Red"/>
+                    </Grid>
+                    <Separator/>
+                    <DataGrid ItemsSource="{Binding Details}"  IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+    </DockPanel>
+    
 </UserControl>

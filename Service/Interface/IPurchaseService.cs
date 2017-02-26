@@ -13,7 +13,7 @@ namespace Service
         IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier);
         IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier, DateTime dateFrom, DateTime dateTo);
         IEnumerable<SupplierPurchases> GetSupplierPurchases(DateTime dateFrom, DateTime dateTo);
-        IEnumerable<PurchaseDetails> GetPurchaseDetails(SupplierPurchases purchase);
+        IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID);
         bool AddPurchase(Purchase purchase);
         bool UpdatePurchase(Purchase purchase);
         bool DeletePurchase(Purchase purchase);

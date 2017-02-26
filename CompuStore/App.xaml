@@ -16,8 +16,9 @@
                 <!--Icons-->
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
                 </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="DataGridColumnHeader">
+            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Salmon"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -16,6 +16,7 @@ using Prism.Modularity;
 using Prism.Unity;
 using System.Threading;
 using Service;
+using System.Globalization;
 
 namespace CompuStore
 {
@@ -23,6 +24,10 @@ namespace CompuStore
     {
         protected override DependencyObject CreateShell()
         {
+            CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-eg");
+            ci.DateTimeFormat.ShortDatePattern = "dd / MM / yyyy";
+            ci.DateTimeFormat.FullDateTimePattern= "dd / MM / yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
             return Container.Resolve<MainWindow>();
         }
         protected override void ConfigureContainer()

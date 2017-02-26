@@ -10,6 +10,8 @@ using System.Linq;
 using Model.Events;
 using Model.Views;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -19,6 +21,7 @@ namespace CompuStore.Suppliers.ViewModels
         private IEventAggregator _eventAggregator;
         private Supplier _selectedItem;
         private string _searchText;
+        private List<Supplier> all;
         private ObservableCollection<Supplier> items;
         private readonly ISupplierService _supplierService;
         private readonly IRegionManager _regionManager;
@@ -32,12 +35,14 @@ namespace CompuStore.Suppliers.ViewModels
         public ObservableCollection<Supplier> Items
         {
             get { return items; }
-            set { SetProperty(ref items, value); }
+            set { SetProperty(ref items, value); SelectedItem = Items.FirstOrDefault(); }
         }
         public string SearchText
         {
             get { return _searchText; }
-            set { SetProperty(ref _searchText, value); }
+            set {
+                SetProperty(ref _searchText, value);
+            }
         }
         #endregion
         #region Commands
@@ -47,8 +52,15 @@ namespace CompuStore.Suppliers.ViewModels
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
         public DelegateCommand PaymentsCommand => new DelegateCommand(ShowPayments, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand PurchasesCommand => new DelegateCommand(ShowPurchases, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Methods
+        private void Refresh()
+        {
+            all = new List<Supplier>(_supplierService.GetAll());
+            SearchText = "";
+            Items = new ObservableCollection<Supplier>(all);
+        }
         private void Add()
         {
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierEdit);
@@ -72,7 +84,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Search()
         {
-            Items = new ObservableCollection<Supplier>(_supplierService.SearchBy(SearchText));
+            Items = new ObservableCollection<Supplier>(all.Where(x => x.Name.StartsWith(SearchText) || x.Phone.StartsWith(SearchText)));
         }
         private void ShowPurchases()
         {
@@ -104,10 +116,11 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<PurchaseAdded>().Subscribe(RefreshPurchases);
             eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(RefreshPurchases);
             eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(RefreshPurchases);
-            Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
+            all = new List<Supplier>(_supplierService.GetAll());
+            Items = new ObservableCollection<Supplier>(all);
         }
 
-        private void RefreshPurchases(SupplierPurchases obj)
+        private void RefreshPurchases(Purchase obj)
         {
             var supplier = Items.Single(x => x.ID == obj.SupplierID);
             Supplier newSupplier = _supplierService.Find(supplier.ID);

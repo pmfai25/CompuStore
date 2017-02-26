@@ -41,10 +41,10 @@ namespace Service
             return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where SupplierID=@SupplierID", args);
         }
 
-        public IEnumerable<PurchaseDetails> GetPurchaseDetails(SupplierPurchases purchase)
+        public IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("PurchaseID", purchase.PurchaseID);
+            args.Add("PurchaseID", purchaseID);
             return Connection.Query<PurchaseDetails>("Select * from PurchaseDetails where PurchaseID=@PurchaseID", args);
         }
 

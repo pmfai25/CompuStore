@@ -13,7 +13,7 @@ using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierPaymentMainViewModel : BindableBase,INavigationAware
+    public class SupplierPaymentMainViewModel : BindableBase,INavigationAware,IRegionMemberLifetime
     {
         #region Fields
         private Supplier _supplier;
@@ -45,7 +45,7 @@ namespace CompuStore.Suppliers.ViewModels
         public DateTime DateTo
         {
             get { return _dateTo; }
-            set { SetProperty(ref _dateTo, value); }
+            set { SetProperty(ref _dateTo, value);}
         }
         public SupplierPayment SelectedItem
         {
@@ -57,6 +57,13 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _items; }
             set { SetProperty(ref _items, value); }
         }
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
         #endregion
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
@@ -64,9 +71,21 @@ namespace CompuStore.Suppliers.ViewModels
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Methods
-
+        private void Refresh()
+        {
+            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.GetAll(Supplier));
+            if (Items.Count > 0)
+            {
+                DateFrom = Items.Min(x => x.Date).Date;
+                DateTo = Items.Max(x => x.Date).Date;
+            }
+            else
+                DateFrom = DateTo = DateTime.Today;
+            Total = Items.Sum(s => s.Money);
+        }
         private void Back()
         {
             if (_navigationContext.NavigationService.Journal.CanGoBack)
@@ -96,49 +115,40 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Search()
         {
-            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(_supplier, DateFrom, DateTo));
+            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(Supplier, DateFrom, DateTo));
             Total = Items.Sum(x => x.Money);
         }
         private void OnSupplierPaymentUpdated(SupplierPayment obj)
         {
-            Total = Items.Sum(i => i.Money);
+            Search();
         }
 
         private void OnSupplierPaymentAdded(SupplierPayment obj)
         {
             Items.Add(obj);
-            Total = Items.Sum(i => i.Money);
+            Search();
         }
         #endregion
         #region Interfaces
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
         {
-            var c2 = (Supplier)(navigationContext.Parameters["Supplier"]);
-            DataUtils.Copy(_supplier, c2);
-            Items = new ObservableCollection<Model.SupplierPayment>(_supplierPaymentService.GetAll(_supplier));
-            Total = Items.Sum(s => s.Money);
+            Supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
+            RefreshCommand.Execute();
             _navigationContext = navigationContext;
         }
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
         {
-            var c2 = (Supplier)(navigationContext.Parameters["Supplier"]);
-            return c2.ID == _supplier.ID;
+            return false;
         }
-
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
         #endregion
         public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IEventAggregator eventAggregator)
         {
-            _supplier = new Supplier();
             _supplierPaymentService = supplierPaymentService;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(OnSupplierPaymentAdded);
             _eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(OnSupplierPaymentUpdated);
-            DateTo = DateTime.Today;
-            DateFrom = DateTime.Today;
         }
-
-
     }
 }

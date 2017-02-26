@@ -3,16 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Style TargetType="DataGridColumnHeader">
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <DockPanel LastChildFill="True">
+        <Label Margin="0,-5"  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
+
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">           
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
@@ -23,33 +19,38 @@
             <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
                 <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
             </Button>
-            <Separator></Separator>
-            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText}"></TextBox>
-            <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
+            <Separator></Separator>            
+            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <Separator/>
+            <Button Command="{Binding RefreshCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
+                <iconPacks:PackIconMaterial Kind="Refresh" Foreground="Blue" />
             </Button>
             <Separator></Separator>
             <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="ايصالات النقدية">
                 <iconPacks:PackIconMaterial Kind="ClockAlert" />
             </Button>
             <Button Command="{Binding PurchasesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير المشتريات">
-                <iconPacks:PackIconMaterial Kind="File" />
+                <iconPacks:PackIconMaterial Kind="CurrencyUsd" />
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-            <DataGrid ScrollViewer.CanContentScroll="True" MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid ScrollViewer.CanContentScroll="True" MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
                     <DataGridTextColumn Header="المشتريات" Width="120" Foreground="Green" Binding="{Binding Purchases, StringFormat=N2}"/>
                     <DataGridTextColumn Header="سداد المشتريات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
                     <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" FontWeight="DemiBold" Binding="{Binding Remaining, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red"  Binding="{Binding Remaining, StringFormat=N2}"/>
                     <DataGridTextColumn Header="العنوان" Width="300" Binding="{Binding Address}"/>
                     <DataGridTextColumn Header="الملاحظات" Width="300" Binding="{Binding Notes}"/>
                 </DataGrid.Columns>
             </DataGrid>
-        </ScrollViewer>
     </DockPanel>
 </UserControl>

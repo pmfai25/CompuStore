@@ -5,35 +5,6 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Style TargetType="{x:Type DatePickerTextBox}">
-                <Setter Property="Control.Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBox x:Name="PART_TextBox"
-     Text="{Binding Path=SelectedDate, StringFormat='dd - MM - yyyy', 
-     RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <DataTemplate x:Key="ListTemplate">
-                <Grid x:Name="GridItem" HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="1" Text="{Binding Path=Phone}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="2" Text="{Binding Path=Address}" Margin="5,1,0,0" />
-                    <TextBlock Grid.Column="3" Text="{Binding Path=Notes}" Margin="5,1,0,0" />
-                </Grid>
-            </DataTemplate>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="60">
             <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="المشتريات" Foreground="White"/>

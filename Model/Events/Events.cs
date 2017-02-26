@@ -19,9 +19,9 @@ namespace Model.Events
     public class ItemAdded : PubSubEvent<Item> { }
     public class ItemUpdated : PubSubEvent<Item> { }
     public class ItemDeleted : PubSubEvent<Item> { }
-    public class PurchaseAdded : PubSubEvent<SupplierPurchases> { }
-    public class PurchaseUpdated : PubSubEvent<SupplierPurchases> { }
-    public class PurchaseDeleted : PubSubEvent<SupplierPurchases> { }
+    public class PurchaseAdded : PubSubEvent<Purchase> { }
+    public class PurchaseUpdated : PubSubEvent<Purchase> { }
+    public class PurchaseDeleted : PubSubEvent<Purchase> { }
     public class PurchaseItemAdded : PubSubEvent<PurchaseDetails> { }
     public class PurchaseItemUpdated : PubSubEvent<PurchaseDetails> { }
     public class PurchaseItemDeleted : PubSubEvent<PurchaseDetails> { }

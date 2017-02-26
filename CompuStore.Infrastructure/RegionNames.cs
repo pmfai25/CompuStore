@@ -11,7 +11,7 @@ namespace CompuStore.Infrastructure
         public const string MainContentRegion = "MainContentRegion";
         public const string NavContentRegion = "NavContentRegion";
         public const string PurchasesMain = "PurchasesMain";
-        public const string PurchaseEdit = "PurchaseEdit";
+        
         public const string SalesMain = "SalesMain";
         public const string SalesEdit = "SalesEdit";
         public const string ReportsMain = "ReportsMain";
@@ -33,7 +33,7 @@ namespace CompuStore.Infrastructure
         public const string SupplierPaymentMain = "SupplierPaymentMain";
         public const string SupplierPaymentEdit = "SupplierPaymentEdit";
         public const string SupplierPurchasesMain = "SupplierPurchasesMain";
-        public const string SuppliersNavigation = "SuppliersNavigation";
+        public const string SupplierPurchaseEdit = "SupplierPurchaseEdit";
         #endregion
     }
 }

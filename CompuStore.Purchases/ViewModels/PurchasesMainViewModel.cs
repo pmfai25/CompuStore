@@ -54,7 +54,7 @@ namespace CompuStore.Purchases.ViewModels
 
         private void Add()
         {
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.PurchaseEdit);
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPurchaseEdit);
         }
 
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
@@ -63,7 +63,7 @@ namespace CompuStore.Purchases.ViewModels
         {
             NavigationParameters parameters = new NavigationParameters();
             parameters.Add("SupplierPurchase", SelectedItem);
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.PurchaseEdit,parameters);
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPurchaseEdit,parameters);
         }
 
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);

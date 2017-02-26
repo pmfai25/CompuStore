@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Model;
 namespace Service
 {
@@ -11,5 +12,7 @@ namespace Service
         IEnumerable<Supplier> GetAll(bool simple=false);
         Supplier Find(int id);
         bool IsSupplierWithPurchases(Supplier selectedItem);
+        List<Purchase> GetPurchases(Supplier supplier,DateTime dateFrom, DateTime dateTo);
+        List<Purchase> GetPurchases(Supplier supplier);
     }
 }
