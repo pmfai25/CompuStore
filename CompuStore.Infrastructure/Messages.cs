@@ -26,5 +26,10 @@ namespace CompuStore.Infrastructure
         {
             Error("حدث خطأ اثناء حفظ العميل في قاعدة البيانات");
         }
+
+        public static void Notification(string v)
+        {
+            MessageBox.Show(v, "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
     }
 }

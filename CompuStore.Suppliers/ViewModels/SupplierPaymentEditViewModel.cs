@@ -17,8 +17,14 @@ namespace CompuStore.Suppliers.ViewModels
         private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         private ISupplierPaymentService _supplierPaymentService;
+        private Supplier _supplier;
         #endregion
         #region Properties
+        public Supplier Supplier
+        {
+            get { return _supplier; }
+            set { SetProperty(ref _supplier, value); }
+        }
         public SupplierPayment SupplierPayment
         {
             get { return _supplierPayment; }
@@ -58,15 +64,9 @@ namespace CompuStore.Suppliers.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _navigationContext = navigationContext;
-            var supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
-            if (supplier == null)
-            {
-                SupplierPayment = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]);
-                _edit = true;
-            }
-            else
-                SupplierPayment = new SupplierPayment() { SupplierID = supplier.ID };
-
+            Supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
+            SupplierPayment = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]) ?? new SupplierPayment() { SupplierID = Supplier.ID };
+            _edit = SupplierPayment.ID != 0;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

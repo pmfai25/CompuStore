@@ -20,6 +20,6 @@ namespace Service
         bool AddPurchaseItems(List<PurchaseItem> purchaseItem);
         bool UpdatePurchaseItems(List<PurchaseItem> purchaseItem);
         bool DeletePurchaseItems(List<PurchaseItem> purchaseItem);
-        SupplierPurchases FindPurchaseDetails(int purchaseID);
+        Purchase FindPurchase(int purchaseID);
     }
 }

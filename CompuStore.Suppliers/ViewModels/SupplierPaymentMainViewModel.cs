@@ -98,7 +98,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Update()
         {
-            var parameters = new NavigationParameters { { "SupplierPayment", SelectedItem } };
+            var parameters = new NavigationParameters { { "SupplierPayment", SelectedItem }, { "Supplier", _supplier } };
             _navigationContext.NavigationService.RequestNavigate( RegionNames.SupplierPaymentEdit, parameters);
         }
         private void Delete()

@@ -11,5 +11,10 @@ namespace CompuStore.Suppliers.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+
+        }
     }
 }

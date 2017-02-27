@@ -58,15 +58,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <GroupBox Header="الفواتير" Grid.Column="0" Margin="4,6">
-                <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"  IsReadOnly="True" AutoGenerateColumns="False">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding SelectedItemChanged}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                <DataGrid ItemsSource="{Binding Items}" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding SelectedItem}"  IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="150" Foreground="Blue" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                        <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="التاريخ" Width="*" Foreground="Blue" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
@@ -86,18 +81,7 @@
                         <TextBlock Grid.Column="1" Text="المدفوع" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="2" Text="المتبقي" FontSize="14" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Center"/>
                         <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Text="{Binding SelectedItem.Total,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Green"/>
-                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" Background="Yellow" Grid.Column="1" Text="{Binding SelectedItem.Paid,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Blue">
-                            <TextBox.Style>
-                                <Style>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
-                                            <Setter Property="TextBox.Background" Value="White"></Setter>
-                                            <Setter Property="TextBox.IsReadOnly" Value="True"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
+                        <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Grid.Column="1" Text="{Binding SelectedItem.Paid,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Blue"/>
                         <TextBox HorizontalContentAlignment="Center" Margin="4" Grid.Row="1" IsReadOnly="True" Grid.Column="2" Text="{Binding SelectedItem.Remaining,StringFormat=N2}" FontSize="16" FontFamily="Times" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Red"/>
                     </Grid>
                     <Separator/>

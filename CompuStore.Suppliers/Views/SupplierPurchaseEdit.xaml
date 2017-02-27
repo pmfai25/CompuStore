@@ -1,9 +1,110 @@
 ﻿<UserControl x:Class="CompuStore.Suppliers.Views.SupplierPurchaseEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"           
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-            
-    </Grid>
+    <DockPanel>
+        <Label Margin="0,-5"  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="فاتورة مشتريات"/>
+        <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Supplier.Name}"/>
+        <Separator DockPanel.Dock="Top"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="بيانات الفاتورة">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="40" ></RowDefinition>
+                        <RowDefinition Height="auto" ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="رقم الفاتورة" Margin="4,6" ></Label>
+                    <TextBox Background="Yellow" Text="{Binding  Purchase.Number}" Grid.Column="1" Margin="4,6"/>
+
+                    <Label Content="التاريخ" Grid.Row="1" Margin="4,6"></Label>
+                    <DatePicker VerticalAlignment="Center" SelectedDate="{Binding Purchase.Date}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+
+                    <Label Content="الاجمالي" Grid.Row="2"  Margin="4,6" ></Label>
+                    <TextBox Text="{Binding  Purchase.Total, StringFormat=N2}" IsReadOnly="True" TextAlignment="Center" Grid.Row="2" Grid.Column="1"  Margin="4,6" FontSize="14"/>
+
+                    <Label Content="دفع" Grid.Row="3" Margin="4,6"></Label>
+                    <TextBox Background="Yellow" Text="{Binding Purchase.Paid, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Blue"/>
+
+                    <Label Content="المتبقي" Grid.Row="4"  Margin="4,6"></Label>
+                    <TextBox Text="{Binding Purchase.Remaining, StringFormat=N2}" IsReadOnly="True" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Red"/>
+
+                    <StackPanel Grid.Column="1" Grid.Row="5" Margin="10"  Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Top">
+                        <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
+                                    <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel" Foreground="Red"/>
+                                    <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Grid.RowSpan="2" Header="الاصناف">
+                <DockPanel LastChildFill="True"  >
+                    <ToolBar HorizontalAlignment="Left"  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+                        <Label Content="بحث بالباركود: " VerticalAlignment="Center"/>
+                        <TextBox VerticalAlignment="Center" KeyDown="TextBox_KeyDown" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150"  Background="Yellow">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="KeyDown">
+                                    <prism:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <Separator></Separator>
+                        <Button Margin="4,6" Grid.Row="2" Grid.Column="2" Style="{DynamicResource SquareButtonStyle}" Command="{Binding AddItemCommand}">
+                            <StackPanel>
+                                <iconPacks:PackIconModern Kind="Add" Foreground="Green" HorizontalAlignment="Center"/>
+                                <TextBlock Text="منتج جديد"/>
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                    <Separator DockPanel.Dock="Top"></Separator>
+                    <DataGrid MinHeight="300" ItemsSource="{Binding Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{DynamicResource SquareButtonStyle}" Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType=DataGrid}}" Width="40" Height="40"  ToolTip="حذف">
+                                            <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="*" MinWidth="200" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity}"/>
+                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
 </UserControl>

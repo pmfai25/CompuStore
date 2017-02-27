@@ -89,7 +89,7 @@ namespace CompuStore.Purchases.ViewModels
         {
             if(_edit)
             {
-                SupplierPurchases p2 = purchaseService.FindPurchaseDetails(Purchase.PurchaseID);
+                SupplierPurchases p2 = purchaseService.FindPurchase(Purchase.PurchaseID);
                 DataUtils.Copy(Purchase, p2);
             }
             completed = true;

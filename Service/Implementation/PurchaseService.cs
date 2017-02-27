@@ -85,20 +85,11 @@ namespace Service
             return Connection.Update(purchaseItem);
         }
 
-        public SupplierPurchases FindPurchaseDetails(int purchaseID)
+        public Purchase FindPurchase(int purchaseID)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("PurchaseID", purchaseID);
-            SupplierPurchases x = null;
-            Connection.Query<SupplierPurchases, PurchaseDetails, SupplierPurchases>("Select p.*,d.* from SupplierPurchases p inner join PurchaseDetails d on p.PurchaseID=d.PurchaseID where  p.PurchaseID=@PurchaseID",
-                  (c, d) =>
-                  {
-                      if (x == null)
-                          x = c;
-                      x.Details.Add(d);
-                      return c;
-                  }, args, splitOn: "PurchaseID");
-            return x;
+            args.Add("ID", purchaseID);
+            return Connection.QuerySingle<Purchase>("Select * from Purchase where ID=@ID", args);
         }
 
         public PurchaseService(IDbConnection connection)
