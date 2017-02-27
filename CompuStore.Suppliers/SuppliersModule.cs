@@ -28,6 +28,7 @@ namespace CompuStore.Suppliers
             Container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentMain);
             Container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
             Container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesMain);
+            Container.RegisterTypeForNavigation<SupplierPurchaseEdit>(RegionNames.SupplierPurchaseEdit);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain);
         }
     }

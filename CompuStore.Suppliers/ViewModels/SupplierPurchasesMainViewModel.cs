@@ -16,6 +16,7 @@ namespace CompuStore.Suppliers.ViewModels
 {
     public class SupplierPurchasesMainViewModel : BindableBase, INavigationAware,IRegionMemberLifetime
     {
+        #region Fields
         private ISupplierService _supplierService;
         private IPurchaseService _purchaseService;
         private IRegionManager _regionManager;
@@ -28,6 +29,8 @@ namespace CompuStore.Suppliers.ViewModels
         private DateTime dateFrom;
         private DateTime dateTo;
         private ObservableCollection<PurchaseDetails> _details;
+        #endregion
+        #region Properties
         public ObservableCollection<PurchaseDetails> Details
         {
             get { return _details; }
@@ -64,6 +67,7 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _supplier; }
             set { SetProperty(ref _supplier, value); }
         }
+        #endregion
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
@@ -124,16 +128,6 @@ namespace CompuStore.Suppliers.ViewModels
                 Details = null;
         }
         #endregion
-        public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator, IRegionManager regionManager)
-        {
-            _supplierService = supplierService;
-            _purchaseService = purchaseService;
-            _eventAggregator = eventAggregator;
-            _regionManager = regionManager;
-            eventAggregator.GetEvent<PurchaseAdded>().Subscribe(OnPurchaseAdded);
-            eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(OnPurchaseUpdated);
-            Supplier = new Supplier();
-        }
         #region Events
         private void OnPurchaseUpdated(Purchase obj)
         {
@@ -170,5 +164,15 @@ namespace CompuStore.Suppliers.ViewModels
             
         }
         #endregion
+        public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator, IRegionManager regionManager)
+        {
+            _supplierService = supplierService;
+            _purchaseService = purchaseService;
+            _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
+            eventAggregator.GetEvent<PurchaseAdded>().Subscribe(OnPurchaseAdded);
+            eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(OnPurchaseUpdated);
+            Supplier = new Supplier();
+        }
     }
 }
