@@ -16,7 +16,7 @@ namespace Service
 
         public void Initialize()
         {
-            Connection = new SQLiteConnection("Data Source=Inventory.s3db;");
+            Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db;");
             Connection.Open();
             _container.RegisterInstance<IDbConnection>(Connection);
             _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());

@@ -123,7 +123,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Back()
         {
-            _navigationContext.NavigationService.Journal.GoBack();
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.SuppliersMain);
         }
         #endregion
         #region Interface

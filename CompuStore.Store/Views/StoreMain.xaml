@@ -39,6 +39,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>
+                <DataGridTextColumn Header="الكمية" Width="150" Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Header="حد الطلب" Width="120" Binding="{Binding Limit}"/>
                 <DataGridTextColumn Header="سعر البيع" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
                 <DataGridTextColumn Header="الوصف" Width="*" Binding="{Binding Description}"/>
