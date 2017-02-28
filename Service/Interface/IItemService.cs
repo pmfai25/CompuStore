@@ -13,8 +13,8 @@ namespace Service
         bool Update(Item item);
         bool Delete(Item item);
         bool IsDeletable(Item item);
-        IEnumerable<Item> SearchBy(int categoryID,long serial);
-        IEnumerable<Item> SearchBy(int categoryID, string name);
+        IEnumerable<Item> SearchBy(long serial);
+        IEnumerable<Item> SearchBy( string name);
         Item SearchBySerial(long serial);       
         IEnumerable<Item> GetAll(bool simple=false);
         IEnumerable<Item> GetAll(int categoryID);

@@ -51,19 +51,18 @@ namespace Service
             return Connection.QuerySingle<int>("Select count(*) from OrderItem oi, PurchaseItem pi where oi.ItemID=@ItemID or pi.ItemID=@ItemID", args) == 0;
         }
 
-        public IEnumerable<Item> SearchBy(int categoryID, long serial)
+        public IEnumerable<Item> SearchBy(long serial)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("CategoryID", categoryID);
             args.Add("Serial", serial);
-            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and Serial=@Serial", args);
+            return Connection.Query<Item>("Select * from Item where Serial=@Serial", args);
         }
-        public IEnumerable<Item> SearchBy(int categoryID, string name)
+        public IEnumerable<Item> SearchBy(string name)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("CategoryID", categoryID);
+            
             args.Add("Name", name+"%");
-            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID and  Name like @Name", args);
+            return Connection.Query<Item>("Select * from Item where Name like @Name", args);
         }
 
         public bool Update(Item item)

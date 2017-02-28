@@ -11,5 +11,6 @@ namespace CompuStore.Store.Views
         {
             InitializeComponent();
         }
+
     }
 }

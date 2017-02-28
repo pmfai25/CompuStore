@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
+using System.Windows.Input;
 
 namespace CompuStore.Store.ViewModels
 {
@@ -29,8 +30,9 @@ namespace CompuStore.Store.ViewModels
         public Category SelectedCategory
         {
             get { return _selectedCategory; }
-            set { SetProperty(ref _selectedCategory, value); }
+            set { SetProperty(ref _selectedCategory, value); Refresh(); }
         }
+
         public ObservableCollection<Category> Categories
         {
             get { return _categories; }
@@ -57,8 +59,18 @@ namespace CompuStore.Store.ViewModels
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand EditCategoriesCommand => new DelegateCommand(EditCategories);
-        public DelegateCommand SearchCommand => new DelegateCommand(SearchItems);       
+        public DelegateCommand<KeyEventArgs> SearchCommand => new DelegateCommand<KeyEventArgs>(Search);
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
+
+
         #endregion
+        private void Refresh()
+        {
+            if (SelectedCategory != null)
+                Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
+            else
+                Items = new ObservableCollection<Item>();
+        }
         private void Add()
         {
             if(Categories.Count==0)
@@ -89,14 +101,15 @@ namespace CompuStore.Store.ViewModels
                 Items.Remove(SelectedItem);
             }
         }
-        private void SearchItems()
+        private void Search(KeyEventArgs e)
         {
-            SearchText.Trim();
+            if (e.Key != Key.Enter)
+                return;
             long n;
             if(long.TryParse(SearchText, out n))
-                Items = new ObservableCollection<Item>(_itemService.SearchBy(SelectedCategory.ID,n));
+                Items = new ObservableCollection<Item>(_itemService.SearchBy(n));
             else
-                Items = new ObservableCollection<Item>(_itemService.SearchBy(SelectedCategory.ID, SearchText));
+                Items = new ObservableCollection<Item>(_itemService.SearchBy(SearchText));
         }
         private void EditCategories()
         {
@@ -110,13 +123,9 @@ namespace CompuStore.Store.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
             _eventAggregator.GetEvent<ItemUpdated>().Subscribe(OnItemUpdated);
-            _searchText = "";
             Categories = new ObservableCollection<Category>(categoryService.GetAll());
             SelectedCategory = Categories.FirstOrDefault();
-            if (SelectedCategory != null)
-                Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
-            else
-                Items = new ObservableCollection<Item>();
+            Refresh();
         }
 
         private void OnItemUpdated(Item obj)

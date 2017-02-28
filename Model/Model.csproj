@@ -98,7 +98,6 @@
     <Compile Include="Views\ClientOrders.cs" />
     <Compile Include="Views\OrderDetails.cs" />
     <Compile Include="Views\PurchaseDetails.cs" />
-    <Compile Include="Views\StoreDetails.cs" />
     <Compile Include="Views\SupplierPurchases.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

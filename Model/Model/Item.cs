@@ -10,7 +10,12 @@ namespace Model
         private int limit;
         private long serial;
         private decimal price;
-        
+        private double quantity;
+        public double Quantity
+        {
+            get { return quantity; }
+            set { SetProperty(ref quantity, value); }
+        }
         public int ID { get; set; }
         public string Name
         {
