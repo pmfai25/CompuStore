@@ -123,6 +123,12 @@ namespace CompuStore.Store.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
             _eventAggregator.GetEvent<ItemUpdated>().Subscribe(OnItemUpdated);
+            _eventAggregator.GetEvent<PurchaseAdded>().Subscribe(x => Refresh());
+            _eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(x => Refresh());
+            _eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(x => Refresh());
+            _eventAggregator.GetEvent<OrderAdded>().Subscribe(x => Refresh());
+            _eventAggregator.GetEvent<OrderDeleted>().Subscribe(x => Refresh());
+            _eventAggregator.GetEvent<OrderUpdated>().Subscribe(x => Refresh());
             Categories = new ObservableCollection<Category>(categoryService.GetAll());
             SelectedCategory = Categories.FirstOrDefault();
             Refresh();
