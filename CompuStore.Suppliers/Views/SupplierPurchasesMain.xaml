@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="CompuStore.Suppliers.Views.SupplierPurchasesMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:prism="http://prismlibrary.com/"            
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -51,7 +51,7 @@
             <TextBlock Margin="4,0" VerticalAlignment="Center" Foreground="Blue" Text="{Binding Total,StringFormat=N2}"></TextBlock>
             <iconPacks:PackIconMaterial VerticalAlignment="Center" Foreground="Green" Kind="CashUsd"></iconPacks:PackIconMaterial>
         </ToolBar>
-        <Separator DockPanel.Dock="Top"></Separator>
+        <Separator DockPanel.Dock="Top"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -94,9 +94,9 @@
                         <TextBlock Margin="4,6" Grid.Row="0" Foreground="Salmon" Text="المبلغ" FontSize="14"/>
                         <TextBlock Margin="4,6" Grid.Row="1" Foreground="Salmon" Text="المدفوع" FontSize="14"/>
                         <TextBlock Margin="4,6" Grid.Row="2" Foreground="Salmon" Text="المتبقي" FontSize="14"/>
-                        <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total}" Foreground="Blue" FontSize="14"/>
-                        <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid}" Foreground="Green" FontSize="14"/>
-                        <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining}" Foreground="Red" FontSize="14"/>
+                        <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="Blue" FontSize="14"/>
+                        <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="Green" FontSize="14"/>
+                        <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="Red" FontSize="14"/>
                     </Grid>
                 </Grid>
             </GroupBox>

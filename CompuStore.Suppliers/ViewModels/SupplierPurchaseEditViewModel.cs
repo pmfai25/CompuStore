@@ -24,12 +24,13 @@ namespace CompuStore.Suppliers.ViewModels
         private IEventAggregator _eventAggregator;
         private IPurchaseService _purchaseService;
         private IItemService _itemService;
+        private ISupplierService _supplierService;
         private Purchase  _purchase;
         private Supplier _supplier;
         private ObservableCollection<PurchaseDetails> _details;
         private string _searchText;
         private PurchaseDetails _selectedDetail;
-        private bool _open, _completed, _edit;
+        private bool _open, _completed, _edit;        
         #endregion
         #region Properties
         public ObservableCollection<PurchaseDetails> Details
@@ -155,8 +156,8 @@ namespace CompuStore.Suppliers.ViewModels
                 Messages.Error("يجب اضافة رقم صحيح اكبر من الصفر للفاتورة ");
                 return false;
             }
-            var purchases = _purchaseService.GetSupplierPurchases(Supplier);
-            if(!_edit&&purchases.Any(x=>x.Number==Purchase.Number)|| _edit&&purchases.Any(x=>x.Number==Purchase.Number && x.PurchaseID!=Purchase.ID))
+            var purchases = _supplierService.GetPurchases(Supplier);
+            if(!_edit&&purchases.Any(x=>x.Number==Purchase.Number)|| _edit&&purchases.Any(x=>x.Number==Purchase.Number && x.ID!=Purchase.ID))
             {
                 Messages.Error("رقم الفاتورة مكرر يجب ادخال رقم اخر ");
                 return false;
@@ -219,8 +220,9 @@ namespace CompuStore.Suppliers.ViewModels
             _open = true;
         }
         #endregion
-        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService, IEventAggregator eventAggregator)
+        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService,ISupplierService supplierService, IEventAggregator eventAggregator)
         {
+            _supplierService = supplierService;
             _itemService = itemService;
             _purchaseService = purchaseService;
             _eventAggregator = eventAggregator;

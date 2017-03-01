@@ -32,25 +32,26 @@ namespace Model.Views
         {
             get { return retail; }
             set { SetProperty(ref retail, value); }
-        }        
+        }
         public decimal Sale
         {
             get { return sale; }
-            set { SetProperty(ref sale, value); OnPropertyChanged("Total"); }
-        }        
+            set { SetProperty(ref sale, value); OnPropertyChanged("Total"); if (UpdateValues != null) UpdateValues(); }
+        }
         public int Quantity
         {
             get { return qunatity; }
-            set { SetProperty(ref qunatity, value); OnPropertyChanged("Total"); }
+            set { SetProperty(ref qunatity, value); OnPropertyChanged("Total"); if (UpdateValues != null) UpdateValues(); }
         }
         public decimal Discount
         {
             get { return discount; }
-            set { SetProperty(ref discount, value); OnPropertyChanged("Total"); }
+            set { SetProperty(ref discount, value); OnPropertyChanged("Total"); if (UpdateValues != null) UpdateValues(); }
         }
         public int OrderID { get; set; }
         public int OrderItemID { get; set; }
         public int PatchID { get; set; }
         public int ItemID { get; set; }
+        public event Action UpdateValues;
     }
 }

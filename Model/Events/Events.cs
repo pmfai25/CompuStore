@@ -18,8 +18,8 @@ namespace Model.Events
     public class PurchaseAdded : PubSubEvent<Purchase> { }
     public class PurchaseUpdated : PubSubEvent<Purchase> { }
     public class PurchaseDeleted : PubSubEvent<Purchase> { }
-    public class OrderAdded : PubSubEvent<ClientOrders> { }
-    public class OrderUpdated : PubSubEvent<ClientOrders> { }
-    public class OrderDeleted : PubSubEvent<ClientOrders> { }
+    public class OrderAdded : PubSubEvent<Order> { }
+    public class OrderUpdated : PubSubEvent<Order> { }
+    public class OrderDeleted : PubSubEvent<Order> { }
 
 }

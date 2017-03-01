@@ -1,92 +1,136 @@
-﻿using Prism.Commands;
+﻿using CompuStore.Infrastructure;
+using Model;
+using Model.Events;
+using Model.Views;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Model.Views;
-using Model;
-using System.Collections.ObjectModel;
 using Service;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CompuStore.Clients.ViewModels
 {
     public class ClientSalesMainViewModel : BindableBase,INavigationAware
     {
-        #region Fields
-        private DateTime dateTo;
-        private DateTime dateFrom;
-        private Client _client;        
-        private ClientOrders _selectedOrder;
-        private ObservableCollection<OrderDetails> _details;
-        private ObservableCollection<ClientOrders> _orders;
+        #region Fields        
         private IOrderService _orderService;
+        private IClientService _clientService;
+        private IRegionManager _regionManager;
+        private IEventAggregator _eventAggregator;
         private NavigationContext _navigationContext;
+        private Client _client;
+        private Order _selectedItem;
+        private decimal _total;
+        private DateTime _dateFrom;
+        private DateTime _dateTo;
+        private ObservableCollection<Order> _items;
+        private ObservableCollection<OrderDetails> _details;
         #endregion
         #region Properties             
         public DateTime DateTo
         {
-            get { return dateTo; }
-            set { SetProperty(ref dateTo, value); }
+            get { return _dateTo; }
+            set { SetProperty(ref _dateTo, value); }
         }       
         public DateTime DateFrom
         {
-            get { return dateFrom; }
-            set { SetProperty(ref dateFrom, value); }
+            get { return _dateFrom; }
+            set { SetProperty(ref _dateFrom, value); }
+        }
+        public decimal Total
+        {
+            get { return _total; }
+            set { SetProperty(ref _total, value); }
         }
         public Client Client
         {
             get { return _client; }
             set { SetProperty(ref _client, value); }
         }
-        public ClientOrders SelectedOrder
+        public Order SelectedItem
         {
-            get { return _selectedOrder; }
+            get { return _selectedItem; }
             set
             {
-                if (value == null)
-                    Details = null;
-                else
-                    if (_selectedOrder!=null&& value.OrderID != _selectedOrder.OrderID)
+                SetProperty(ref _selectedItem, value);
+                if (_selectedItem != null)
                     Details = new ObservableCollection<OrderDetails>(_orderService.GetOrderDetails(value));
-                SetProperty(ref _selectedOrder, value);
+                else
+                    Details = null;                
             }
         }
-        public ObservableCollection<ClientOrders> Orders
+        public ObservableCollection<Order> Items
         {
-            get { return _orders; }
-            set { SetProperty(ref _orders, value); }
+            get { return _items; }
+            set { SetProperty(ref _items, value); }
         }
         public ObservableCollection<OrderDetails> Details
         {
             get { return _details; }
             set { SetProperty(ref _details, value); }
         }
-        public DelegateCommand BackCommand => new DelegateCommand(Back);
+        #endregion
+        #region Commands
+        public DelegateCommand AddCommand => new DelegateCommand(Add);
+        public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
+        public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
-
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
+        public DelegateCommand BackCommand => new DelegateCommand(Back);
+        #endregion
+        #region Methods
+        private void Add()
+        {
+            NavigationParameters parameters = new NavigationParameters { { "Client", Client } };
+            _navigationContext.NavigationService.RequestNavigate( RegionNames.ClientSaleEdit, parameters);
+        }
+        private void Update()
+        {
+            NavigationParameters parameters = new NavigationParameters { { "Order", SelectedItem }, { "Client", Client }, { "Details", Details } };
+            _navigationContext.NavigationService.RequestNavigate( RegionNames.ClientSaleEdit, parameters);
+        }
+        private void Delete()
+        {
+            if (Messages.Delete("فاتورة رقم " + _selectedItem.Number))
+            {
+                _orderService.DeleteOrder(SelectedItem);
+                Items.Remove(SelectedItem);
+                Total = Items.Sum(i => i.Total);
+                _eventAggregator.GetEvent<OrderDeleted>().Publish(SelectedItem);
+            }
+        }
         private void Search()
         {
-            Orders = new ObservableCollection<ClientOrders>(_orderService.GetClientOrders(Client, DateFrom, DateTo));
+            Items = new ObservableCollection<Order>(_clientService.GetOrders(Client, DateFrom, DateTo));
+            Total = Items.Sum(x => x.Total);
         }
-        #endregion
+        private void Refresh()
+        {
+            Items = new ObservableCollection<Order>(_clientService.GetOrders(Client));
+            if (Items.Count > 0)
+            {
+                DateFrom = Items.Min(x => x.Date).Date;
+                DateTo = Items.Max(x => x.Date).Date;
+                Total = Items.Sum(x => x.Total);
+                SelectedItem = Items.First();
+            }
+            else
+                DateFrom = DateTo = DateTime.Today;
+        }
         private void Back()
         {
-            if (_navigationContext.NavigationService.Journal.CanGoBack)
-                _navigationContext.NavigationService.Journal.GoBack();
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.ClientsMain);
         }
 
-        public ClientSalesMainViewModel(IOrderService orderService)
-        {
-            _orderService = orderService;
-            Client = new Client();
-            SelectedOrder = new ClientOrders();
-            Orders = new ObservableCollection<ClientOrders>();
-        }
-
+        #endregion
+        #region Interface
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            return false;
+            var c2 = (Client)navigationContext.Parameters["Client"];
+            return c2.ID == Client.ID;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
@@ -97,10 +141,18 @@ namespace CompuStore.Clients.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _navigationContext = navigationContext;
-            DateTo = DateFrom = DateTime.Today;
             Client = (Client)_navigationContext.Parameters["Client"];
-            Orders =new ObservableCollection<ClientOrders>( _orderService.GetClientOrders(Client));
-            SelectedOrder = Orders.FirstOrDefault();
+            Refresh();
+        }
+#endregion
+        public ClientSalesMainViewModel(IClientService clientService, IOrderService orderService, IEventAggregator eventAggregator, IRegionManager regionManager)
+        {
+            _orderService = orderService;
+            _clientService = clientService;
+            _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
+            _eventAggregator.GetEvent<OrderAdded>().Subscribe(x => Search());
+            _eventAggregator.GetEvent<OrderUpdated>().Subscribe(x => Search());
         }
     }
 }

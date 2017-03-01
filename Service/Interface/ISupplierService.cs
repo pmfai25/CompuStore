@@ -9,7 +9,7 @@ namespace Service
         bool Update(Supplier supplier);
         bool Delete(Supplier supplier);
         IEnumerable<Supplier> SearchBy(string name);
-        IEnumerable<Supplier> GetAll(bool simple=false);
+        IEnumerable<Supplier> GetAll();
         Supplier Find(int id);
         bool IsDeleteable(Supplier selectedItem);
         List<Purchase> GetPurchases(Supplier supplier,DateTime dateFrom, DateTime dateTo);

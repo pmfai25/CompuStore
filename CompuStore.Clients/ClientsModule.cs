@@ -21,12 +21,12 @@ namespace CompuStore.Clients
 
         public void Initialize()
         {
-
             _container.RegisterTypeForNavigation<ClientsMain>(RegionNames.ClientsMain);
             _container.RegisterTypeForNavigation<ClientEdit>(RegionNames.ClientEdit);
             _container.RegisterTypeForNavigation<ClientPaymentMain>(RegionNames.ClientPaymentMain);
             _container.RegisterTypeForNavigation<ClientPaymentEdit>(RegionNames.ClientPaymentEdit);
             _container.RegisterTypeForNavigation<ClientSalesMain>(RegionNames.ClientSalesMain);
+            _container.RegisterTypeForNavigation<ClientSaleEdit>(RegionNames.ClientSaleEdit);
         }
     }
 }

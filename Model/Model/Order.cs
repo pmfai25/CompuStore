@@ -15,7 +15,7 @@ namespace Model
         private DateTime date;
         private decimal paid;
         private decimal total;
-               
+        private decimal remaining;
         public int ID { get; set; }
         public int Number
         {
@@ -27,17 +27,22 @@ namespace Model
             get { return date; }
             set { SetProperty(ref date, value); }
         }
-        public decimal Paid
-        {
-            get { return paid; }
-            set { SetProperty(ref paid, value); }
-        }
         public decimal Total
         {
             get { return total; }
-            set { SetProperty(ref total, value); }
+            set { SetProperty(ref total, value); OnPropertyChanged("Remaining"); }
+        }
+        public decimal Paid
+        {
+            get { return paid; }
+            set { SetProperty(ref paid, value); OnPropertyChanged("Remaining"); }
+        }
+        [Computed]
+        public decimal Remaining
+        {
+            get { return Total - Paid; }
+            set { SetProperty(ref remaining, value); }
         }
         public int ClientID { get; set; }
-        public int AccountID { get; set; }
     }
 }

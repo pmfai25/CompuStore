@@ -10,25 +10,25 @@ namespace CompuStore.Suppliers
 {
     public class SuppliersModule : IModule
     {
-        private IUnityContainer Container;
+        private IUnityContainer _container;
         IRegionManager _regionManager;
 
-        public SuppliersModule(RegionManager regionManager, IUnityContainer Container)
+        public SuppliersModule(RegionManager regionManager, IUnityContainer container)
         {
             _regionManager = regionManager;
-            this.Container = Container;
+            _container = container;
         }
 
         public void Initialize()
         {
-            Container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
-            Container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
-            Container.RegisterTypeForNavigation<SupplierEdit>(RegionNames.SupplierEdit);
-            Container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentMain);
-            Container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
-            Container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesMain);
-            Container.RegisterTypeForNavigation<SupplierPurchaseEdit>(RegionNames.SupplierPurchaseEdit);
+            _container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
+            _container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
+            _container.RegisterTypeForNavigation<SupplierEdit>(RegionNames.SupplierEdit);
+            _container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentMain);
+            _container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
+            _container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesMain);
+            _container.RegisterTypeForNavigation<SupplierPurchaseEdit>(RegionNames.SupplierPurchaseEdit);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain);
         }
     }

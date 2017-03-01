@@ -18,19 +18,17 @@ namespace Service
         public bool Add(Supplier supplier)
         {
             return Connection.Insert(supplier) != 0;            
+        }        
+        public bool Update(Supplier supplier)
+        {
+            return Connection.Update(supplier);
         }
         public bool Delete(Supplier supplier)
         {
             return Connection.Delete(supplier);
         }
-        public bool Update(Supplier supplier)
+        public IEnumerable<Supplier> GetAll()
         {
-            return Connection.Update(supplier);
-        }
-        public IEnumerable<Supplier> GetAll(bool simple=false)
-        {
-            if (simple)
-                return Connection.Query<Supplier>("Select ID, Name from Supplier");
             return Connection.GetAll<Supplier>();
         }
         public IEnumerable<Supplier> SearchBy(string name)

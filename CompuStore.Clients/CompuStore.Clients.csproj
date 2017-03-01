@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="ViewModels\ClientPaymentEditViewModel.cs" />
     <Compile Include="ViewModels\ClientPaymentMainViewModel.cs" />
+    <Compile Include="ViewModels\ClientSaleEditViewModel.cs" />
     <Compile Include="ViewModels\ClientSalesMainViewModel.cs" />
     <Compile Include="ViewModels\ClientEditViewModel.cs" />
     <Compile Include="ViewModels\ClientsMainViewModel.cs" />
@@ -124,6 +125,9 @@
     </Compile>
     <Compile Include="Views\ClientPaymentEdit.xaml.cs">
       <DependentUpon>ClientPaymentEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientSaleEdit.xaml.cs">
+      <DependentUpon>ClientSaleEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientSalesMain.xaml.cs">
       <DependentUpon>ClientSalesMain.xaml</DependentUpon>
@@ -152,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ClientPaymentEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientSaleEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

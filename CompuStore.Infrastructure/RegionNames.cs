@@ -26,6 +26,7 @@ namespace CompuStore.Infrastructure
         public const string ClientPaymentMain = "ClientPaymentMain";
         public const string ClientPaymentEdit = "ClientPaymentEdit";
         public const string ClientSalesMain = "ClientSalesMain";
+        public const string ClientSaleEdit = "ClientSaleEdit";
         #endregion
         #region Supplier Module
         public const string SuppliersMain = "SuppliersMain";
