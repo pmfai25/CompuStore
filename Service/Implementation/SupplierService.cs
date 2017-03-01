@@ -47,7 +47,7 @@ namespace Service
             return Connection.QuerySingle<Supplier>("Select * from Supplier where ID=@ID", args);
         }
 
-        public bool IsSupplierWithPurchases(Supplier selectedItem)
+        public bool IsDeleteable(Supplier selectedItem)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", selectedItem.ID);

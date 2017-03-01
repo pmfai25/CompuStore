@@ -6,9 +6,9 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label Margin="0,-5"  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="أيصالات النقدية"/>
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="أيصالات النقدية"/>
         <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Supplier.Name}"/>
-
+        <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
                 <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
@@ -55,10 +55,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="رقم الفاتورة" Width="120" FontWeight="DemiBold" Binding="{Binding Number}"/>
                 <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
-                <DataGridTextColumn Header="المبلغ" Width="120" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
-                <DataGridTextColumn Header="الملاحظات" Width="300" Binding="{Binding Notes}"/>
+                <DataGridTextColumn Header="المبلغ" Width="100" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </DockPanel>
 </UserControl>

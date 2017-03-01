@@ -97,7 +97,6 @@ namespace CompuStore.Store.ViewModels
             {
                 if (!Messages.Delete(SelectedItem.Name)) return;
                 _itemService.Delete(SelectedItem);
-                _eventAggregator.GetEvent<ItemDeleted>().Publish(SelectedItem);
                 Items.Remove(SelectedItem);
             }
         }

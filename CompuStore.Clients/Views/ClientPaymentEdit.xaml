@@ -5,9 +5,10 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="60">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="اضافة او تعديل ايصال نقدية" Foreground="White"/>
-        </Grid>
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="أيصالات النقدية"/>
+        <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
+        <Separator DockPanel.Dock="Top"/>
+        <Separator DockPanel.Dock="Top"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>
@@ -24,7 +25,7 @@
             <TextBox Text="{Binding  ClientPayment.Number, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="التاريخ" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding ClientPayment.Date, StringFormat=d, ConverterCulture=ar-EG}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding ClientPayment.Date}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
            
             <Label Content="المبلغ" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding ClientPayment.Money, StringFormat=N2}" Grid.Row="2" Grid.Column="1" Margin="4,6"/>

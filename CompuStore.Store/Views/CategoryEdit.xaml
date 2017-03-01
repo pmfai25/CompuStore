@@ -4,7 +4,10 @@
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
              prism:ViewModelLocator.AutoWireViewModel="True" Width="400">
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="اقسام الاصناف"/>
+        <Separator DockPanel.Dock="Top"/>
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -34,4 +37,5 @@
             </Button>
         </StackPanel>
     </Grid>
+    </DockPanel>
 </UserControl>

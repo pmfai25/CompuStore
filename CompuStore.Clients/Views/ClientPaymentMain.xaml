@@ -2,30 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"    
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
-        <UserControl.Resources>
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-        </Style>
-        <!--<Style TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <TextBox  x:Name="PART_TextBox" VerticalAlignment="Center" Text="{Binding Path=SelectedDate, StringFormat=d, ConverterCulture=ar-EG, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-    </UserControl.Resources>
-    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="60">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Label FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ايصالات النقدية للعميل/" Foreground="White"/>
-                <Label FontSize="24" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" Content="{Binding Client.Name}"/>
-            </StackPanel>
-        </Grid>
-       
+    <DockPanel LastChildFill="True">
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="أيصالات النقدية"/>
+        <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
+        <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
                 <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
@@ -42,12 +25,25 @@
             </Button>
             <Separator></Separator>
             <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
-            <TextBox VerticalAlignment="Center" Text="{Binding DateFrom, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="150">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedDateChanged">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DatePicker>
+
             <Label Content="الى: " VerticalAlignment="Center"/>
-            <TextBox VerticalAlignment="Center"  Text="{Binding DateTo, StringFormat=d, ConverterCulture=ar-EG}" Width="150"/>
-            <Separator/>            
-            <Button Command="{Binding SearchCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Magnify" Rotation="90" Foreground="Blue" />
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="150">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedDateChanged">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DatePicker>
+            <Separator/>
+            <Button Command="{Binding RefreshCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
+                <iconPacks:PackIconMaterial Kind="Refresh" Foreground="Blue" />
             </Button>
             <Separator/>
             <TextBlock Text="الاجمالي" VerticalAlignment="Center"></TextBlock>
@@ -57,12 +53,11 @@
         <Separator DockPanel.Dock="Top"></Separator>
         <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="رقم الفاتورة" Width="150" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=d, ConverterCulture=ar-EG}"/>
-                <DataGridTextColumn Header="المبلغ" Width="150" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
-                <DataGridTextColumn Header="الملاحظات" Width="*" Binding="{Binding Notes}"/>
+                <DataGridTextColumn Header="رقم الفاتورة" Width="120" FontWeight="DemiBold" Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                <DataGridTextColumn Header="المبلغ" Width="100" Foreground="Blue" Binding="{Binding Money, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </DockPanel>
 </UserControl>

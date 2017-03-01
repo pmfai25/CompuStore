@@ -8,20 +8,14 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
-using Model.Views;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CompuStore.Suppliers.ViewModels
 {
     public class SuppliersMainViewModel : BindableBase
     {
         #region Fields
-        private IEventAggregator _eventAggregator;
         private Supplier _selectedItem;
         private string _searchText;
-        private List<Supplier> all;
         private ObservableCollection<Supplier> items;
         private readonly ISupplierService _supplierService;
         private readonly IRegionManager _regionManager;
@@ -57,9 +51,8 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Refresh()
         {
-            all = new List<Supplier>(_supplierService.GetAll());
             SearchText = "";
-            Items = new ObservableCollection<Supplier>(all);
+            Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
         }
         private void Add()
         {
@@ -72,19 +65,19 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Delete()
         {
-            if (_supplierService.IsSupplierWithPurchases(SelectedItem))
+            if (_supplierService.IsDeleteable(SelectedItem))
                 Messages.Error("لايمكن حذف شركة لها عمليات شراء الا بعد حذف المشتريات اولا");
             else
             {
                 if (!Messages.Delete(SelectedItem.Name)) return;
                 _supplierService.Delete(SelectedItem);
                 Items.Remove(SelectedItem);
-                _eventAggregator.GetEvent<SupplierDeleted>().Publish(SelectedItem);
+
             }
         }
         private void Search()
         {
-            Items = new ObservableCollection<Supplier>(all.Where(x => x.Name.StartsWith(SearchText) || x.Phone.StartsWith(SearchText)));
+            Items = new ObservableCollection<Supplier>(_supplierService.SearchBy(SearchText));
         }
         private void ShowPurchases()
         {
@@ -98,7 +91,17 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void RefreshSupplierPayments(SupplierPayment obj)
         {
-            var supplier = Items.Single(x => x.ID == obj.SupplierID);
+            var supplier = Items.SingleOrDefault(x => x.ID == obj.SupplierID);
+            if (supplier == null)
+                return;
+            Supplier newSupplier = _supplierService.Find(supplier.ID);
+            DataUtils.Copy(supplier, newSupplier);
+        }
+        private void RefreshPurchases(Purchase obj)
+        {
+            var supplier = Items.SingleOrDefault(x => x.ID == obj.SupplierID);
+            if (supplier == null)
+                return;
             Supplier newSupplier = _supplierService.Find(supplier.ID);
             DataUtils.Copy(supplier, newSupplier);
         }
@@ -108,7 +111,6 @@ namespace CompuStore.Suppliers.ViewModels
             _searchText = "";
             _regionManager = regionManager;
             _supplierService = supplierService;
-            _eventAggregator = eventAggregator;
             eventAggregator.GetEvent<SupplierAdded>().Subscribe(x=>Items.Add(x));
             eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(RefreshSupplierPayments);
             eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);
@@ -116,15 +118,8 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<PurchaseAdded>().Subscribe(RefreshPurchases);
             eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(RefreshPurchases);
             eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(RefreshPurchases);
-            all = new List<Supplier>(_supplierService.GetAll());
-            Items = new ObservableCollection<Supplier>(all);
+            Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
         }
-
-        private void RefreshPurchases(Purchase obj)
-        {
-            var supplier = Items.Single(x => x.ID == obj.SupplierID);
-            Supplier newSupplier = _supplierService.Find(supplier.ID);
-            DataUtils.Copy(supplier, newSupplier);
-        }
+       
     }
 }

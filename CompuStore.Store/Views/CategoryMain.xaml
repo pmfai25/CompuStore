@@ -22,10 +22,9 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="انواع الاصناف" Foreground="White" Height="60"/>
-        </Grid>
+    <DockPanel LastChildFill="True">
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="اقسام الاصناف"/>
+        <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
                 <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
@@ -44,10 +43,10 @@
         <Separator DockPanel.Dock="Top"></Separator>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="الانواع" Grid.Column="0" Margin="4,6">
+            <GroupBox Header="الاقسام" Grid.Column="0" Margin="4,6">
                 <ListBox  ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True">
                 </ListBox>
             </GroupBox>
@@ -67,7 +66,6 @@
             MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
             ItemHeight="{Binding (ListView.View).ItemHeight, 
             RelativeSource={RelativeSource AncestorType=ListView}}" />
-                            
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
@@ -80,6 +78,5 @@
                 </ListBox>
             </GroupBox>
         </Grid>
-        
     </DockPanel>
 </UserControl>

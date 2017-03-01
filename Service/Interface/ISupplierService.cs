@@ -11,7 +11,7 @@ namespace Service
         IEnumerable<Supplier> SearchBy(string name);
         IEnumerable<Supplier> GetAll(bool simple=false);
         Supplier Find(int id);
-        bool IsSupplierWithPurchases(Supplier selectedItem);
+        bool IsDeleteable(Supplier selectedItem);
         List<Purchase> GetPurchases(Supplier supplier,DateTime dateFrom, DateTime dateTo);
         List<Purchase> GetPurchases(Supplier supplier);
     }

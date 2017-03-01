@@ -6,7 +6,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;

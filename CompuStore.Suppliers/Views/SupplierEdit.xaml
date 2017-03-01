@@ -5,10 +5,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
+        <Label Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="اضافة او تعديل مورد"/>
+        <Separator DockPanel.Dock="Top"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>                
+                <RowDefinition Height="80" ></RowDefinition>                
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="50" ></RowDefinition>
@@ -21,7 +23,7 @@
             <TextBox Text="{Binding  Supplier.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding Supplier.Phone}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding Supplier.Phone}" Grid.Row="1" Grid.Column="1" Margin="4,6" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
 
             <Label Content="العنوان" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>

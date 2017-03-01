@@ -4,17 +4,13 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows;
 using CompuStore.Infrastructure;
 using Prism.Events;
 using Model.Events;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientEditViewModel : BindableBase, INavigationAware
+    public class ClientEditViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
         private bool _edit;
@@ -31,6 +27,14 @@ namespace CompuStore.Clients.ViewModels
         }
         public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
+
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
         #endregion
         #region Interface
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -42,12 +46,8 @@ namespace CompuStore.Clients.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var c2= (Client)(navigationContext.Parameters["Client"]);
-            if (c2 == null)
-                return false;
-            return c2.ID == Client.ID; 
+            return false;
         }
-
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             
@@ -57,22 +57,13 @@ namespace CompuStore.Clients.ViewModels
         #region Methods
         private void Save()
         {
-            bool _saved;
             if (CanSave())
             {
-                if (_edit)
-                {
-                    _saved = _clientService.Update(Client);
-                    if (_saved)
-                        _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
-                }
+                if (_edit && _clientService.Update(Client))
+                    _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
+                else if (!_edit && _clientService.Add(Client))
+                    _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
                 else
-                {
-                    _saved = _clientService.Add(Client);
-                    if (_saved)
-                        _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
-                }
-                if (!_saved)
                 {
                     Messages.ErrorDataNotSaved();
                     return;
@@ -83,6 +74,10 @@ namespace CompuStore.Clients.ViewModels
                 Messages.Error("يجب ادخال اسم ورقم تليفون للعميل");
             
         }
+        private bool CanSave()
+        {
+            return !(String.IsNullOrWhiteSpace(Client.Name) || String.IsNullOrWhiteSpace(Client.Phone));
+        }
         private void Cancel()
         {
             if (_edit)
@@ -92,10 +87,7 @@ namespace CompuStore.Clients.ViewModels
             }
             _navigationContext.NavigationService.Journal.GoBack();
         }
-        private bool CanSave()
-        {
-            return !(String.IsNullOrWhiteSpace(Client.Name) || String.IsNullOrWhiteSpace(Client.Phone));            
-        }
+        
         #endregion
         public ClientEditViewModel(IClientService clientService,  IEventAggregator eventAggregator)
         {

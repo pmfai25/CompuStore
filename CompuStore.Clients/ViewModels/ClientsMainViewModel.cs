@@ -5,23 +5,22 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Media;
 using Model.Events;
+using Model.Views;
+using System;
 
 namespace CompuStore.Clients.ViewModels
 {
     public class ClientsMainViewModel : BindableBase
     {
         #region Fields
-        private readonly IRegionManager _regionManager;
-        private IClientService _clientService;
-        private string _searchText;
         private Client _selectedItem;
+        private string _searchText;
         private ObservableCollection<Client> _items;
+        private IClientService _clientService;
+        private readonly IRegionManager _regionManager;
         #endregion
         #region Properties
         public Client SelectedItem
@@ -44,10 +43,17 @@ namespace CompuStore.Clients.ViewModels
         public DelegateCommand AddCommand => new DelegateCommand(Add);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, ()=>SelectedItem!=null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
-        public DelegateCommand SearchCommand => new DelegateCommand(SearchClients);
+        public DelegateCommand SearchCommand => new DelegateCommand(Search);
         public DelegateCommand PaymentsCommand => new DelegateCommand(ShowPayments, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SalesCommand => new DelegateCommand(ShowSales, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
-
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
+        #endregion
+        #region Methods
+        private void Refresh()
+        {
+            SearchText = "";
+            Items = new ObservableCollection<Client>(_clientService.GetAll());
+        }
         private void Add()
         {
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientEdit);
@@ -68,6 +74,10 @@ namespace CompuStore.Clients.ViewModels
                 Items.Remove(SelectedItem);
             }
         }
+        private void Search()
+        {
+            Items = new ObservableCollection<Client>(_clientService.SearchBy(SearchText));
+        }
         private void ShowSales()
         {
             NavigationParameters parameters = new NavigationParameters { { "Client", SelectedItem } };
@@ -79,25 +89,37 @@ namespace CompuStore.Clients.ViewModels
             NavigationParameters parameters = new NavigationParameters { { "Client", SelectedItem } };
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientPaymentMain,parameters);
         }
-
+        private void RefreshClientPayment(ClientPayment obj)
+        {
+            var client = Items.SingleOrDefault(x => x.ID == obj.ClientID);
+            if (client == null)
+                return;
+            Client newClient = _clientService.Find(client.ID);
+            DataUtils.Copy(client, newClient);
+        }
+        private void RefreshSales(ClientOrders obj)
+        {
+            var client = Items.SingleOrDefault(x => x.ID == obj.ClientID);
+            if (client == null)
+                return;
+            Client newClient = _clientService.Find(client.ID);
+            DataUtils.Copy(client, newClient);
+        }
         #endregion
-        private void SearchClients() => Items = new ObservableCollection<Client>(_clientService.SearchBy(SearchText));
+
         public ClientsMainViewModel(IClientService clientService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             _searchText = "";
-            _clientService = clientService;
             _regionManager = regionManager;
+            _clientService = clientService;
             eventAggregator.GetEvent<ClientAdded>().Subscribe(c=> Items.Add(c));
             eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(RefreshClientPayment);
             eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(RefreshClientPayment);
             eventAggregator.GetEvent<ClientPaymentDeleted>().Subscribe(RefreshClientPayment);
-            Items =new ObservableCollection<Model.Client>( _clientService.GetAll());            
-        }
-        private void RefreshClientPayment(ClientPayment obj)
-        {
-            var client = Items.Single(x => x.ID == obj.ClientID);
-            Client newClient = _clientService.Find(client.ID);
-            DataUtils.Copy(client, newClient);
-        }
+            eventAggregator.GetEvent<OrderAdded>().Subscribe(RefreshSales);
+            eventAggregator.GetEvent<OrderUpdated>().Subscribe(RefreshSales);
+            eventAggregator.GetEvent<OrderDeleted>().Subscribe(RefreshSales);
+            Items =new ObservableCollection<Client>( _clientService.GetAll());            
+        }        
     }
 }

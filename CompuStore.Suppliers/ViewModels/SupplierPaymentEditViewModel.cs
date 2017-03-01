@@ -6,10 +6,11 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Model.Events;
+using System;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierPaymentEditViewModel : BindableBase, INavigationAware
+    public class SupplierPaymentEditViewModel : BindableBase, INavigationAware,IRegionMemberLifetime
     {
         #region Fields
         private bool _edit;
@@ -30,6 +31,13 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _supplierPayment; }
             set { SetProperty(ref _supplierPayment, value); }
         }
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
         #endregion
         #region Commands
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
@@ -44,10 +52,11 @@ namespace CompuStore.Suppliers.ViewModels
                 if (!_edit && _supplierPaymentService.Add(SupplierPayment))
                 _eventAggregator.GetEvent<SupplierPaymentAdded>().Publish(SupplierPayment);
             else
+            {
                 Messages.ErrorDataNotSaved();
-
-            if (_navigationContext.NavigationService.Journal.CanGoBack)
-                _navigationContext.NavigationService.Journal.GoBack();
+                return;
+            }
+            _navigationContext.NavigationService.Journal.GoBack();
         }
         private void Cancel()
         {
@@ -56,8 +65,7 @@ namespace CompuStore.Suppliers.ViewModels
                 var c = _supplierPaymentService.Find(SupplierPayment.ID);
                 DataUtils.Copy(SupplierPayment, c);
             }
-            if (_navigationContext.NavigationService.Journal.CanGoBack)
-                _navigationContext.NavigationService.Journal.GoBack();
+            _navigationContext.NavigationService.Journal.GoBack();
         }
         #endregion
         #region Inteface
@@ -71,10 +79,7 @@ namespace CompuStore.Suppliers.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var supplierPayment2 = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]);
-            if (supplierPayment2 == null)
-                return false;
-            return SupplierPayment.ID == supplierPayment2.ID;
+            return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)

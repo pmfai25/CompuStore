@@ -6,10 +6,9 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
-    <DockPanel LastChildFill="True" Background="{StaticResource AccentColorBrush4}">
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
-            <Label FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Content="الاصناف" Foreground="White" Height="60"/>
-        </Grid>
+    <DockPanel LastChildFill="True">
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الاصناف"/>
+        <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}">
                 <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
@@ -21,8 +20,8 @@
                 <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
             </Button>
             <Separator></Separator>
-            <TextBlock VerticalAlignment="Center" Margin="2">اختار نوع</TextBlock>
-            <ComboBox Margin="2,0,4,0" Width="150" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" ></ComboBox>
+            <TextBlock VerticalAlignment="Center" Margin="2">اختار قسم</TextBlock>
+            <ComboBox  Margin="2,0,4,0" Width="150" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" ></ComboBox>
             <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="KeyDown">
@@ -36,9 +35,9 @@
             <Separator></Separator>
             <Button Command="{Binding EditCategoriesCommand}">
             <StackPanel Orientation="Vertical" Margin="2">
-                <iconPacks:PackIconMaterial Kind="Settings" HorizontalAlignment="Center"/>
-                <TextBlock> الانواع</TextBlock>
-            </StackPanel>
+                <iconPacks:PackIconMaterial Kind="Settings" Foreground="Lime"  HorizontalAlignment="Center"/>
+                    <TextBlock Text="الاقسام"/>
+                </StackPanel>
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
@@ -46,10 +45,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>
-                <DataGridTextColumn Header="الكمية" Width="150" Binding="{Binding Quantity}"/>
-                <DataGridTextColumn Header="حد الطلب" Width="120" Binding="{Binding Limit}"/>
-                <DataGridTextColumn Header="سعر البيع" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
-                <DataGridTextColumn Header="الوصف" Width="*" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="الكمية" Width="100" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="حد الطلب" Width="100" Binding="{Binding Limit}"/>
+                <DataGridTextColumn Header="سعر البيع" Width="100" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
+                <DataGridTextColumn Header="الوصف" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

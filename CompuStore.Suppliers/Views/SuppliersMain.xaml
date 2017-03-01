@@ -7,8 +7,8 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label Margin="0,-5"  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
-
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
+        <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">           
             <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
                 <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
@@ -40,7 +40,7 @@
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
-        <DataGrid ScrollViewer.CanContentScroll="True" MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>

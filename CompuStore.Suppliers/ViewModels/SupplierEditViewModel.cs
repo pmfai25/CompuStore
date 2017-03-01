@@ -10,7 +10,7 @@ using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierEditViewModel : BindableBase,INavigationAware
+    public class SupplierEditViewModel : BindableBase,INavigationAware,IRegionMemberLifetime
     {
         #region Fields
         private bool _edit;
@@ -26,35 +26,31 @@ namespace CompuStore.Suppliers.ViewModels
             set { SetProperty(ref _supplier, value); }
         }
         public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
-        public DelegateCommand SaveCommand => new DelegateCommand(Save);        
-        #endregion
-        public SupplierEditViewModel(IEventAggregator eventAggregator, ISupplierService supplierService)
+        public DelegateCommand SaveCommand => new DelegateCommand(Save);
+
+        public bool KeepAlive
         {
-            _eventAggregator = eventAggregator;
-            _supplierService = supplierService;
+            get
+            {
+                return false;
+            }
         }
+        #endregion
+        #region Methods
         private void Save()
         {
-            bool _saved;
             if (CanSave())
             {
-                if (_edit)
-                {
-                    _saved = _supplierService.Update(Supplier);
-                    if(_saved)
-                        _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);
-                }
+                if (_edit && _supplierService.Update(Supplier))
+                    _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);
                 else
-                {
-                    _saved = _supplierService.Add(Supplier);
-                    if(_saved)
-                        _eventAggregator.GetEvent<SupplierAdded>().Publish(Supplier);
-                }
-                if (!_saved)
+                if (!_edit && _supplierService.Add(Supplier))
+                    _eventAggregator.GetEvent<SupplierAdded>().Publish(Supplier);
+                else
                 {
                     Messages.ErrorDataNotSaved();
                     return;
-                }                               
+                }
                 _navigationContext.NavigationService.Journal.GoBack();
             }
             else
@@ -73,13 +69,11 @@ namespace CompuStore.Suppliers.ViewModels
             }
             _navigationContext.NavigationService.Journal.GoBack();
         }
-
+#endregion
+        #region Interface
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var s2 = (Supplier)(navigationContext.Parameters["Supplier"]);
-            if (s2 == null)
-                return false;
-            return s2.ID == Supplier.ID;
+            return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext) { }
@@ -88,6 +82,12 @@ namespace CompuStore.Suppliers.ViewModels
             _navigationContext = navigationContext;
             Supplier = (Supplier)(navigationContext.Parameters["Supplier"]) ?? new Supplier();
             _edit = Supplier.ID != 0;
+        }
+#endregion
+        public SupplierEditViewModel(IEventAggregator eventAggregator, ISupplierService supplierService)
+        {
+            _eventAggregator = eventAggregator;
+            _supplierService = supplierService;
         }
     }
 }
