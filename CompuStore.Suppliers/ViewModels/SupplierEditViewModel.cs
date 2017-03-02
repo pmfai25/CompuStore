@@ -39,26 +39,21 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Save()
         {
-            if (CanSave())
-            {
-                if (_edit && _supplierService.Update(Supplier))
-                    _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);
-                else
-                if (!_edit && _supplierService.Add(Supplier))
-                    _eventAggregator.GetEvent<SupplierAdded>().Publish(Supplier);
-                else
-                {
-                    Messages.ErrorDataNotSaved();
-                    return;
-                }
-                _navigationContext.NavigationService.Journal.GoBack();
-            }
+            if (!Supplier.IsValid)
+                return;
+
+            if (_edit && _supplierService.Update(Supplier))
+                _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);
             else
-                Messages.Error("يجب ادخال اسم ورقم تليفون للعميل");
-        }
-        private bool CanSave()
-        {
-            return !(String.IsNullOrWhiteSpace(Supplier.Name) || String.IsNullOrWhiteSpace(Supplier.Phone));
+            if (!_edit && _supplierService.Add(Supplier))
+                _eventAggregator.GetEvent<SupplierAdded>().Publish(Supplier);
+            else
+            {
+                Messages.ErrorDataNotSaved();
+                return;
+            }
+            _navigationContext.NavigationService.Journal.GoBack();
+
         }
         private void Cancel()
         {

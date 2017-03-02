@@ -97,7 +97,7 @@ namespace CompuStore.Clients.ViewModels
             Client newClient = _clientService.Find(client.ID);
             DataUtils.Copy(client, newClient);
         }
-        private void RefreshSales(ClientOrders obj)
+        private void RefreshSales(Order obj)
         {
             var client = Items.SingleOrDefault(x => x.ID == obj.ClientID);
             if (client == null)

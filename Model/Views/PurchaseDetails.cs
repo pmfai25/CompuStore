@@ -11,6 +11,7 @@ namespace Model.Views
     [Table("PurchaseDetails")]
     public class PurchaseDetails:BindableBase
     {
+        
         private string name;
         private decimal price;
         private int qunatity;
@@ -29,17 +30,28 @@ namespace Model.Views
         public decimal Price
         {
             get { return price; }
-            set { SetProperty(ref price, value); OnPropertyChanged("Total"); if (UpdateValues != null) UpdateValues(); }
+            set {
+                SetProperty(ref price, value);
+                OnPropertyChanged("Total");
+                OnPriceUpdate?.Invoke(this);
+
+            }
         }
         public int Quantity
         {
             get { return qunatity; }
-            set { SetProperty(ref qunatity, value); OnPropertyChanged("Total");if (UpdateValues != null) UpdateValues(); }
+            set
+            {
+                SetProperty(ref qunatity, value);
+                OnPropertyChanged("Total");
+                OnQuantityUpdate?.Invoke(this);
+            }
         }
 
         public int PurchaseID { get; set; }
         public int PurchaseItemID { get; set; }
         public int ItemID { get; set; }
-        public event Action UpdateValues;
+        public event Action<PurchaseDetails> OnPriceUpdate;
+        public event Action<PurchaseDetails> OnQuantityUpdate;
     }
 }

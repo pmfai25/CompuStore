@@ -24,6 +24,11 @@ namespace Model
         public int PurchaseID { get; set; }
         [Computed]
         public decimal Total { get { return Price * Quantity; } }
+        public PurchaseItem()
+        {
+            Price = 1;
+            Quantity = 1;
+        }
         
     }
 }

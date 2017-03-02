@@ -97,6 +97,7 @@
     <Compile Include="Model\SupplierPayment.cs" />
     <Compile Include="Views\ClientOrders.cs" />
     <Compile Include="Views\OrderDetails.cs" />
+    <Compile Include="Views\PatchPurchases.cs" />
     <Compile Include="Views\PurchaseDetails.cs" />
     <Compile Include="Views\SupplierPurchases.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

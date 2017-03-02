@@ -88,6 +88,31 @@ namespace Service
             return Connection.QuerySingle<Purchase>("Select * from Purchase where ID=@ID", args);
         }
 
+        public bool IsDeletable(Purchase purchase)
+        {
+            Dictionary<Tuple<int, decimal>, int> dict = new Dictionary<Tuple<int, decimal>, int>();
+            var lst = GetPatches(purchase);
+            foreach (var p in lst)
+            {
+                var t = new Tuple<int, decimal>(p.ItemID, p.Price);
+                if (!dict.ContainsKey(t))
+                    dict.Add(t, p.CurrentQuantity);
+                dict[t] -= p.Quantity;
+            }
+            return dict.All(x => x.Value >= 0);
+        }
+        public IEnumerable<PatchPurchases> GetPatches(Purchase purchase)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("PurchaseID", purchase.ID);
+            return Connection.Query<PatchPurchases>("Select * from PatchPurchases where PurchaseID=@PurchaseID",args);
+        }
+
+        public int GetAvailableQuantity(int itemID, decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
         public PurchaseService(IDbConnection connection)
         {
             Connection = connection;

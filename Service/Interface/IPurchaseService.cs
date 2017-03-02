@@ -21,5 +21,8 @@ namespace Service
         bool UpdatePurchaseItems(List<PurchaseItem> purchaseItem);
         bool DeletePurchaseItems(List<PurchaseItem> purchaseItem);
         Purchase FindPurchase(int purchaseID);
+        IEnumerable<PatchPurchases> GetPatches(Purchase purchase);
+        int GetAvailableQuantity(int itemID, decimal price);
+        bool IsDeletable(Purchase purchase);
     }
 }

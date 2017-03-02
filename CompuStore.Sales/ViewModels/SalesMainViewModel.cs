@@ -18,8 +18,8 @@ namespace CompuStore.Sales.ViewModels
         private IOrderService orderService;
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
-        private ClientOrders selectedItem;
-        private ObservableCollection<ClientOrders> items;
+        private Order selectedItem;
+        private ObservableCollection<Order> items;
         private decimal total;
         private DateTime dateFrom;
         private DateTime dateTo;
@@ -39,7 +39,7 @@ namespace CompuStore.Sales.ViewModels
             get { return total; }
             set { SetProperty(ref total, value); }
         }
-        public ClientOrders SelectedItem
+        public Order SelectedItem
         {
             get { return selectedItem; }
             set
@@ -49,7 +49,7 @@ namespace CompuStore.Sales.ViewModels
                     Details = new ObservableCollection<OrderDetails>(orderService.GetOrderDetails(SelectedItem));
             }
         }
-        public ObservableCollection<ClientOrders> Items
+        public ObservableCollection<Order> Items
         {
             get { return items; }
             set { SetProperty(ref items, value); }
@@ -103,12 +103,12 @@ namespace CompuStore.Sales.ViewModels
             Search();
         }
 
-        private void OnOrderUpdated(ClientOrders obj)
+        private void OnOrderUpdated(Order obj)
         {
             Total = Items.Sum(i => i.Total);
         }
 
-        private void OnOrderAdded(ClientOrders obj)
+        private void OnOrderAdded(Order obj)
         {
             Items.Add(obj);
             Total = Items.Sum(i => i.Total);
