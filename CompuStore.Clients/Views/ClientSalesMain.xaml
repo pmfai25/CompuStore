@@ -76,7 +76,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Sale, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity}"/>
                         <DataGridTextColumn Header="الخصم" Width="120" Foreground="Red" Binding="{Binding Discount, StringFormat=N2}"/>
                         <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
                     </DataGrid.Columns>
