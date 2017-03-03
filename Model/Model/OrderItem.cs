@@ -31,7 +31,7 @@ namespace Model
             get { return discount; }
             set { SetProperty(ref discount, value); OnPropertyChanged("Total"); }
         }
-        public int PatchID { get; set; }
+        public int PurchaseItemID { get; set; }
         public int OrderID { get; set; }
         [Computed]
         public decimal Total { get { return Price * Quantity - Discount; } }

@@ -28,28 +28,14 @@ namespace Service
             args.Add("DateTo", dateTo);
             return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where Date<=@DateTo and Date >=@DateFrom and SupplierID=@SupplierID", args);
         }
-        public IEnumerable<SupplierPurchases> GetSupplierPurchases(DateTime dateFrom, DateTime dateTo)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("DateFrom", dateFrom);
-            args.Add("DateTo", dateTo);
-            Dictionary<int, SupplierPurchases> dict = new Dictionary<int, SupplierPurchases>();
-            Connection.Query<SupplierPurchases, PurchaseDetails, SupplierPurchases>("Select p.*,d.* from SupplierPurchases p inner join PurchaseDetails d on p.PurchaseID=d.PurchaseID where  Date<=@DateTo and Date >=@DateFrom",
-                   (c, d) =>
-                   {
-                       if (!dict.ContainsKey(c.PurchaseID))
-                           dict.Add(c.PurchaseID, c);
-                       dict[c.PurchaseID].Details.Add(d);
-                       return c;
-                   }, args, splitOn: "PurchaseID");
-            return dict.Values;
-
-        }
         public IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("PurchaseID", purchaseID);
-            return Connection.Query<PurchaseDetails>("Select * from PurchaseDetails where PurchaseID=@PurchaseID", args);
+            var x= Connection.Query<PurchaseDetails>("Select * from PurchaseDetails where PurchaseID=@PurchaseID", args);
+            foreach (var i in x)
+                i.Sold = i.Quantity - i.Available;
+            return x;
         }
 
         public bool AddPurchase(Purchase purchase)
@@ -90,29 +76,10 @@ namespace Service
 
         public bool IsDeletable(Purchase purchase)
         {
-            Dictionary<Tuple<int, decimal>, int> dict = new Dictionary<Tuple<int, decimal>, int>();
-            var lst = GetPatches(purchase);
-            foreach (var p in lst)
-            {
-                var t = new Tuple<int, decimal>(p.ItemID, p.Price);
-                if (!dict.ContainsKey(t))
-                    dict.Add(t, p.CurrentQuantity);
-                dict[t] -= p.Quantity;
-            }
-            return dict.All(x => x.Value >= 0);
-        }
-        public IEnumerable<PatchPurchases> GetPatches(Purchase purchase)
-        {
             DynamicParameters args = new DynamicParameters();
             args.Add("PurchaseID", purchase.ID);
-            return Connection.Query<PatchPurchases>("Select * from PatchPurchases where PurchaseID=@PurchaseID",args);
+            return Connection.Query<PurchaseItem>("Select * from PurchaseItem where PurchaseID=@PurchaseID", args).All(x => x.Available == x.Quantity);
         }
-
-        public int GetAvailableQuantity(int itemID, decimal price)
-        {
-            throw new NotImplementedException();
-        }
-
         public PurchaseService(IDbConnection connection)
         {
             Connection = connection;

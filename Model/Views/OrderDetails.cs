@@ -50,7 +50,7 @@ namespace Model.Views
         }
         public int OrderID { get; set; }
         public int OrderItemID { get; set; }
-        public int PatchID { get; set; }
+        public int PurchaseItemID { get; set; }
         public int ItemID { get; set; }
         public event Action UpdateValues;
     }

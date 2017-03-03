@@ -12,7 +12,6 @@ namespace Service
     {
         IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier);
         IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier, DateTime dateFrom, DateTime dateTo);
-        IEnumerable<SupplierPurchases> GetSupplierPurchases(DateTime dateFrom, DateTime dateTo);
         IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID);
         bool AddPurchase(Purchase purchase);
         bool UpdatePurchase(Purchase purchase);
@@ -21,8 +20,6 @@ namespace Service
         bool UpdatePurchaseItems(List<PurchaseItem> purchaseItem);
         bool DeletePurchaseItems(List<PurchaseItem> purchaseItem);
         Purchase FindPurchase(int purchaseID);
-        IEnumerable<PatchPurchases> GetPatches(Purchase purchase);
-        int GetAvailableQuantity(int itemID, decimal price);
         bool IsDeletable(Purchase purchase);
     }
 }

@@ -167,17 +167,9 @@
       <Project>{cb38702b-7e25-4896-b74d-727f3486db86}</Project>
       <Name>CompuStore.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CompuStore.Purchases\CompuStore.Purchases.csproj">
-      <Project>{ab8b448c-dd74-4d60-a041-3e5d03a32180}</Project>
-      <Name>CompuStore.Purchases</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CompuStore.Reports\CompuStore.Reports.csproj">
       <Project>{8ef53595-c3f8-410e-8794-a45fb7000e0a}</Project>
       <Name>CompuStore.Reports</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CompuStore.Sales\CompuStore.Sales.csproj">
-      <Project>{21d7f945-20ab-403b-a1b4-2975c7daf8fe}</Project>
-      <Name>CompuStore.Sales</Name>
     </ProjectReference>
     <ProjectReference Include="..\CompuStore.Store\CompuStore.Store.csproj">
       <Project>{3153ea48-1f07-44d2-a3b5-8ac8bfb1194d}</Project>

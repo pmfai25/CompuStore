@@ -77,7 +77,6 @@
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
-    <Compile Include="Model\Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,7 +96,6 @@
     <Compile Include="Model\SupplierPayment.cs" />
     <Compile Include="Views\ClientOrders.cs" />
     <Compile Include="Views\OrderDetails.cs" />
-    <Compile Include="Views\PatchPurchases.cs" />
     <Compile Include="Views\PurchaseDetails.cs" />
     <Compile Include="Views\SupplierPurchases.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

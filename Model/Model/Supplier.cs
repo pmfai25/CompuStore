@@ -69,7 +69,6 @@ namespace Model
                 return null;
             }
         }
-
         string IDataErrorInfo.this[string propertyName]
         {
             get

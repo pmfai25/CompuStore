@@ -32,22 +32,22 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="رقم الفاتورة" Margin="4,6" ></Label>
-                    <TextBox Background="Yellow" Text="{Binding  Purchase.Number}" Grid.Column="1" Margin="4,6"/>
+                    <TextBox TextAlignment="Center" Background="Yellow" Text="{Binding  Purchase.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="4,6"/>
 
                     <Label Content="التاريخ" Grid.Row="1" Margin="4,6"></Label>
                     <DatePicker VerticalAlignment="Center" SelectedDate="{Binding Purchase.Date}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
 
                     <Label Content="الاجمالي" Grid.Row="2"  Margin="4,6" ></Label>
-                    <TextBox Text="{Binding  Purchase.Total, StringFormat=N2}" IsReadOnly="True" TextAlignment="Center" Grid.Row="2" Grid.Column="1"  Margin="4,6" FontSize="14"/>
+                    <TextBox Text="{Binding  Purchase.Total, StringFormat=N2, ValidatesOnDataErrors=True}" IsReadOnly="True"  Grid.Row="2" Grid.Column="1"  Margin="4,6" FontSize="14"/>
 
                     <Label Content="دفع" Grid.Row="3" Margin="4,6"></Label>
-                    <TextBox Background="Yellow" Text="{Binding Purchase.Paid, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Blue"/>
+                    <TextBox Background="Yellow" Text="{Binding Purchase.Paid, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Blue"/>
 
                     <Label Content="المتبقي" Grid.Row="4"  Margin="4,6"></Label>
-                    <TextBox Text="{Binding Purchase.Remaining, StringFormat=N2}" IsReadOnly="True" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Red"/>
+                    <TextBox Text="{Binding Purchase.Remaining, StringFormat=N2}" IsReadOnly="True"  Grid.Row="4" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Red"/>
 
                     <StackPanel Grid.Column="1" Grid.Row="5" Margin="10"  Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Top">
-                        <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
+                        <Button  Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                     <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
@@ -88,19 +88,36 @@
                     <Separator DockPanel.Dock="Top"></Separator>
                     <DataGrid MinHeight="300" ItemsSource="{Binding Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="30">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Style="{DynamicResource SquareButtonStyle}" Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType=DataGrid}}" Width="40" Height="40"  ToolTip="حذف">
-                                            <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
-                                        </Button>
+                                        <iconPacks:PackIconMaterial Width="25" Height="25" Kind="Delete" HorizontalAlignment="Center" Foreground="Red">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </iconPacks:PackIconMaterial>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="*" MinWidth="200" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity}"/>
+                            <DataGridTemplateColumn Header="السعر" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Foreground="Blue" Width="100" Text="{Binding Price, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="الكمية" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Foreground="Blue" Width="100" Text="{Binding Quantity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
+                            
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

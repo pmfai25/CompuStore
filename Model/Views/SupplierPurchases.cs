@@ -16,7 +16,6 @@ namespace Model.Views
         private decimal paid;
         private decimal remaining;
         private int suppliedID;
-        private ObservableCollection<PurchaseDetails> details;
         public int SupplierID
         {
             get { return suppliedID; }
@@ -53,17 +52,7 @@ namespace Model.Views
             get { return paid; }
             set { SetProperty(ref paid, value); OnPropertyChanged("Remaining"); }
         }
-        [Computed]
-        public ObservableCollection<PurchaseDetails> Details
-        {
-            get { return details; }
-            set { SetProperty(ref details, value); }
-        }
         public int PurchaseID { get; set; }
-        public SupplierPurchases()
-        {
-            Details = new ObservableCollection<PurchaseDetails>();             
-        }
         
     }
 }

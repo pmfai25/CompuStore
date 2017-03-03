@@ -1,14 +1,9 @@
 ﻿using System.Windows;
 using CompuStore.Clients;
 using CompuStore.Infrastructure;
-using CompuStore.Purchases;
-using CompuStore.Purchases.Views;
 using CompuStore.Reports;
 using CompuStore.Reports.Views;
-using CompuStore.Sales;
-using CompuStore.Sales.Views;
 using CompuStore.Store;
-using CompuStore.Store.Views;
 using CompuStore.Suppliers;
 using CompuStore.Views;
 using Microsoft.Practices.Unity;
@@ -47,8 +42,6 @@ namespace CompuStore
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             moduleCatalog.AddModule(typeof(ServiceModule));
-           // moduleCatalog.AddModule(typeof(SalesModule));
-            //moduleCatalog.AddModule(typeof(PurchasesModule));
             moduleCatalog.AddModule(typeof(StoreModule));
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));

@@ -18,7 +18,6 @@ namespace CompuStore.Suppliers.ViewModels
     public class SupplierPurchaseEditViewModel : BindableBase,INavigationAware, IRegionMemberLifetime
     {
         #region Fields
-        private Dictionary<Tuple<int, decimal>, int> _dict;
         private decimal oldTotal, newTotal;
         private List<PurchaseItem> _deletedDetails;
         private NavigationContext _navigationContext;
@@ -70,22 +69,16 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Delete()
         {
-            if (SelectedDetail.PurchaseItemID != 0)
+            if (SelectedDetail.PurchaseItemID != 0 && SelectedDetail.Available != SelectedDetail.Quantity)
             {
-                var t = new Tuple<int, decimal>(SelectedDetail.ItemID, SelectedDetail.Price);
-                if (_dict[t] - SelectedDetail.Quantity < 0)
-                {
-                    Messages.Error("لا يمكن حذف هذا الصنف " + SelectedDetail.Name + " لان تم بيعه بالكامل");
-                    return;
-                }
-                else
-                {
-                    _dict[t] -= SelectedDetail.Quantity;
-                    _deletedDetails.Add(new PurchaseItem() { ID = SelectedDetail.PurchaseItemID });
-                }
+                Messages.Error("لا يمكن حذف هذا الصنف " + SelectedDetail.Name + " لانه تمت عليه عمليات بيع");
+                return;
             }
-            Details.Remove(SelectedDetail);
-            Purchase.Total = Details.Sum(i => i.Total);
+            if (Messages.Delete(SelectedDetail.Name))
+            {
+                Details.Remove(SelectedDetail);
+                Purchase.Total = Details.Sum(i => i.Total);
+            }
         }
         private void Cancel()
         {
@@ -101,8 +94,11 @@ namespace CompuStore.Suppliers.ViewModels
 
         private void Save()
         {
-            if (!CanSave())
+            if (!Purchase.IsValid)
+            {
+                Messages.Error("يوجد اخطاء في بعض البيانات");
                 return;
+            }
             SavePurchase();
             SaveDetails();                       
             _completed = true;
@@ -129,17 +125,20 @@ namespace CompuStore.Suppliers.ViewModels
                     Quantity = d.Quantity
                 };
                 if (pi.ID == 0)
+                {
+                    pi.Available = pi.Quantity;
                     lstInsert.Add(pi);
+                }
                 else
+                {
+                    pi.Available = pi.Quantity - d.Sold;
                     lstUpdate.Add(pi);
+                }
             }
             if (lstInsert.Count > 0)
                 _purchaseService.AddPurchaseItems(lstInsert);
             if (lstUpdate.Count > 0)
-            {
                 _purchaseService.UpdatePurchaseItems(lstUpdate);
-
-            }
             if (_deletedDetails.Count > 0)
                 _purchaseService.DeletePurchaseItems(_deletedDetails);
         }
@@ -154,33 +153,10 @@ namespace CompuStore.Suppliers.ViewModels
                 _purchaseService.UpdatePurchase(Purchase);
             Purchase.Total = newTotal;
         }
-
-        private bool CanSave()
+        private void AddItem()
         {
-            if (Purchase.Total <= 0)
-            {
-                Messages.Error("لا يمكن حفظ فاتورة بهذا الاجمالي " + Purchase.Total);
-                return false;
-            }
-            if(Purchase.Paid <0)
-            {
-                Messages.Error("لا يمكن حفظ فاتورة بمبلغ مدفوع اقل من الصفر " + Purchase.Total);
-                return false;
-            }
-            if (Purchase.Number <= 0)
-            {
-                Messages.Error("يجب اضافة رقم صحيح اكبر من الصفر للفاتورة ");
-                return false;
-            }
-            var purchases = _supplierService.GetPurchases(Supplier);
-            if(!_edit&&purchases.Any(x=>x.Number==Purchase.Number)|| _edit&&purchases.Any(x=>x.Number==Purchase.Number && x.ID!=Purchase.ID))
-            {
-                Messages.Error("رقم الفاتورة مكرر يجب ادخال رقم اخر ");
-                return false;
-            }
-            return true;
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.StoreEdit);
         }
-
         private void Search(KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
@@ -194,17 +170,19 @@ namespace CompuStore.Suppliers.ViewModels
                 Messages.Notification("لايوجد صنف بهذا الباركود");
                 return;
             }
-            var p = new PurchaseDetails() { Name = item.Name, ItemID = item.ID,Quantity=1 };
-            p.OnPriceUpdate += OnPriceUpdate;
-            p.OnQuantityUpdate += OnQuantityUpdate;
-            Details.Add(p);
-
+            OnItemAdded(item);
         }
-
-        private void AddItem()
+        private void OnItemAdded(Item obj)
         {
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.StoreEdit);
+            var pd = new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name, Quantity=1 };
+            pd.OnUpdateValues += OnPurchaseItemUpdateValue;
+            Details.Add(pd);
+            SelectedDetail = pd;
         }
+        private void OnPurchaseItemUpdateValue()
+        {
+            Purchase.Total = Details.Sum(x => x.Total);
+        }       
         #endregion
         #region Interface
         public bool KeepAlive
@@ -230,46 +208,18 @@ namespace CompuStore.Suppliers.ViewModels
             _navigationContext = navigationContext;
             Supplier = (Supplier)navigationContext.Parameters["Supplier"];
             Purchase =(Purchase)navigationContext.Parameters["Purchase"]??new Purchase() { Date = DateTime.Today, SupplierID = _supplier.ID };
+            Purchase.SupplierPurchases = _supplierService.GetPurchases(Supplier);
             _edit = Purchase.ID != 0;
-            if(_edit)
-            {
-                _dict = new Dictionary<Tuple<int, decimal>, int>();
-                var lst = _purchaseService.GetPatches(Purchase);
-                foreach(var p in lst)
-                    _dict.Add(new Tuple<int, decimal>(p.ItemID, p.Price), p.CurrentQuantity);
-            }
+            if (!_edit)
+                if (Purchase.SupplierPurchases.Count > 0)
+                    Purchase.Number = Purchase.SupplierPurchases.Max(x=>x.Number) + 1;
+                else
+                    Purchase.Number = 1;
             oldTotal = Purchase.Total;
             Details = (ObservableCollection<PurchaseDetails>)navigationContext.Parameters["Details"] ?? new ObservableCollection<PurchaseDetails>();
             foreach (var d in Details)
-            {
-                d.OnQuantityUpdate += OnQuantityUpdate;
-                d.OnPriceUpdate += OnPriceUpdate;
-            }
+                d.OnUpdateValues += OnPurchaseItemUpdateValue;
             _open = true;
-        }
-
-        private void OnQuantityUpdate(PurchaseDetails obj)
-        {
-            Purchase.Total = Details.Sum(x => x.Total);
-        }
-
-        private void OnPriceUpdate(PurchaseDetails obj)
-        {
-            //For merging items with same price and serial
-            var lst = Details.Where(x => x.ItemID == obj.ItemID && x.Price == obj.Price).ToList();
-            if(lst.Count>1)
-            {
-                var first = lst.FirstOrDefault(x => x.PurchaseItemID != 0) ?? lst[0];
-                for(int i=1;i<lst.Count;i++)
-                {
-                    first.Quantity += lst[i].Quantity;
-                    if (lst[i].PurchaseItemID != 0)
-                        _deletedDetails.Add(new PurchaseItem { ID = lst[i].PurchaseItemID });
-                    Details.Remove(lst[i]);
-                }
-            }
-            Purchase.Total = Details.Sum(x => x.Total);
-
         }
         #endregion
         public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService,ISupplierService supplierService, IEventAggregator eventAggregator)
@@ -281,14 +231,6 @@ namespace CompuStore.Suppliers.ViewModels
             _eventAggregator = eventAggregator;
             _deletedDetails = new List<PurchaseItem>();
             _eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
-        }
-        private void OnItemAdded(Item obj)
-        {
-            var pd = new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name };
-            pd.OnQuantityUpdate += OnQuantityUpdate;
-            pd.OnPriceUpdate += OnPriceUpdate;
-            Details.Add(pd);            
-            SelectedDetail = pd;
-        }
+        }     
     }
 }

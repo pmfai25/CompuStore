@@ -7,11 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Reports", "Compu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore", "CompuStore\CompuStore.csproj", "{99C9E82C-C594-446D-AA59-8FFBC43AD226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Sales", "CompuStore.Sales\CompuStore.Sales.csproj", "{21D7F945-20AB-403B-A1B4-2975C7DAF8FE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Store", "CompuStore.Store\CompuStore.Store.csproj", "{3153EA48-1F07-44D2-A3B5-8AC8BFB1194D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Purchases", "CompuStore.Purchases\CompuStore.Purchases.csproj", "{AB8B448C-DD74-4D60-A041-3E5D03A32180}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Clients", "CompuStore.Clients\CompuStore.Clients.csproj", "{901934ED-35B1-4D60-BA72-F66FDB30328A}"
 EndProject
@@ -37,18 +33,10 @@ Global
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99C9E82C-C594-446D-AA59-8FFBC43AD226}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21D7F945-20AB-403B-A1B4-2975C7DAF8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21D7F945-20AB-403B-A1B4-2975C7DAF8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21D7F945-20AB-403B-A1B4-2975C7DAF8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21D7F945-20AB-403B-A1B4-2975C7DAF8FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3153EA48-1F07-44D2-A3B5-8AC8BFB1194D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3153EA48-1F07-44D2-A3B5-8AC8BFB1194D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3153EA48-1F07-44D2-A3B5-8AC8BFB1194D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3153EA48-1F07-44D2-A3B5-8AC8BFB1194D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.Build.0 = Release|Any CPU
 		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{901934ED-35B1-4D60-BA72-F66FDB30328A}.Release|Any CPU.ActiveCfg = Release|Any CPU

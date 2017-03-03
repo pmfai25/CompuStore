@@ -8,7 +8,12 @@ namespace Model
     {
         private decimal price;        
         private int quantity;
-        
+        private int available;
+        public int Available
+        {
+            get { return available; }
+            set { SetProperty(ref available, value); }
+        }
         public int ID { get; set; }
         public decimal Price
         {
