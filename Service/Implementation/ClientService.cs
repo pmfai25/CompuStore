@@ -51,21 +51,20 @@ namespace Service{
             return Connection.QuerySingle<decimal>("Select Sales from Client where ID=@ID", args) != 0;
         }
 
-        public List<Order> GetOrders(Client client)
+        public List<Orders> GetOrders(Client client)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ClientID", client.ID);
-            return new List<Order>(Connection.Query<Order>("Select * from Order where ClientID=@ClientID", args));
+            return new List<Orders>(Connection.Query<Orders>("Select * from Orders where ClientID=@ClientID", args));
 
         }
-
-        public List<Order> GetOrders(Client client, DateTime dateFrom, DateTime dateTo)
+        public List<Orders> GetOrders(Client client, DateTime dateFrom, DateTime dateTo)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ClientID", client.ID);
             args.Add("DateFrom", dateFrom);
             args.Add("DateTo", dateTo);
-            return new List<Order>(Connection.Query<Order>("Select * from Order where ClientID=@ClientID and Date <=@DateTo and Date>=@DateFrom", args));
+            return new List<Orders>(Connection.Query<Orders>("Select * from Orders where ClientID=@ClientID and Date <=@DateTo and Date>=@DateFrom", args));
         }
     }
 }

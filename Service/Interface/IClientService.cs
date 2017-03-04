@@ -16,7 +16,7 @@ namespace Service
         IEnumerable<Client> SearchBy(string name);
         IEnumerable<Client> GetAll();
         Client Find(int id);
-        List<Order> GetOrders(Client client);
-        List<Order> GetOrders(Client client, DateTime dateFrom, DateTime dateTo);
+        List<Orders> GetOrders(Client client);
+        List<Orders> GetOrders(Client client, DateTime dateFrom, DateTime dateTo);
     }
 }

@@ -57,26 +57,21 @@ namespace CompuStore.Clients.ViewModels
         #region Methods
         private void Save()
         {
-            if (CanSave())
+            if (!Client.IsValid)
             {
-                if (_edit && _clientService.Update(Client))
-                    _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
-                else if (!_edit && _clientService.Add(Client))
-                    _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
-                else
-                {
-                    Messages.ErrorDataNotSaved();
-                    return;
-                }
-                _navigationContext.NavigationService.Journal.GoBack();               
+                Messages.Error("يوجد خطا في بعض البيانات");
+                return;
             }
+            if (_edit && _clientService.Update(Client))
+                _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
+            else if (!_edit && _clientService.Add(Client))
+                _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
             else
-                Messages.Error("يجب ادخال اسم ورقم تليفون للعميل");
-            
-        }
-        private bool CanSave()
-        {
-            return !(String.IsNullOrWhiteSpace(Client.Name) || String.IsNullOrWhiteSpace(Client.Phone));
+            {
+                Messages.ErrorDataNotSaved();
+                return;
+            }
+            _navigationContext.NavigationService.Journal.GoBack();
         }
         private void Cancel()
         {

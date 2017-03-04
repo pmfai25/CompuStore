@@ -75,7 +75,7 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClientPayment.cs" />
     <Compile Include="Model\Item.cs" />
-    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Orders.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

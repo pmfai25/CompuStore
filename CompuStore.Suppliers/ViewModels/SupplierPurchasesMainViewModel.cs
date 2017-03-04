@@ -144,11 +144,7 @@ namespace CompuStore.Suppliers.ViewModels
             var s2 = (Supplier)navigationContext.Parameters["Supplier"];
             return s2.ID == Supplier.ID;
         }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
         #endregion
         public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {

@@ -22,11 +22,11 @@ namespace CompuStore.Clients.ViewModels
         private IEventAggregator _eventAggregator;
         private NavigationContext _navigationContext;
         private Client _client;
-        private Order _selectedItem;
+        private Orders _selectedItem;
         private decimal _total;
         private DateTime _dateFrom;
         private DateTime _dateTo;
-        private ObservableCollection<Order> _items;
+        private ObservableCollection<Orders> _items;
         private ObservableCollection<OrderDetails> _details;
         #endregion
         #region Properties             
@@ -50,7 +50,7 @@ namespace CompuStore.Clients.ViewModels
             get { return _client; }
             set { SetProperty(ref _client, value); }
         }
-        public Order SelectedItem
+        public Orders SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -62,7 +62,7 @@ namespace CompuStore.Clients.ViewModels
                     Details = null;                
             }
         }
-        public ObservableCollection<Order> Items
+        public ObservableCollection<Orders> Items
         {
             get { return _items; }
             set { SetProperty(ref _items, value); }
@@ -104,12 +104,12 @@ namespace CompuStore.Clients.ViewModels
         }
         private void Search()
         {
-            Items = new ObservableCollection<Order>(_clientService.GetOrders(Client, DateFrom, DateTo));
+            Items = new ObservableCollection<Orders>(_clientService.GetOrders(Client, DateFrom, DateTo));
             Total = Items.Sum(x => x.Total);
         }
         private void Refresh()
         {
-            Items = new ObservableCollection<Order>(_clientService.GetOrders(Client));
+            Items = new ObservableCollection<Orders>(_clientService.GetOrders(Client));
             if (Items.Count > 0)
             {
                 DateFrom = Items.Min(x => x.Date).Date;
@@ -132,19 +132,14 @@ namespace CompuStore.Clients.ViewModels
             var c2 = (Client)navigationContext.Parameters["Client"];
             return c2.ID == Client.ID;
         }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _navigationContext = navigationContext;
             Client = (Client)_navigationContext.Parameters["Client"];
             Refresh();
         }
-#endregion
+        #endregion
         public ClientSalesMainViewModel(IClientService clientService, IOrderService orderService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             _orderService = orderService;

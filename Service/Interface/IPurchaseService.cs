@@ -10,8 +10,6 @@ namespace Service
 {
     public interface IPurchaseService
     {
-        IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier);
-        IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier, DateTime dateFrom, DateTime dateTo);
         IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID);
         bool AddPurchase(Purchase purchase);
         bool UpdatePurchase(Purchase purchase);
@@ -21,5 +19,6 @@ namespace Service
         bool DeletePurchaseItems(List<PurchaseItem> purchaseItem);
         Purchase FindPurchase(int purchaseID);
         bool IsDeletable(Purchase purchase);
+        List<PurchaseItem> GetPurchaseItemsWithStock(Item item);
     }
 }

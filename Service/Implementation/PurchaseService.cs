@@ -14,28 +14,11 @@ namespace Service
     class PurchaseService : IPurchaseService
     {
         IDbConnection Connection;
-        public IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("SupplierID", supplier.ID);
-            return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where SupplierID=@SupplierID", args);
-        }
-        public IEnumerable<SupplierPurchases> GetSupplierPurchases(Supplier supplier, DateTime dateFrom, DateTime dateTo)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("SupplierID", supplier.ID);
-            args.Add("DateFrom", dateFrom);
-            args.Add("DateTo", dateTo);
-            return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where Date<=@DateTo and Date >=@DateFrom and SupplierID=@SupplierID", args);
-        }
         public IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("PurchaseID", purchaseID);
-            var x= Connection.Query<PurchaseDetails>("Select * from PurchaseDetails where PurchaseID=@PurchaseID", args);
-            foreach (var i in x)
-                i.Sold = i.Quantity - i.Available;
-            return x;
+            return Connection.Query<PurchaseDetails>("Select * from PurchaseDetails where PurchaseID=@PurchaseID", args);
         }
 
         public bool AddPurchase(Purchase purchase)
@@ -80,6 +63,14 @@ namespace Service
             args.Add("PurchaseID", purchase.ID);
             return Connection.Query<PurchaseItem>("Select * from PurchaseItem where PurchaseID=@PurchaseID", args).All(x => x.Available == x.Quantity);
         }
+
+        public List<PurchaseItem> GetPurchaseItemsWithStock(Item item)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("ItemID", item.ID);
+            return new List<PurchaseItem>(Connection.Query<PurchaseItem>("Select * from PurchaseItem where Available>0 and ItemID=@ItemID", args));
+        }
+
         public PurchaseService(IDbConnection connection)
         {
             Connection = connection;

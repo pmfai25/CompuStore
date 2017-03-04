@@ -76,6 +76,8 @@ namespace CompuStore.Suppliers.ViewModels
             }
             if (Messages.Delete(SelectedDetail.Name))
             {
+                if (SelectedDetail.PurchaseItemID != 0)
+                    _deletedDetails.Add(new PurchaseItem() { ID = SelectedDetail.PurchaseItemID });
                 Details.Remove(SelectedDetail);
                 Purchase.Total = Details.Sum(i => i.Total);
             }
@@ -94,7 +96,7 @@ namespace CompuStore.Suppliers.ViewModels
 
         private void Save()
         {
-            if (!Purchase.IsValid)
+            if (!Purchase.IsValid || Details.Any(x=>!x.IsValid))
             {
                 Messages.Error("يوجد اخطاء في بعض البيانات");
                 return;
@@ -175,14 +177,10 @@ namespace CompuStore.Suppliers.ViewModels
         private void OnItemAdded(Item obj)
         {
             var pd = new PurchaseDetails() { ItemID = obj.ID, Name = obj.Name, Quantity=1 };
-            pd.OnUpdateValues += OnPurchaseItemUpdateValue;
+            pd.OnUpdateValues +=()=> Purchase.Total = Details.Sum(x => x.Total);
             Details.Add(pd);
             SelectedDetail = pd;
-        }
-        private void OnPurchaseItemUpdateValue()
-        {
-            Purchase.Total = Details.Sum(x => x.Total);
-        }       
+        }     
         #endregion
         #region Interface
         public bool KeepAlive
@@ -218,7 +216,7 @@ namespace CompuStore.Suppliers.ViewModels
             oldTotal = Purchase.Total;
             Details = (ObservableCollection<PurchaseDetails>)navigationContext.Parameters["Details"] ?? new ObservableCollection<PurchaseDetails>();
             foreach (var d in Details)
-                d.OnUpdateValues += OnPurchaseItemUpdateValue;
+                d.OnUpdateValues +=()=> Purchase.Total = Details.Sum(x => x.Total);
             _open = true;
         }
         #endregion

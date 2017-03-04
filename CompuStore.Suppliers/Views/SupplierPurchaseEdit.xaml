@@ -11,7 +11,7 @@
         <Separator DockPanel.Dock="Top"/>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -105,7 +105,7 @@
                             <DataGridTemplateColumn Header="السعر" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Foreground="Blue" Width="100" Text="{Binding Price, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox Foreground="Blue" Text="{Binding Price,StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -116,8 +116,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
-                            
+                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>                            
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

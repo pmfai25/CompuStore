@@ -7,7 +7,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True" >
-        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="المشتريات"/>
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="المبيعات"/>
         <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
         <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
@@ -61,7 +61,7 @@
                 <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="1.5*" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                        <DataGridTextColumn Header="التاريخ" Width="*" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
@@ -75,7 +75,7 @@
                     <DataGrid Grid.Row="0"  ItemsSource="{Binding Details}"  IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Sale, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
                         <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity}"/>
                         <DataGridTextColumn Header="الخصم" Width="120" Foreground="Red" Binding="{Binding Discount, StringFormat=N2}"/>
                         <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>

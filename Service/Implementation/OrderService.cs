@@ -12,44 +12,23 @@ namespace Service
 {
     public class OrderService : IOrderService
     {
-        private IDbConnection Connection;
-        public IEnumerable<ClientOrders> GetClientOrders(Client client)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("ClientID", client.ID);
-            return Connection.Query<ClientOrders>("Select * from ClientOrders where ClientID=@ClientID", args);
-        }
-        public IEnumerable<ClientOrders> GetClientOrders(Client client, DateTime dateFrom, DateTime dateTo)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("ClientID", client.ID);
-            args.Add("DateFrom", dateFrom);
-            args.Add("DateTo", dateTo);
-            return Connection.Query<ClientOrders>("Select * from ClientOrders where ClientID=@ClientID and Date<=@DateTo and Date >=@DateTo", args);
-        }
-        public IEnumerable<ClientOrders> GetClientOrders(DateTime dateFrom, DateTime dateTo)
-        {
-            DynamicParameters args = new DynamicParameters();
-            args.Add("DateFrom", dateFrom);
-            args.Add("DateTo", dateTo);
-            return Connection.Query<ClientOrders>("Select * from ClientOrders where Date<=@DateTo and Date >=@DateTo", args);
-        }       
-        public IEnumerable<OrderDetails> GetOrderDetails(Order order)
+        private IDbConnection Connection;      
+        public IEnumerable<OrderDetails> GetOrderDetails(Orders order)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("OrderID", order.ID);
             return Connection.Query<OrderDetails>("Select * from OrderDetails where OrderID=@OrderID", args);
         }        
 
-        public bool AddOrder(Order order)
+        public bool AddOrder(Orders order)
         {
             return Connection.Insert(order) != 0;
         }
-        public bool UpdateOrder(Order order)
+        public bool UpdateOrder(Orders order)
         {
             return Connection.Update(order);
         }
-        public bool DeleteOrder(Order order)
+        public bool DeleteOrder(Orders order)
         {
             return Connection.Delete(order);
         }
@@ -65,12 +44,28 @@ namespace Service
         {
             return Connection.Delete(orderItem);
         }
-        public Order FindOrder(int orderID)
+        public Orders FindOrder(int orderID)
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", orderID);
-            return Connection.QuerySingle<Order>("Select * from Order where ID=@ID", args);
+            return Connection.QuerySingle<Orders>("Select * from Orders where ID=@ID", args);
         }
+
+        public void AddOrderItems(List<OrderItem> lstInsert)
+        {
+            Connection.Insert(lstInsert);
+        }
+
+        public void UpdateOrderItems(List<OrderItem> lstUpdate)
+        {
+            Connection.Update(lstUpdate);
+        }
+
+        public void DeleteOrderItems(List<OrderItem> lstDelete)
+        {
+            Connection.Delete(lstDelete);
+        }
+
         public OrderService(IDbConnection connection)
         {
             Connection = connection;

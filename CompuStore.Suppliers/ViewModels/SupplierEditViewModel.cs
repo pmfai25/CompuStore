@@ -40,7 +40,10 @@ namespace CompuStore.Suppliers.ViewModels
         private void Save()
         {
             if (!Supplier.IsValid)
+            {
+                Messages.Error("يوجد خطا في بعض البيانات");
                 return;
+            }
 
             if (_edit && _supplierService.Update(Supplier))
                 _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);

@@ -19,8 +19,6 @@ namespace Model.Views
         private int available;
         private decimal total;
         [Computed]
-        public int Sold { get; set; }
-        [Computed]
         public decimal Total
         {
             get { return Price * Quantity; }
@@ -55,6 +53,7 @@ namespace Model.Views
             get { return available; }
             set { SetProperty(ref available, value); }
         }
+        public int Sold { get; set; }
         public int PurchaseID { get; set; }
         public int PurchaseItemID { get; set; }
         public int ItemID { get; set; }
@@ -100,7 +99,7 @@ namespace Model.Views
                         error = "يجب ادخال كمية اكبر من صفر";
                     else
                         if (Quantity < Sold)
-                        error = "الكمية يجب ان تكون اكبر من او تساوي " +Sold;
+                        error = "الكمية يجب ان تكون اكبر من او تساوي الكمية المباعة " +Sold;
                     break;
                 case "Price":
                     if (Price<=0)

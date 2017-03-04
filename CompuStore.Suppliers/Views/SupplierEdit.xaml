@@ -18,16 +18,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="400"/>
-                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Label Content="اسم المورد" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Name="txtName" Text="{Binding  Supplier.Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
-            <Label Foreground="Red" Content="{Binding ElementName=txtName, Path=(Validation.Errors).CurrentItem.ErrorContent}" Grid.Row="0" Grid.Column="2" Margin="4,6"/>
-            
-            <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Name="txtPhone" Text="{Binding Supplier.Phone, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" Grid.Row="1" Grid.Column="1" Margin="4,6" />
-            <Label Foreground="Red" Content="{Binding ElementName=txtPhone, Path=(Validation.Errors).CurrentItem.ErrorContent}" Grid.Row="1" Grid.Column="2" Margin="4,6"/>
+            <TextBox Name="txtName" Text="{Binding  Supplier.Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
+            <Label Content="رقم التليفون" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
+            <TextBox Name="txtPhone" Text="{Binding Supplier.Phone, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="4,6" />
 
             <Label Content="العنوان" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Supplier.Address}" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />

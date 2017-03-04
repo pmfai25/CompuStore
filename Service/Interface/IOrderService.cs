@@ -10,16 +10,16 @@ namespace Service
 {
     public interface IOrderService
     {
-        IEnumerable<ClientOrders> GetClientOrders(Client client);
-        IEnumerable<ClientOrders> GetClientOrders(Client client, DateTime dateFrom, DateTime dateTo);
-        IEnumerable<ClientOrders> GetClientOrders(DateTime dateFrom, DateTime dateTo);
-        IEnumerable<OrderDetails> GetOrderDetails(Order order);
-        bool AddOrder(Order order);
-        bool UpdateOrder(Order order);
-        bool DeleteOrder(Order order);
+        IEnumerable<OrderDetails> GetOrderDetails(Orders order);
+        bool AddOrder(Orders order);
+        bool UpdateOrder(Orders order);
+        bool DeleteOrder(Orders order);
         bool AddOrderDetail(OrderItem orderItem);
         bool UpdateOrderDetail(OrderItem orderItem);
         bool DeleteOrderDetail(OrderItem orderItem);
-        Order FindOrder(int orderID);
+        Orders FindOrder(int orderID);
+        void AddOrderItems(List<OrderItem> lstInsert);
+        void UpdateOrderItems(List<OrderItem> lstUpdate);
+        void DeleteOrderItems(List<OrderItem> lstDelete);
     }
 }
