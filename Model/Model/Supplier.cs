@@ -79,6 +79,7 @@ namespace Model
         #endregion
         #region Validation
         private readonly string[] properties = { "Name", "Phone" };
+        [Computed]
         public bool IsValid
         {
             get

@@ -48,7 +48,7 @@ namespace Service
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ItemID", item.ID);
-            return Connection.QuerySingle<int>("Select count(*) from OrderItem oi, PurchaseItem pi where oi.ItemID=@ItemID or pi.ItemID=@ItemID", args) == 0;
+            return Connection.QuerySingle<int>("Select total(Quantity) from PurchaseItem pi where pi.ItemID=@ItemID", args) == 0;
         }
 
         public IEnumerable<Item> SearchBy(long serial)
