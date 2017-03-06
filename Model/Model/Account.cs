@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace Model
 {
     [Table("Account")]
-    class Account:BindableBase
+   public class Account:BindableBase
     {
+
         public int ID { get; set; }
         private string username;
         public string Username
@@ -23,6 +24,12 @@ namespace Model
         {
             get { return password; }
             set { SetProperty(ref password, value); }
+        }
+        private int _role;
+        public int Role
+        {
+            get { return _role; }
+            set { SetProperty(ref _role, value); }
         }
     }
 }
