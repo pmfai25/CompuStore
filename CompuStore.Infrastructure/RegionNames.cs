@@ -10,10 +10,8 @@ namespace CompuStore.Infrastructure
     {
         public const string MainContentRegion = "MainContentRegion";
         public const string NavContentRegion = "NavContentRegion";
-        public const string PurchasesMain = "PurchasesMain";
-        
-        public const string SalesMain = "SalesMain";
-        public const string SalesEdit = "SalesEdit";
+        public const string SupplierPurchasesReport = "SupplierPurchasesReport";        
+        public const string ClientOrdersReport = "ClientOrdersReport";
         public const string ReportsMain = "ReportsMain";
         #region Store Module
         public const string StoreMain = "StoreMain";

@@ -93,15 +93,27 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="btnReports"  Command="{Binding ReportsCommand}" Style="{DynamicResource defaultStyle}" Click="btnReports_Click">
+                <Button x:Name="btnSales"  Command="{Binding SalesCommand}" Style="{DynamicResource defaultStyle}" Click="btnSales_Click">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="FileChart" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="التقارير"/></TextBlock>
+                            <iconPacks:PackIconModern HorizontalAlignment="Center" Kind="Money" Width="30" Height="30" />
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="المبيعات"/></TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnPurchases"  Command="{Binding PurchasesCommand}" Style="{DynamicResource defaultStyle}" Click="btnPurchases_Click">
+                    <Button.Content>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <iconPacks:PackIconModern HorizontalAlignment="Center" Kind="CurrencyDollar" Width="30" Height="30" />
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="المشتريات"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>

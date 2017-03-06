@@ -11,7 +11,7 @@ namespace CompuStore.Clients
     public class ClientsModule : IModule
     {
         IRegionManager _regionManager;
-        readonly IUnityContainer _container;
+        IUnityContainer _container;
 
         public ClientsModule(RegionManager regionManager,IUnityContainer container)
         {

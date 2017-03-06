@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="CompuStore.Reports.Views.ReportsMain"
+﻿<UserControl x:Class="CompuStore.Reports.Views.ClientOrdersReport"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:prism="http://prismlibrary.com/"            
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"  
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="التقارير"/>
+        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="مبيعات العملاء"/>
         <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
         <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
@@ -52,22 +52,22 @@
             <Separator Grid.Row="1"/>
             <GroupBox Header="المحصلة النهائية" Grid.Row="2">
                 <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock Margin="4,6" Grid.Row="0" Foreground="Salmon" Text="المبلغ" FontSize="14"/>
-                <TextBlock Margin="4,6" Grid.Row="1" Foreground="Salmon" Text="المدفوع" FontSize="14"/>
-                <TextBlock Margin="4,6" Grid.Row="2" Foreground="Salmon" Text="المتبقي" FontSize="14"/>
-                <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="Blue" FontSize="14"/>
-                <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="Green" FontSize="14"/>
-                <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="Red" FontSize="14"/>
-            </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="4,6" Grid.Row="0" Foreground="Salmon" Text="المبلغ" FontSize="14"/>
+                    <TextBlock Margin="4,6" Grid.Row="1" Foreground="Salmon" Text="المدفوع" FontSize="14"/>
+                    <TextBlock Margin="4,6" Grid.Row="2" Foreground="Salmon" Text="المتبقي" FontSize="14"/>
+                    <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="Blue" FontSize="14"/>
+                    <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="Green" FontSize="14"/>
+                    <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="Red" FontSize="14"/>
+                </Grid>
             </GroupBox>
         </Grid>
     </DockPanel>
