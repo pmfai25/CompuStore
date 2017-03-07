@@ -7,8 +7,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"  
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="مشتريات الموردين"/>
-        <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
+        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
+            <StackPanel>
+                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="مشتريات الموردين"/>
+                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
+            </StackPanel>
+        </Border>
         <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
@@ -44,14 +48,18 @@
             <GroupBox Header="الفواتير" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="*" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                        <DataGridTextColumn Header="المورد" Width="250" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                        <DataGridTextColumn Header="رقم الفاتورة" Width="100"  Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="الاجمالي" Width="100" Binding="{Binding Total,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="المدفوع" Width="100" Binding="{Binding Paid,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="المتبقي" Width="100" Binding="{Binding Remaining,StringFormat=N2}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
             <Separator Grid.Row="1"/>
-            <GroupBox Header="المحصلة النهائية" Grid.Row="2">
-                <Grid>
+            <GroupBox Margin="-4" Header="المحصلة النهائية" Grid.Row="2" Padding="0">
+                <Grid Background="{DynamicResource AccentColorBrush4}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="150"/>
@@ -61,12 +69,12 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="4,6" Grid.Row="0" Foreground="Salmon" Text="المبلغ" FontSize="14"/>
-                    <TextBlock Margin="4,6" Grid.Row="1" Foreground="Salmon" Text="المدفوع" FontSize="14"/>
-                    <TextBlock Margin="4,6" Grid.Row="2" Foreground="Salmon" Text="المتبقي" FontSize="14"/>
-                    <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="Blue" FontSize="14"/>
-                    <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="Green" FontSize="14"/>
-                    <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="Red" FontSize="14"/>
+                    <TextBlock Margin="10,6" Grid.Row="0"  Text="المبلغ" FontSize="14"/>
+                    <TextBlock Margin="10,6" Grid.Row="1"  Text="المدفوع" FontSize="14"/>
+                    <TextBlock Margin="10,6" Grid.Row="2"  Text="المتبقي" FontSize="14"/>
+                    <TextBlock Margin="10,6" Grid.Row="0" Grid.Column="1" Text="{Binding Total, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
+                    <TextBlock Margin="10,6" Grid.Row="1" Grid.Column="1" Text="{Binding Paid, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
+                    <TextBlock Margin="10,6" Grid.Row="2" Grid.Column="1" Text="{Binding Remaining, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
                 </Grid>
             </GroupBox>
         </Grid>

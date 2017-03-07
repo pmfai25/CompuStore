@@ -10,6 +10,8 @@ namespace Service
 {
     public interface IPurchaseService
     {
+        IEnumerable<SupplierPurchases> GetPurchases(DateTime from, DateTime to);
+        IEnumerable<SupplierPurchases> GetPurchases();
         IEnumerable<PurchaseDetails> GetPurchaseDetails(int purchaseID);
         bool AddPurchase(Purchase purchase);
         bool UpdatePurchase(Purchase purchase);

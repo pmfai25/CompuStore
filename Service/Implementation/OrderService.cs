@@ -66,6 +66,20 @@ namespace Service
             Connection.Delete(lstDelete);
         }
 
+        public IEnumerable<ClientOrders> GetOrders()
+        {
+            var x = Connection.Query("Select * from ClientOrders");
+            return Connection.Query<ClientOrders>("Select * from ClientOrders");
+        }
+
+        public IEnumerable<ClientOrders> GetOrders(DateTime from, DateTime to)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("DateFrom", from);
+            args.Add("DateTo", to);
+            return Connection.Query<ClientOrders>("Select * from  ClientOrders where Date<=@DateTo and Date>=@DateFrom", args);
+        }
+
         public OrderService(IDbConnection connection)
         {
             Connection = connection;

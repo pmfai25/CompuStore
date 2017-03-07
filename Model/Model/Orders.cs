@@ -17,6 +17,8 @@ namespace Model
         private decimal paid;
         private decimal total;
         private decimal remaining;
+        private decimal profit;
+        
         public int ID { get; set; }
         public int Number
         {
@@ -43,6 +45,11 @@ namespace Model
         {
             get { return Total - Paid; }
             set { SetProperty(ref remaining, value); }
+        }
+        public decimal Profit
+        {
+            get { return profit; }
+            set { SetProperty(ref profit, value); }
         }
         public int ClientID { get; set; }
         [Computed]

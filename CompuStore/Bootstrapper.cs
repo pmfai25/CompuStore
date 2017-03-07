@@ -22,6 +22,7 @@ namespace CompuStore
             CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-eg");
             ci.DateTimeFormat.ShortDatePattern = "dd / MM / yyyy";
             ci.DateTimeFormat.FullDateTimePattern= "dd / MM / yyyy";
+            ci.NumberFormat = CultureInfo.GetCultureInfo("en-us").NumberFormat;
             Thread.CurrentThread.CurrentCulture = ci;
             return Container.Resolve<MainWindow>();
         }

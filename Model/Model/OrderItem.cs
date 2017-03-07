@@ -14,6 +14,8 @@ namespace Model
         private decimal price;
         private int quantity;
         private decimal discount;
+        private decimal retail;
+        private decimal profit;
 
         public int ID { get; set; }
         public decimal Price
@@ -31,9 +33,20 @@ namespace Model
             get { return discount; }
             set { SetProperty(ref discount, value); OnPropertyChanged("Total"); }
         }
-        public int PurchaseItemID { get; set; }
+        public int PurchaseItemID { get; set; }       
+        public decimal Retail
+        {
+            get { return retail; }
+            set { SetProperty(ref retail, value); }
+        }
         public int OrderID { get; set; }
         [Computed]
         public decimal Total { get { return Price * Quantity - Discount; } }
+        [Computed]
+        public decimal Profit
+        {
+            get { return (Price - Retail)*Quantity; }
+            set { SetProperty(ref profit, value); }
+        }
     }
 }

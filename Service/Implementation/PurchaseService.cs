@@ -71,6 +71,19 @@ namespace Service
             return new List<PurchaseItem>(Connection.Query<PurchaseItem>("Select * from PurchaseItem where Available>0 and ItemID=@ItemID", args));
         }
 
+        public IEnumerable<SupplierPurchases> GetPurchases(DateTime from, DateTime to)
+        {
+            DynamicParameters args = new DynamicParameters();
+            args.Add("DateFrom", from);
+            args.Add("DateTo", to);
+            return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases where Date<=@DateTo and Date>=@DateFrom", args);
+        }
+
+        public IEnumerable<SupplierPurchases> GetPurchases()
+        {
+            return Connection.Query<SupplierPurchases>("Select * from SupplierPurchases");
+        }
+
         public PurchaseService(IDbConnection connection)
         {
             Connection = connection;

@@ -14,7 +14,19 @@ namespace Model.Views
         private decimal total;
         private decimal paid;
         private decimal remaining;
-        [Computed]
+        private decimal finaltProfit;        
+        private decimal currentProfit;
+
+        public decimal CurrentProfit
+        {
+            get { return currentProfit; }
+            set { SetProperty(ref currentProfit, value); }
+        }
+        public decimal FinalProfit
+        {
+            get { return finaltProfit; }
+            set { SetProperty(ref finaltProfit, value); }
+        }
         public decimal Remaining
         {
             get { return Total - Paid; }

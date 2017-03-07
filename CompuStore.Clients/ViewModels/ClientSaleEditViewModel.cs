@@ -126,6 +126,7 @@ namespace CompuStore.Clients.ViewModels
                 {
                     ID = d.OrderItemID,
                     PurchaseItemID=d.PurchaseItemID,
+                    Retail=d.Retail,
                     OrderID=Order.ID,
                     Price = d.Price,
                     Quantity = d.Quantity,

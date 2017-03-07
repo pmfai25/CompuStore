@@ -5,7 +5,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Label Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="اضافة او تعديل مورد"/>
+        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
+            <StackPanel>
+                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="أضافة او تعديل مورد"/>
+                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" />
+            </StackPanel>
+        </Border>
         <Separator DockPanel.Dock="Top"/>
         <Grid>
             <Grid.RowDefinitions>

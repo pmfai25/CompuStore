@@ -10,6 +10,8 @@ namespace Service
 {
     public interface IOrderService
     {
+        IEnumerable<ClientOrders> GetOrders();
+        IEnumerable<ClientOrders> GetOrders(DateTime from, DateTime to);
         IEnumerable<OrderDetails> GetOrderDetails(Orders order);
         bool AddOrder(Orders order);
         bool UpdateOrder(Orders order);
