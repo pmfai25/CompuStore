@@ -50,12 +50,12 @@ namespace CompuStore.Register
             await Task.Delay(2000);
             if (Cryptor.Decrypt(settings.Serial) == Finger.Value)
                 return true;
-            if(settings.Trials>0)
-            {
-                settings.Trials--;
-                _settingsService.Update(settings);
-                return true;
-            }
+            //if(settings.Trials>0)
+            //{
+            //    settings.Trials--;
+            //    _settingsService.Update(settings);
+            //    return true;
+            //}
             return false;
             
         }

@@ -11,7 +11,7 @@ namespace Model
     public class Settings
     {
         public int ID { get; set; }
-        public int Trials { get; set; }
+        //public int Trials { get; set; }
         public string Serial { get; set; }
     }
 }
