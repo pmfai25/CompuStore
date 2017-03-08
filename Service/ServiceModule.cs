@@ -16,7 +16,7 @@ namespace Service
 
         public void Initialize()
         {
-            Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db;");
+            Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db; Version = 3;");
             Connection.Open();
             _container.RegisterInstance<IDbConnection>(Connection);
             _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
@@ -27,6 +27,8 @@ namespace Service
             _container.RegisterType<IPurchaseService, PurchaseService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IItemService, ItemService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IAccountService, AccountService>(new ContainerControlledLifetimeManager());
         }
     }
 }

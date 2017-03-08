@@ -40,7 +40,7 @@
             <Separator></Separator>
             <Button Command="{Binding EditCategoriesCommand}">
             <StackPanel Orientation="Vertical" Margin="2">
-                <iconPacks:PackIconMaterial Kind="Settings" Foreground="Lime"  HorizontalAlignment="Center"/>
+                <iconPacks:PackIconMaterial Kind="Settings"   HorizontalAlignment="Center"/>
                     <TextBlock Text="الاقسام"/>
                 </StackPanel>
             </Button>
@@ -52,7 +52,7 @@
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>
                 <DataGridTextColumn Header="الكمية" Width="100" Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Header="حد الطلب" Width="100" Binding="{Binding Limit}"/>
-                <DataGridTextColumn Header="سعر البيع" Width="100" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سعر البيع" Width="100" Binding="{Binding Price, StringFormat=N2}"/>
                 <DataGridTextColumn Header="الوصف" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>

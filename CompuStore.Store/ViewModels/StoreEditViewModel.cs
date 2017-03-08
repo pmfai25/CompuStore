@@ -21,6 +21,12 @@ namespace CompuStore.Store.ViewModels
         private IEventAggregator _eventAggregator;
         private IItemService _itemService;
         private ICategoryService _categoryService;
+        private Category _selectedCategory;
+        public Category SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set { SetProperty(ref _selectedCategory, value); }
+        }
         public Item Item
         {
             get { return _item; }
@@ -36,14 +42,9 @@ namespace CompuStore.Store.ViewModels
 
         private void Save()
         {
-            if (CanSave())
+            if (Item.IsValid)
             {
-                var x = _itemService.SearchBySerial(Item.Serial);
-                if(x!=null&&( _edit&&x.ID!=Item.ID ||!_edit))
-                {
-                    Messages.Error(" هذا الباركود مستخدم من قبل مع الصنف " + x.Name);
-                    return;
-                }
+                Item.CategoryID = SelectedCategory.ID;
                 if (_edit && _itemService.Update(Item))
                 {
                     _eventAggregator.GetEvent<ItemUpdated>().Publish(Item);
@@ -104,7 +105,9 @@ namespace CompuStore.Store.ViewModels
         {
             _navigationContext = navigationContext;
             Categories = (ObservableCollection<Category>)navigationContext.Parameters["Categories"] ?? new ObservableCollection<Category>(_categoryService.GetAll());
-            Item = (Item)navigationContext.Parameters["Item"] ?? new Item() { CategoryID = Categories.First().ID };
+            SelectedCategory = (Category)navigationContext.Parameters["SelectedCategory"] ?? Categories.First();
+            Item = (Item)navigationContext.Parameters["Item"] ?? new Item() { CategoryID = SelectedCategory.ID };
+            Item.Items = new List<Item>(_itemService.GetAll(true));
             _edit = Item.ID != 0;
         }
     }

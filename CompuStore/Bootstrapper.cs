@@ -12,6 +12,8 @@ using Prism.Unity;
 using System.Threading;
 using Service;
 using System.Globalization;
+using System;
+using CompuStore.Register;
 
 namespace CompuStore
 {
@@ -29,13 +31,18 @@ namespace CompuStore
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();                      
-            Container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
         }
 
         
         protected override void InitializeShell()
         {
-            Application.Current.MainWindow.Show();
+            try
+            {
+                Application.Current.MainWindow.Show();
+            }catch(Exception ex)
+            {
+                Messages.Error("حدث خطا بالبرنامج" + Environment.NewLine + ex.Message);
+            }
             
         }
         protected override void ConfigureModuleCatalog()
@@ -47,6 +54,7 @@ namespace CompuStore
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));
             moduleCatalog.AddModule(typeof(ReportsModule));
+            moduleCatalog.AddModule(typeof(RegisterModule));
             
         }
     }

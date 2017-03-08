@@ -3,6 +3,7 @@ using Prism.Events;
 
 namespace Model.Events
 {
+    public class SerialValid : PubSubEvent<string> { }
     public class ClientAdded : PubSubEvent<Client> { }
     public class ClientUpdated : PubSubEvent<Client> { }
     public class ClientPaymentAdded : PubSubEvent<ClientPayment> { }

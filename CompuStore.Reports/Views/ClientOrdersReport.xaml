@@ -47,10 +47,15 @@
             <GroupBox Header="الفواتير" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="*" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGridTextColumn Header="العميل" Width="250" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                        <DataGridTextColumn Header="رقم الفاتورة" Width="100"  Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="الاجمالي" Width="100" Binding="{Binding Total,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="المدفوع" Width="100" Binding="{Binding Paid,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="المتبقي" Width="100" Binding="{Binding Remaining,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الربح الحالي" Width="100" Binding="{Binding CurrentProfit,StringFormat=N2}"/>
+                        <DataGridTextColumn Header="الربح النهائي" Width="100" Binding="{Binding FinalProfit,StringFormat=N2}"/>
+                    </DataGrid.Columns></DataGrid>
             </GroupBox>
             <Separator Grid.Row="1"/>
             <GroupBox Margin="-4" Header="المحصلة النهائية" Grid.Row="2" Padding="0">

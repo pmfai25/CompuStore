@@ -111,6 +111,7 @@ namespace CompuStore.Suppliers.ViewModels
         private void Search()
         {
             Items = new ObservableCollection<Purchase>(_supplierService.GetPurchases(Supplier, DateFrom, DateTo));
+            SelectedItem = Items.FirstOrDefault();
             Total = Items.Sum(x => x.Total);            
         }
         private void Refresh()

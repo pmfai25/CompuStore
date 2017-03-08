@@ -80,6 +80,7 @@ namespace CompuStore.Store.ViewModels
             }
             NavigationParameters parameter = new NavigationParameters();
             parameter.Add("Categories", Categories);
+            parameter.Add("SelectedCategory", SelectedCategory);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit,parameter);
         }
         private void Update()
@@ -87,6 +88,7 @@ namespace CompuStore.Store.ViewModels
             NavigationParameters parameter = new NavigationParameters();
             parameter.Add("Item", SelectedItem);
             parameter.Add("Categories", Categories);
+            parameter.Add("SelectedCategory", SelectedCategory);
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreEdit, parameter);
         }
         private void Delete()

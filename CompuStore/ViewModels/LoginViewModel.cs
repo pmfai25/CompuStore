@@ -1,14 +1,11 @@
-﻿using CompuStore.Views;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Model;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Service.Interface;
+using Service;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace CompuStore.ViewModels
 {

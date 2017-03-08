@@ -112,19 +112,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ClientOrdersReportViewModel.cs" />
-    <Compile Include="ViewModels\ReportsMainViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchasesReportViewModel.cs" />
     <Compile Include="Views\ClientOrdersReport.xaml.cs">
       <DependentUpon>ClientOrdersReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ItemsSalePercentReport.xaml.cs">
-      <DependentUpon>ItemsSalePercentReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LimitedItemsReport.xaml.cs">
-      <DependentUpon>LimitedItemsReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReportsMain.xaml.cs">
-      <DependentUpon>ReportsMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SupplierPurchasesReport.xaml.cs">
       <DependentUpon>SupplierPurchasesReport.xaml</DependentUpon>
@@ -143,18 +133,6 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ClientOrdersReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ItemsSalePercentReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LimitedItemsReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReportsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

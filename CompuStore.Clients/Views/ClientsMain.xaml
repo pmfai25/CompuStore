@@ -49,10 +49,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="اسم العميل" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="المبيعات" Width="100" Foreground="Green" Binding="{Binding Sales, StringFormat=N2}"/>
-                <DataGridTextColumn Header="سداد المبيعات" Width="120" Foreground="Blue" Binding="{Binding InstantPayments, StringFormat=N2}"/>
-                <DataGridTextColumn Header="ايصالات النقدية" Width="120" Foreground="Blue" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
-                <DataGridTextColumn Header="المبلغ المتبقي" Width="120" Foreground="Red" Binding="{Binding Remaining, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبيعات" Width="100" Binding="{Binding Sales, StringFormat=N2}"/>
+                <DataGridTextColumn Header="سداد المبيعات" Width="120"  Binding="{Binding InstantPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="ايصالات النقدية" Width="120"  Binding="{Binding DelayedPayments, StringFormat=N2}"/>
+                <DataGridTextColumn Header="المبلغ المتبقي" Width="120"  Binding="{Binding Remaining, StringFormat=N2}"/>
                 <DataGridTextColumn Header="العنوان" Binding="{Binding Address}"/>
                 <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
             </DataGrid.Columns>

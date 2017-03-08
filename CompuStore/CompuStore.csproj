@@ -175,6 +175,10 @@
       <Project>{cb38702b-7e25-4896-b74d-727f3486db86}</Project>
       <Name>CompuStore.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CompuStore.Register\CompuStore.Register.csproj">
+      <Project>{AB8B448C-DD74-4D60-A041-3E5D03A32180}</Project>
+      <Name>CompuStore.Register</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CompuStore.Reports\CompuStore.Reports.csproj">
       <Project>{8ef53595-c3f8-410e-8794-a45fb7000e0a}</Project>
       <Name>CompuStore.Reports</Name>

@@ -30,7 +30,8 @@ namespace CompuStore.Suppliers.ViewModels
         private ObservableCollection<PurchaseDetails> _details;
         private string _searchText;
         private PurchaseDetails _selectedDetail;
-        private bool _open, _completed, _edit;        
+        private bool _open, _completed, _edit;
+        private ICategoryService _categoryService;
         #endregion
         #region Properties
         public ObservableCollection<PurchaseDetails> Details
@@ -157,6 +158,14 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void AddItem()
         {
+            ObservableCollection<Category> categories = new ObservableCollection<Category>(_categoryService.GetAll());
+            if(categories.Count==0)
+            {
+                Messages.Error("يجب اضافة اقسام من شاشة الاصناف اولا قبل اضافة صنف جديد");
+                return;
+            }
+            NavigationParameters parameters = new NavigationParameters();
+            parameters.Add("Categories", categories);
             _navigationContext.NavigationService.RequestNavigate(RegionNames.StoreEdit);
         }
         private void Search(KeyEventArgs e)
@@ -220,9 +229,9 @@ namespace CompuStore.Suppliers.ViewModels
             _open = true;
         }
         #endregion
-        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService,ISupplierService supplierService, IEventAggregator eventAggregator)
+        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService,ICategoryService categoryService,ISupplierService supplierService, IEventAggregator eventAggregator)
         {
-            
+            _categoryService = categoryService;
             _supplierService = supplierService;
             _itemService = itemService;
             _purchaseService = purchaseService;

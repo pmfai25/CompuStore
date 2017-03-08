@@ -27,22 +27,22 @@
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Label Content="اسم الصنف" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding  Item.Name}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding  Item.Name,  ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="الباركود" Grid.Column="2" Margin="4,6"/>
-            <TextBox Text="{Binding Item.Serial}" Grid.Column="3" Margin="4,6"/>
+            <TextBox Text="{Binding Item.Serial,  ValidatesOnDataErrors=True}" Grid.Column="3" Margin="4,6"/>
 
             <Label Content="النوع" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
-            <ComboBox ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedValuePath="ID" SelectedValue="{Binding Item.CategoryID}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
+            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" SelectedValuePath="ID"  Grid.Row="1" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="حد الطلب" Grid.Row="1" Grid.Column="2" Margin="4,6" Grid.ColumnSpan="3"></Label>
-            <TextBox Text="{Binding Item.Limit}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
+            <TextBox Text="{Binding Item.Limit,  ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
 
             <Label Content="الوصف" Grid.Row="2" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Item.Description}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
             <Label Content="سعر البيع" Grid.Row="3" Grid.Column="0" Margin="4,6" ></Label>
-            <TextBox Text="{Binding Item.Price, StringFormat=N2}" Grid.Row="3" Grid.Column="1" Margin="4,6"  />
+            <TextBox Text="{Binding Item.Price, StringFormat=N2,  ValidatesOnDataErrors=True}" Grid.Row="3" Grid.Column="1" Margin="4,6"  />
 
             <StackPanel Grid.Row="4" Grid.ColumnSpan="4"  Margin="10" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">

@@ -81,34 +81,34 @@
                     <DataGrid  ItemsSource="{Binding Details}"  IsReadOnly="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="السعر" Width="120" Foreground="Blue" Binding="{Binding Price, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="الكمية" Width="120" Foreground="Blue" Binding="{Binding Quantity}"/>
-                            <DataGridTextColumn Header="الخصم" Width="120" Foreground="Red" Binding="{Binding Discount, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="السعر" Width="120" Binding="{Binding Price, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="الكمية" Width="120" Binding="{Binding Quantity}"/>
+                            <DataGridTextColumn Header="الخصم" Width="120" Binding="{Binding Discount, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="الاجمالي" Width="120" Binding="{Binding Total, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
                 <Separator Grid.Row="1"/>
-                    <GroupBox Header="المحصلة النهائية" Grid.Row="2">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Margin="4,6" Grid.Row="0" Foreground="Salmon" Text="المبلغ" FontSize="14"/>
-                            <TextBlock Margin="4,6" Grid.Row="1" Foreground="Salmon" Text="المدفوع" FontSize="14"/>
-                            <TextBlock Margin="4,6" Grid.Row="2" Foreground="Salmon" Text="المتبقي" FontSize="14"/>
-                            <TextBlock Margin="4,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="Blue" FontSize="14"/>
-                            <TextBlock Margin="4,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="Green" FontSize="14"/>
-                            <TextBlock Margin="4,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="Red" FontSize="14"/>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
+                <GroupBox Margin="-4" Header="المحصلة النهائية" Grid.Row="2" Padding="0">
+                    <Grid Background="{DynamicResource AccentColorBrush4}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="10,6" Grid.Row="0"  Text="المبلغ" FontSize="14"/>
+                        <TextBlock Margin="10,6" Grid.Row="1"  Text="المدفوع" FontSize="14"/>
+                        <TextBlock Margin="10,6" Grid.Row="2"  Text="المتبقي" FontSize="14"/>
+                        <TextBlock Margin="10,6" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.Total, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
+                        <TextBlock Margin="10,6" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Paid, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
+                        <TextBlock Margin="10,6" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.Remaining, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
         </Grid>
     </DockPanel>
 </UserControl>

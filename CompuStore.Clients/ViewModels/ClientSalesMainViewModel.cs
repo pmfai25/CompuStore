@@ -105,6 +105,7 @@ namespace CompuStore.Clients.ViewModels
         private void Search()
         {
             Items = new ObservableCollection<Orders>(_clientService.GetOrders(Client, DateFrom, DateTo));
+            SelectedItem = Items.FirstOrDefault();
             Total = Items.Sum(x => x.Total);
         }
         private void Refresh()

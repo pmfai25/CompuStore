@@ -45,7 +45,7 @@
                     <TextBox Text="{Binding  Purchase.Total, StringFormat=N2, ValidatesOnDataErrors=True}" IsReadOnly="True"  Grid.Row="2" Grid.Column="1"  Margin="4,6" FontSize="14"/>
 
                     <Label Content="دفع" Grid.Row="3" Margin="4,6"></Label>
-                    <TextBox Background="Yellow" Text="{Binding Purchase.Paid, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Blue"/>
+                    <TextBox Background="Yellow" Text="{Binding Purchase.Paid, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14" />
 
                     <Label Content="المتبقي" Grid.Row="4"  Margin="4,6"></Label>
                     <TextBox Text="{Binding Purchase.Remaining, StringFormat=N2}" IsReadOnly="True"  Grid.Row="4" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Red"/>
@@ -109,18 +109,18 @@
                             <DataGridTemplateColumn Header="السعر" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Foreground="Blue" Text="{Binding Price,StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox  Text="{Binding Price,StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="الكمية" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Foreground="Blue" Width="100" Text="{Binding Quantity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox  Width="100" Text="{Binding Quantity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Foreground="Blue" Binding="{Binding Total, StringFormat=N2}"/>                            
+                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120"  Binding="{Binding Total, StringFormat=N2}"/>                            
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

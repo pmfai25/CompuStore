@@ -1,14 +1,8 @@
-﻿using Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Model;
-using Dapper;
 using Dapper.Contrib.Extensions;
 using System.Data;
-namespace Service.Implementation
+namespace Service
 {
     class AccountService : IAccountService
     {
