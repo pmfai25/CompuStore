@@ -18,7 +18,11 @@ namespace Service
 
         public void Initialize()
         {
+#if DEBUG
             Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db; Version = 3;");
+#else
+            Connection = new SQLiteConnection("Data Source=Inventory.s3db; Version = 3;");  
+#endif
             Connection.Open();
             Connection.Execute("PRAGMA foreign_keys = ON");
             _container.RegisterInstance<IDbConnection>(Connection);
