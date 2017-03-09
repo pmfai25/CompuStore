@@ -7,6 +7,7 @@ using System;
 using CompuStore.Infrastructure;
 using Prism.Events;
 using Model.Events;
+using System.Collections.Generic;
 
 namespace CompuStore.Clients.ViewModels
 {
@@ -40,6 +41,7 @@ namespace CompuStore.Clients.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Client = (Client)(navigationContext.Parameters["Client"]) ?? new Client();
+            Client.Clients = new List<Client>(_clientService.GetAll(true));
             _navigationContext = navigationContext;
             _edit = Client.ID != 0;            
         }

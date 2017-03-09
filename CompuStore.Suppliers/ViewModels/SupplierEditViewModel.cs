@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using Model.Events;
+using System.Collections.Generic;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -67,7 +68,7 @@ namespace CompuStore.Suppliers.ViewModels
             }
             _navigationContext.NavigationService.Journal.GoBack();
         }
-#endregion
+        #endregion
         #region Interface
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -79,9 +80,10 @@ namespace CompuStore.Suppliers.ViewModels
         {
             _navigationContext = navigationContext;
             Supplier = (Supplier)(navigationContext.Parameters["Supplier"]) ?? new Supplier();
+            Supplier.Suppliers = new List<Supplier>(_supplierService.GetAll(true));
             _edit = Supplier.ID != 0;
         }
-#endregion
+        #endregion
         public SupplierEditViewModel(IEventAggregator eventAggregator, ISupplierService supplierService)
         {
             _eventAggregator = eventAggregator;

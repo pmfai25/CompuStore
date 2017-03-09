@@ -2,6 +2,8 @@
 using Prism.Modularity;
 using System.Data;
 using System.Data.SQLite;
+using Dapper;
+using Dapper.Contrib.Extensions;
 namespace Service
 {
     public class ServiceModule : IModule
@@ -16,8 +18,9 @@ namespace Service
 
         public void Initialize()
         {
-            Connection = new SQLiteConnection("Data Source=Inventory.s3db; Version = 3;");
+            Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db; Version = 3;");
             Connection.Open();
+            Connection.Execute("PRAGMA foreign_keys = ON");
             _container.RegisterInstance<IDbConnection>(Connection);
             _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());

@@ -14,7 +14,7 @@ namespace Service
         bool Delete(Client client);
         bool IsDeletable(Client client);
         IEnumerable<Client> SearchBy(string name);
-        IEnumerable<Client> GetAll();
+        IEnumerable<Client> GetAll(bool simple=false);
         Client Find(int id);
         List<Orders> GetOrders(Client client);
         List<Orders> GetOrders(Client client, DateTime dateFrom, DateTime dateTo);

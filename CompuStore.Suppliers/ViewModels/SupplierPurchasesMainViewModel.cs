@@ -103,9 +103,9 @@ namespace CompuStore.Suppliers.ViewModels
             if (Messages.Delete("فاتورة رقم " + _selectedItem.Number))
             {
                 _purchaseService.DeletePurchase( SelectedItem);
-                Items.Remove(SelectedItem);
-                Total = Items.Sum(i => i.Total);
                 _eventAggregator.GetEvent<PurchaseDeleted>().Publish(SelectedItem);
+                Items.Remove(SelectedItem);
+                Total = Items.Sum(i => i.Total);                
             }
         }
         private void Search()

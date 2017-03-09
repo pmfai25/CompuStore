@@ -65,7 +65,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Delete()
         {
-            if (_supplierService.IsDeleteable(SelectedItem))
+            if (!_supplierService.IsDeleteable(SelectedItem))
                 Messages.Error("لايمكن حذف شركة لها عمليات شراء الا بعد حذف المشتريات اولا");
             else
             {

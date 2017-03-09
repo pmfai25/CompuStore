@@ -4,6 +4,7 @@ using Dapper.Contrib.Extensions;
 using Prism.Mvvm;
 using System.ComponentModel;
 using System.Collections;
+using System.Linq;
 
 namespace Model
 {
@@ -90,32 +91,31 @@ namespace Model
                 return true;
             }
         }
+        [Computed]
+        public List<Supplier> Suppliers { get; set; }
 
         private string GetValidationError(string property)
         {
-            string error = null;
             switch(property)
             {
                 case "Name":
                     if (string.IsNullOrWhiteSpace(Name))
-                        error= "يجب ادخال اسم للمورد";
+                        return "يجب ادخال اسم للمورد";
                     break;
                 case "Phone":
+                    Phone.Trim();
+                    var y = Suppliers.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
+                    if (y != null)
+                        return "هذا التليفون مستخدم من قبل مع مورد اخر اسمه" + y.Name;
                     if (string.IsNullOrWhiteSpace(Phone))
-                        error = "يجب ادخال رقم تليفون للمورد";
-                    else
-                    {
-                        Phone.Trim();
-                        foreach (char c in Phone)
-                            if (!char.IsDigit(c))
-                            {
-                                error = "رقم التليفون يجب ان يحتوي على ارقام ففط";
-                                break;
-                            }
-                    }
+                        return "يجب ادخال رقم تليفون للمورد";
+
+                    foreach (char c in Phone)
+                        if (!char.IsDigit(c))
+                            return "رقم التليفون يجب ان يحتوي على ارقام ففط";
                     break;
             }
-            return error;
+            return null;
         }
         #endregion
     }

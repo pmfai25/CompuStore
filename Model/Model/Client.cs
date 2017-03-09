@@ -1,6 +1,8 @@
 ﻿using Prism.Mvvm;
 using Dapper.Contrib.Extensions;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Model
 {
@@ -58,6 +60,8 @@ namespace Model
         }
         [Computed]
         public decimal Remaining { get { return Sales - DelayedPayments - InstantPayments; } }
+        [Computed]
+        public List<Client> Clients { get; set; }
         #region IDataErrorInfo
         string IDataErrorInfo.Error
         {
@@ -90,29 +94,25 @@ namespace Model
 
         private string GetValidationError(string property)
         {
-            string error = null;
             switch (property)
             {
                 case "Name":
                     if (string.IsNullOrWhiteSpace(Name))
-                        error = "يجب ادخال اسم للعميل";
+                        return"يجب ادخال اسم للعميل";
                     break;
                 case "Phone":
+                    Phone.Trim();
+                    var y = Clients.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
+                    if(y!=null)
+                        return "هذا الرقم مسجل من قبل مع العميل " + y.Name;
                     if (string.IsNullOrWhiteSpace(Phone))
-                        error = "يجب ادخال رقم تليفون للعميل";
-                    else
-                    {
-                        Phone.Trim();
-                        foreach (char c in Phone)
-                            if (!char.IsDigit(c))
-                            {
-                                error = "رقم التليفون يجب ان يحتوي على ارقام ففط";
-                                break;
-                            }
-                    }
+                        return "يجب ادخال رقم تليفون للعميل";
+                    foreach (char c in Phone)
+                        if (!char.IsDigit(c))
+                       return "رقم التليفون يجب ان يحتوي على ارقام ففط";
                     break;
             }
-            return error;
+            return null;
         }
         #endregion
     }

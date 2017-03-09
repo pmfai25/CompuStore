@@ -27,9 +27,12 @@ namespace Service
         {
             return Connection.Delete(supplier);
         }
-        public IEnumerable<Supplier> GetAll()
+        public IEnumerable<Supplier> GetAll(bool simple=false)
         {
-            return Connection.GetAll<Supplier>();
+            if (simple)
+                return Connection.Query<Supplier>("Select ID, Name, Phone from Supplier");
+            else
+                return Connection.GetAll<Supplier>();
         }
         public IEnumerable<Supplier> SearchBy(string name)
         {
@@ -49,7 +52,7 @@ namespace Service
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("ID", selectedItem.ID);
-            return Connection.QuerySingle<decimal>("Select Purchases from Supplier where ID=@ID", args) != 0;
+            return Connection.QuerySingle<decimal>("Select Purchases from Supplier where ID=@ID", args) == 0;
         }
 
         public List<Purchase> GetPurchases(Supplier supplier,DateTime dateFrom, DateTime dateTo)
