@@ -25,7 +25,7 @@ namespace CompuStore.Views
             defaultStyle = (Style)Resources["defaultStyle"];
             activeStyle = (Style)Resources["activeStyle"];
             btns = new List<Button>();
-            btns.AddRange(new[] { btnClients,btnItems,   btnPurchases, btnSales,  btnSuppliers });
+            btns.AddRange(new[] { btnClients,btnItems,   btnSales,  btnSuppliers });
             btnSuppliers_Click(btnSuppliers, null);
         }
 
@@ -53,12 +53,6 @@ namespace CompuStore.Views
         {
             SetActive(sender as Button);
         }
-
-        private void btnPurchases_Click(object sender, RoutedEventArgs e)
-        {
-            SetActive(sender as Button);
-        }
-
         private void SetActive(Button button)
         {
             foreach (var b in btns)

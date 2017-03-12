@@ -21,6 +21,7 @@ namespace CompuStore.Reports
 
         public void Initialize()
         {
+            _container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
             _container.RegisterTypeForNavigation<ClientOrdersReport>(RegionNames.ClientOrdersReport);
             _container.RegisterTypeForNavigation<SupplierPurchasesReport>(RegionNames.SupplierPurchasesReport);
         }

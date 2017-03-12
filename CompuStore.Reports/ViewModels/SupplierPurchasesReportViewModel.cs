@@ -19,7 +19,8 @@ namespace CompuStore.Reports.ViewModels
         private DateTime _dateFrom;
         private decimal _total;
         private decimal _paid;
-        private decimal _remaining;       
+        private decimal _remaining;
+        private NavigationContext _navigationContext;
         #endregion
         #region Properties
         public ObservableCollection<SupplierPurchases> Items
@@ -58,6 +59,7 @@ namespace CompuStore.Reports.ViewModels
         }
         #endregion
         #region Commands
+        public DelegateCommand BackCommand => new DelegateCommand(()=>_navigationContext.NavigationService.Journal.GoBack());
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
         public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
@@ -88,6 +90,7 @@ namespace CompuStore.Reports.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            _navigationContext = navigationContext;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

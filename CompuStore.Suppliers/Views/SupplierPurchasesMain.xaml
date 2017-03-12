@@ -7,7 +7,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.InputBindings>
-        <KeyBinding Key="BrowserBack" Command="{Binding BackCommand}"></KeyBinding>
+        <KeyBinding Key="Backspace" Command="{Binding BackCommand}"></KeyBinding>
     </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
         

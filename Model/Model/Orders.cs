@@ -100,6 +100,9 @@ namespace Model
                 case "Paid":
                     if (Paid < 0)
                         error = " المدفوع يجب ان يكون اكبر من او يساوي صفر";
+                    else
+                    if (Remaining < 0)
+                        error = "المدفوع يجب ان يكون اقل من الاجمالي";
                     break;
                 case "Total":
                     if (Total == 0)
