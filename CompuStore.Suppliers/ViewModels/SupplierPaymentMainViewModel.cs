@@ -102,6 +102,8 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number.ToString())) return;
             if (!_supplierPaymentService.Delete(SelectedItem))
             {

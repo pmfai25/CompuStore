@@ -4,6 +4,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
+    
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>

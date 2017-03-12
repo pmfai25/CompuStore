@@ -94,6 +94,8 @@ namespace CompuStore.Clients.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if (Messages.Delete("فاتورة رقم " + _selectedItem.Number))
             {
                 _orderService.DeleteOrder(SelectedItem);

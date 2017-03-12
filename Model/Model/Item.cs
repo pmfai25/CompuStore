@@ -114,5 +114,9 @@ namespace Model
             return error;
         }
         #endregion
+        public Item()
+        {
+            Items = new List<Item>();
+        }
     }
 }

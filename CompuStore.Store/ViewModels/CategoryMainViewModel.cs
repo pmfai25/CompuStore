@@ -85,6 +85,8 @@ namespace CompuStore.Store.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if (Messages.Delete(SelectedItem.Name))
             {
                 _categoryService.Delete(SelectedItem);

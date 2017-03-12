@@ -5,6 +5,9 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
+    </UserControl.InputBindings>
     <DockPanel>
         <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>

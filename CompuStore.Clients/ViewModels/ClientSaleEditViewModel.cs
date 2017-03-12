@@ -69,6 +69,8 @@ namespace CompuStore.Clients.ViewModels
         #region Methods
         private void Delete()
         {
+            if (SelectedDetail == null)
+                return;
             if (!Messages.Delete(SelectedDetail.Name))
                 return;
             if (SelectedDetail.OrderItemID != 0)

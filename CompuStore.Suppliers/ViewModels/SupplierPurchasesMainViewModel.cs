@@ -95,6 +95,8 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if(!_purchaseService.IsDeletable(SelectedItem))
             {
                 Messages.Error("لا يمكن حذف هذة الفاتورة لانه توجد مبيعات مرتبطة بالاصناف التي تم شراءها في هذة الفاتورة");

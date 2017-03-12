@@ -101,7 +101,7 @@ namespace Model
                         return"يجب ادخال اسم للعميل";
                     break;
                 case "Phone":
-                    Phone.Trim();
+                    
                     var y = Clients.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
                     if(y!=null)
                         return "هذا الرقم مسجل من قبل مع العميل " + y.Name;
@@ -115,5 +115,9 @@ namespace Model
             return null;
         }
         #endregion
+        public Client()
+        {
+            Clients = new List<Client>();
+        }
     }
 }

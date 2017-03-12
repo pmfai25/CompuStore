@@ -65,6 +65,8 @@ namespace CompuStore.Clients.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if (!_clientService.IsDeletable(SelectedItem))
                 Messages.Error("لايمكن حذف عميل له عمليات بيع الا بعد حذف المبيعات اولا");
             else

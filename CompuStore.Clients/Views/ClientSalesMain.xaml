@@ -65,6 +65,9 @@
             </Grid.ColumnDefinitions>
             <GroupBox Header="الفواتير" Grid.Column="0" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"/>
+                    </DataGrid.InputBindings>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="التاريخ" Width="*" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>

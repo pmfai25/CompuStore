@@ -6,7 +6,11 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.InputBindings>
+        <KeyBinding Key="BrowserBack" Command="{Binding BackCommand}"></KeyBinding>
+    </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
+        
         <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>
                 <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="مشتريات المورد"/>
@@ -63,6 +67,9 @@
             </Grid.ColumnDefinitions>
             <GroupBox Header="الفواتير" Grid.Column="0" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"  IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
+                    </DataGrid.InputBindings>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="رقم الفاتورة" Width="*" FontWeight="DemiBold" Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="التاريخ" Width="*" Foreground="Blue" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>

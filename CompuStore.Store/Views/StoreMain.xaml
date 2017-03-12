@@ -47,6 +47,9 @@
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>
         <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"/>
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="الصنف" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="الباركود" Width="150" Binding="{Binding Serial}"/>

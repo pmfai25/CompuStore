@@ -70,6 +70,8 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Delete()
         {
+            if (SelectedDetail == null)
+                return;
             if (SelectedDetail.PurchaseItemID != 0 && SelectedDetail.Available != SelectedDetail.Quantity)
             {
                 Messages.Error("لا يمكن حذف هذا الصنف " + SelectedDetail.Name + " لانه تمت عليه عمليات بيع");

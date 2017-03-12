@@ -101,5 +101,9 @@ namespace Model
             return error;
         }
         #endregion
+        public Purchase()
+        {
+            SupplierPurchases = new List<Purchase>();
+        }
     }
 }

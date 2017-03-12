@@ -109,5 +109,9 @@ namespace Model
             return error;
         }
         #endregion
+        public Orders()
+        {
+            ClientOrders = new List<Orders>();
+        }
     }
 }

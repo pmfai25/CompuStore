@@ -103,7 +103,6 @@ namespace Model
                         return "يجب ادخال اسم للمورد";
                     break;
                 case "Phone":
-                    Phone.Trim();
                     var y = Suppliers.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
                     if (y != null)
                         return "هذا التليفون مستخدم من قبل مع مورد اخر اسمه" + y.Name;
@@ -118,5 +117,9 @@ namespace Model
             return null;
         }
         #endregion
+        public Supplier()
+        {
+            Suppliers = new List<Supplier>();
+        }
     }
 }

@@ -93,6 +93,8 @@ namespace CompuStore.Store.ViewModels
         }
         private void Delete()
         {
+            if (SelectedItem == null)
+                return;
             if (!_itemService.IsDeletable(SelectedItem))
                 Messages.Error("لايمكن حذف صنف له عمليات بيع او شراء الا بعد حذف المبيعات والمشتريات اولا");
             else
