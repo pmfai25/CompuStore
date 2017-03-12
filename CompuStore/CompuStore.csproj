@@ -176,7 +176,7 @@
       <Name>CompuStore.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\CompuStore.Register\CompuStore.Register.csproj">
-      <Project>{AB8B448C-DD74-4D60-A041-3E5D03A32180}</Project>
+      <Project>{ab8b448c-dd74-4d60-a041-3e5d03a32180}</Project>
       <Name>CompuStore.Register</Name>
     </ProjectReference>
     <ProjectReference Include="..\CompuStore.Reports\CompuStore.Reports.csproj">

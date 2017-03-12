@@ -5,19 +5,18 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-
+using Service;
+using Model;
 namespace CompuStore.Register.ViewModels
 {
     public class RegisterNowViewModel : BindableBase, IConfirmNavigationRequest
     {
         private string serial;
-        bool result;
+        private bool result;
         private string color;
+        private ISettingsService _service;
         private NavigationContext _navigationContext;
         private string finger;
-        private IEventAggregator _eventAggregator;
 
         public string Finger
         {
@@ -42,8 +41,9 @@ namespace CompuStore.Register.ViewModels
             result=RegisterManager.IsValidSerial(Serial);
             if (result)
             {
-                Color = "C";
-                _eventAggregator.GetEvent<SerialValid>().Publish(Serial);
+                Settings settings = _service.Get();
+                settings.Serial = Serial;
+                _service.Update(settings);
                 Messages.Notification("تم التسجيل بنجاح");
                 _navigationContext.NavigationService.Journal.GoBack();
             }
@@ -71,9 +71,9 @@ namespace CompuStore.Register.ViewModels
         {
         }
 
-        public RegisterNowViewModel(IEventAggregator eventAggregator)
+        public RegisterNowViewModel(ISettingsService service)
         {
-            _eventAggregator = eventAggregator;
+            _service = service;
         }
     }
 }

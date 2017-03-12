@@ -25,13 +25,6 @@ namespace CompuStore.Register
             _container = container;
             _settingsService = settingsService;
             _regionManager = regionManager;
-            eventAggregator.GetEvent<SerialValid>().Subscribe(UpdateSettings);
-        }
-
-        private void UpdateSettings(string serial)
-        {
-            settings.Serial = serial;
-            _settingsService.Update(settings);
         }
 
         public async void Initialize()
