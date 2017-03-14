@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace CompuStore.ViewModels
@@ -36,7 +37,7 @@ namespace CompuStore.ViewModels
         }
         public DelegateCommand<object> LoginCommand => new DelegateCommand<object>(LoginUser);
         public DelegateCommand ExitCommand => new DelegateCommand(()=>Application.Current.Shutdown());
-
+        public DelegateCommand<KeyEventArgs> PasswordEnterCommand => new DelegateCommand<KeyEventArgs>(e=> { if (e.Key != Key.Enter) return; LoginUser(e.Source); });
         private void LoginUser(object password)
         {
             PasswordBox box = (PasswordBox)password;
@@ -106,7 +107,10 @@ namespace CompuStore.ViewModels
 
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
         {
-            continuationCallback(successful);
+            if (navigationContext.Uri == new Uri("RegisterNow",UriKind.Relative))
+                continuationCallback(true);
+            else
+                continuationCallback(successful);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -121,7 +125,6 @@ namespace CompuStore.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            
         }
     }
 }

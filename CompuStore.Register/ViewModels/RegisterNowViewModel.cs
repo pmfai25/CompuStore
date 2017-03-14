@@ -34,7 +34,7 @@ namespace CompuStore.Register.ViewModels
             set { SetProperty(ref serial, value); }
         }
 
-        public DelegateCommand RegisterCommand => new DelegateCommand(Register, () => !string.IsNullOrWhiteSpace(Serial)).ObservesProperty(() => Serial);
+        public DelegateCommand RegisterCommand => new DelegateCommand(Register);
 
         private void Register()
         {
@@ -44,7 +44,6 @@ namespace CompuStore.Register.ViewModels
                 Settings settings = _service.Get();
                 settings.Serial = Serial;
                 _service.Update(settings);
-                Messages.Notification("تم التسجيل بنجاح");
                 _navigationContext.NavigationService.Journal.GoBack();
             }
             else

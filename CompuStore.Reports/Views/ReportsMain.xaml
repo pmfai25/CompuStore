@@ -48,14 +48,14 @@
                 <Controls:Tile Title="اصناف مطلوبة" Style="{StaticResource LargeTileStyle}" Background="#1E90FF">
                     <iconPacks:PackIconFontAwesome Kind="ExclamationTriangle" Width="140" Height="80"/>
                 </Controls:Tile>
-                <StackPanel Orientation="Horizontal">
+                <!--<StackPanel Orientation="Horizontal">
                     <Controls:Tile Title="الاصناف الاكثر بيعا" Style="{StaticResource SmallTileStyle}" Background="Gold">
                         <iconPacks:PackIconEntypo Kind="ThumbsUp" Width="100" Height="60"  />
                     </Controls:Tile>
                     <Controls:Tile Title="الاصناف الاقل بيعا" Style="{StaticResource SmallTileStyle}" Background="Silver">
                         <iconPacks:PackIconEntypo Kind="ThumbsDown" Width="100" Height="60"  />
                     </Controls:Tile>
-                </StackPanel>
+                </StackPanel>-->
 
             </StackPanel>
         </Grid>

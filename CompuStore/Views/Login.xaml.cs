@@ -10,6 +10,7 @@ namespace CompuStore.Views
         public Login()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => txtPassword.Focus();
         }
     }
 }

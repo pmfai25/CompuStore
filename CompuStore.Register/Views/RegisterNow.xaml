@@ -5,35 +5,27 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converter="clr-namespace:CompuStore.Register.Converter"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
     <UserControl.Resources>
         <converter:ColorConverter x:Key="Converter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid FlowDirection="LeftToRight" Background="{DynamicResource AccentColorBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel FlowDirection="LeftToRight" Grid.Row="1" Grid.Column="1" Background="{DynamicResource AccentColorBrush4}">
-            <TextBlock Margin="10,10,10,40" Text="انتهت الفترة التجريبية ويجب التسجيل الان" HorizontalAlignment="Center" FontSize="28" Foreground=" Red"/>
-            <TextBlock Margin="10,5" Text="Send this code to Eng. Hisham Shehata to get valid serial" FontSize="16" Foreground="Blue"/>
-            <TextBox IsReadOnly="True" Text="{Binding Finger}" HorizontalContentAlignment="Center" Margin="10,5,10,5" />
-            <TextBlock Margin="10,5" Text="Enter Serial Here" FontSize="16" Foreground="Blue"/>
-            <TextBox Margin="10,5,10,5" Text="{Binding Serial, UpdateSourceTrigger=PropertyChanged}" Background="{Binding Color,Converter={StaticResource ResourceKey=Converter}}" HorizontalContentAlignment="Center"/>
-            <Button Margin="10,5" Command="{Binding RegisterCommand}" Width="200" Height="40" Style="{StaticResource SquareButtonStyle}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Checkmark" Foreground="Blue"/>
-                        <TextBlock FontSize="14" VerticalAlignment="Center" ><Run Text="تسجيل"/></TextBlock>
-                    </StackPanel>
-                </Button.Content>
+        <TextBlock Grid.ColumnSpan="2" FontFamily="Arial" FontSize="32" Foreground="White" Margin="10,20,10,30" HorizontalAlignment="Center" Text="تسجيل البرنامج "/>
+        <TextBox IsReadOnly="True" Text="{Binding Finger}" Grid.Row="1"  Margin="10,5" HorizontalAlignment="Stretch"/>
+        <TextBox Text="{Binding Serial, UpdateSourceTrigger=PropertyChanged}" Background="{Binding Color,Converter={StaticResource ResourceKey=Converter}}" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Enter Serial Here" Grid.Row="2" Margin="10,5" HorizontalAlignment="Stretch">
+            
+        </TextBox>
+        <Button Background="Lime" Margin="10,30,10,60" Grid.Row="3" Command="{Binding RegisterCommand}" Style="{StaticResource SquareButtonStyle}">
+            <iconPacks:PackIconEntypo Kind="Check" Width="40" Height="25" Foreground="White"/>
             </Button>
-        </StackPanel>
     </Grid>
 </UserControl>

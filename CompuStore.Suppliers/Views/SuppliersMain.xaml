@@ -15,8 +15,12 @@
         </Border>
         <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">           
-            <Button Command="{Binding AddCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="جديد">
-                <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" />
+            <Button Padding="4" Command="{Binding AddCommand}"  Style="{DynamicResource SquareButtonStyle}">
+                <StackPanel>                    
+                    <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" HorizontalAlignment="Center" Margin="3" />
+                    <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
             </Button>
             <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
                 <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
