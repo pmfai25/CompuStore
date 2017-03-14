@@ -25,11 +25,6 @@ namespace Model
             get { return password; }
             set { SetProperty(ref password, value); }
         }
-        private int _role;
-        public int Role
-        {
-            get { return _role; }
-            set { SetProperty(ref _role, value); }
-        }
+        
     }
 }

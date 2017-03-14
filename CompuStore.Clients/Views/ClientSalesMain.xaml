@@ -13,8 +13,6 @@
                 <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
             </StackPanel>
         </Border>
-        <Label  Foreground="Salmon" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="المبيعات"/>
-        <Label  Foreground="blue" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
         <Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
@@ -92,7 +90,7 @@
                     </DataGrid>
                 </GroupBox>
                 <Separator Grid.Row="1"/>
-                <GroupBox Margin="-4" Header="المحصلة النهائية" Grid.Row="2" Padding="0">
+                <GroupBox Margin="4,6" Header="المحصلة النهائية" Grid.Row="2" Padding="0">
                     <Grid Background="{DynamicResource AccentColorBrush4}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>

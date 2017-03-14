@@ -10,6 +10,7 @@ namespace CompuStore.Store.Views
         public StoreMain()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => txtSearch.Focus();
         }
 
     }

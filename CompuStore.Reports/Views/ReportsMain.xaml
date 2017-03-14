@@ -13,7 +13,7 @@
         </Style>
 
         <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
-            <Setter Property="Width" Value="150" />
+            <Setter Property="Width" Value="147" />
             <Setter Property="Height" Value="125" />
         </Style>
     </UserControl.Resources>
@@ -25,25 +25,39 @@
             </StackPanel>
         </Border>
         <Separator DockPanel.Dock="Top"/>
-        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Controls:Tile Title="المشتريات" Style="{StaticResource LargeTileStyle}" Background="Salmon" Margin="3" Command="{Binding PurchasesCommand}">
-                <iconPacks:PackIconModern Kind="CurrencyDollar"  Width="140" Height="80"/>
-            </Controls:Tile>
-            <Controls:Tile Title="المبيعات" Style="{StaticResource LargeTileStyle}" Background="#A200FF" Margin="3" Command="{Binding OrdersCommand}">
-                <iconPacks:PackIconModern Kind="Money" Width="140" Height="80"/>
-            </Controls:Tile>
-            <Controls:Tile Title="الخزنة" Style="{StaticResource LargeTileStyle}" Background="#FF0097" Command="{Binding SafeCommand}" >
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="5">
+                <Controls:Tile Title="المشتريات" Style="{StaticResource LargeTileStyle}" Background="Salmon" Margin="3" Command="{Binding PurchasesCommand}">
+                    <iconPacks:PackIconModern Kind="CurrencyDollar"  Width="140" Height="80"/>
+                </Controls:Tile>
+                <Controls:Tile Title="المبيعات" Style="{StaticResource LargeTileStyle}" Background="#A200FF" Margin="3" Command="{Binding OrdersCommand}">
+                    <iconPacks:PackIconModern Kind="Money" Width="140" Height="80"/>
+                </Controls:Tile>
+                <Controls:Tile Title="الخزنة" Style="{StaticResource LargeTileStyle}" Background="#FF0097" Command="{Binding SafeCommand}" >
                     <iconPacks:PackIconFontAwesome Kind="Money"  Width="140" Height="80"/>
-            </Controls:Tile>
-            <Controls:Tile Title="حركة الاصناف" Style="{StaticResource LargeTileStyle}" Background="#F09609">
-                <StackPanel Orientation="Vertical">
-                    <iconPacks:PackIconFontAwesome Margin="0,2" Kind="ArrowLeft"  Width="140" Height="38"/>
-                    <iconPacks:PackIconFontAwesome Margin="0,2" Kind="ArrowRight"  Width="140" Height="38"/>
+                </Controls:Tile>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="5">
+                <Controls:Tile Title="حركة الاصناف" Style="{StaticResource LargeTileStyle}" Background="#F09609">
+                    <iconPacks:PackIconModern Kind="Stock" Width="140" Height="80" />
+                </Controls:Tile>
+                <Controls:Tile Title="اصناف مطلوبة" Style="{StaticResource LargeTileStyle}" Background="#1E90FF">
+                    <iconPacks:PackIconFontAwesome Kind="ExclamationTriangle" Width="140" Height="80"/>
+                </Controls:Tile>
+                <StackPanel Orientation="Horizontal">
+                    <Controls:Tile Title="الاصناف الاكثر بيعا" Style="{StaticResource SmallTileStyle}" Background="Gold">
+                        <iconPacks:PackIconEntypo Kind="ThumbsUp" Width="100" Height="60"  />
+                    </Controls:Tile>
+                    <Controls:Tile Title="الاصناف الاقل بيعا" Style="{StaticResource SmallTileStyle}" Background="Silver">
+                        <iconPacks:PackIconEntypo Kind="ThumbsDown" Width="100" Height="60"  />
+                    </Controls:Tile>
                 </StackPanel>
-            </Controls:Tile>
-            <Controls:Tile Title="اصناف تحت الطلب" Style="{StaticResource LargeTileStyle}" Background="#1E90FF" />
-            <Controls:Tile Title="الاصناف الاكثر بيعا" Style="{StaticResource LargeTileStyle}" Background="#1E90FF" />
-            <Controls:Tile Title="الاصناف الاقل بيعا" Style="{StaticResource LargeTileStyle}" Background="Green" />
-        </WrapPanel>
+
+            </StackPanel>
+        </Grid>
     </DockPanel>
 </UserControl>

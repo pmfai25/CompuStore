@@ -15,6 +15,7 @@ namespace CompuStore.Infrastructure
         public const string SupplierPurchasesReport = "SupplierPurchasesReport";        
         public const string ClientOrdersReport = "ClientOrdersReport";
         public const string ReportsMain = "ReportsMain";
+        public const string Login = "Login";
         #region Store Module
         public const string StoreMain = "StoreMain";
         public const string StoreEdit = "StoreEdit";

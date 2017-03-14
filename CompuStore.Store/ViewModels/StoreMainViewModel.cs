@@ -106,11 +106,15 @@ namespace CompuStore.Store.ViewModels
         }
         private void Search(KeyEventArgs e)
         {
-            if (e.Key != Key.Enter)
+            
+                if (e.Key != Key.Enter)
                 return;
             long n;
-            if(long.TryParse(SearchText, out n))
+            if (long.TryParse(SearchText, out n))
+            {
                 Items = new ObservableCollection<Item>(_itemService.SearchBy(n));
+                SearchText = "";
+            }
             else
                 Items = new ObservableCollection<Item>(_itemService.SearchBy(SearchText));
         }

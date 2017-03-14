@@ -161,12 +161,15 @@ namespace CompuStore.Clients.ViewModels
                 var item = _itemService.SearchBySerial(s);
                 if (item == null)
                 {
-                    Messages.Notification("لايوجد صنف بهذا الباركود");
+                    Messages.Notification(" لايوجد صنف بهذا الباركود "+ SearchText);
+                    SearchText = "";
                     return;
                 }
+                
                 if(item.Quantity==0)
                 {
                     Messages.Notification("لا توجد كمية متاحة من " + item.Name);
+                    SearchText = "";
                     return;
                 }
                 List<PurchaseItem> purchaseItems = _purchaseService.GetPurchaseItemsWithStock(item);
@@ -175,6 +178,7 @@ namespace CompuStore.Clients.ViewModels
                 if(selectedPurchaseItem==null)
                 {
                     Messages.Notification("لا توجد كمية متاحة من " + item.Name);
+                    SearchText = "";
                     return;
                 }
                 OrderDetails od = new OrderDetails();
@@ -189,7 +193,7 @@ namespace CompuStore.Clients.ViewModels
                 od.Price = item.Price;
                 od.Quantity = 1;
             }
-            
+            SearchText = "";
         }
         #endregion
         #region Interface

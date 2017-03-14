@@ -77,7 +77,7 @@
                 <DockPanel LastChildFill="True"  >
                     <ToolBar HorizontalAlignment="Left"  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
                         <Label Content="بحث بالباركود: " VerticalAlignment="Center"/>
-                        <TextBox VerticalAlignment="Center" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150"  Background="Yellow">
+                        <TextBox Name="txtSearch" VerticalAlignment="Center" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150"  Background="Yellow">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="KeyDown">
                                     <prism:InvokeCommandAction Command="{Binding SearchCommand}"/>

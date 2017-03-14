@@ -14,11 +14,14 @@ using Service;
 using System.Globalization;
 using System;
 using CompuStore.Register;
+using Prism.Regions;
 
 namespace CompuStore
 {
     class Bootstrapper : UnityBootstrapper
     {
+        private IRegionManager regionManager;
+
         protected override DependencyObject CreateShell()
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-eg");
@@ -30,7 +33,9 @@ namespace CompuStore
         }
         protected override void ConfigureContainer()
         {
-            base.ConfigureContainer();                      
+            base.ConfigureContainer();
+            regionManager = Container.Resolve<IRegionManager>();
+            Container.RegisterTypeForNavigation<Login>(RegionNames.Login);
         }
 
         
@@ -47,6 +52,7 @@ namespace CompuStore
         }
         protected override void ConfigureModuleCatalog()
         {
+            
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             moduleCatalog.AddModule(typeof(ServiceModule));
@@ -54,8 +60,8 @@ namespace CompuStore
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));
             moduleCatalog.AddModule(typeof(ReportsModule));
-            moduleCatalog.AddModule(typeof(RegisterModule));
-            
+            moduleCatalog.AddModule(typeof(RegisterModule));   
+             
         }
     }
 }

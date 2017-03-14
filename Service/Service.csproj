@@ -141,6 +141,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CompuStore.Infrastructure\CompuStore.Infrastructure.csproj">
+      <Project>{CB38702B-7E25-4896-B74D-727F3486DB86}</Project>
+      <Name>CompuStore.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{e3090564-2b83-4b09-948e-a9f1ca887e97}</Project>
       <Name>Model</Name>

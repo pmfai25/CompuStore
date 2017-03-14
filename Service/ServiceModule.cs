@@ -4,15 +4,19 @@ using System.Data;
 using System.Data.SQLite;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using Prism.Regions;
+using CompuStore.Infrastructure;
+
 namespace Service
 {
     public class ServiceModule : IModule
     {
         IUnityContainer _container;
         SQLiteConnection Connection;
-        
-        public ServiceModule(IUnityContainer container)
+        IRegionManager _regionManager;
+        public ServiceModule(IUnityContainer container, IRegionManager regionManager)
         {
+            _regionManager = regionManager;
             _container = container;            
         }
 
@@ -36,6 +40,7 @@ namespace Service
             _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IAccountService, AccountService>(new ContainerControlledLifetimeManager());
+            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.Login);
         }
     }
 }

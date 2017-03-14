@@ -180,10 +180,12 @@ namespace CompuStore.Suppliers.ViewModels
             var item = _itemService.SearchBySerial(s);
             if (item == null)
             {
-                Messages.Notification("لايوجد صنف بهذا الباركود");
+                Messages.Notification(" لايوجد صنف بهذا الباركود " + SearchText);
+                SearchText = "";
                 return;
             }
             OnItemAdded(item);
+            SearchText = "";
         }
         private void OnItemAdded(Item obj)
         {

@@ -10,6 +10,7 @@ namespace CompuStore.Suppliers.Views
         public SupplierPurchaseEdit()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => txtSearch.Focus();
         }
     }
 }

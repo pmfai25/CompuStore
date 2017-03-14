@@ -21,5 +21,10 @@ namespace KeyGenerator
         {
             textBox2.Text = Cryptor.Encrypt(textBox1.Text);
         }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e.KeyCode);
+        }
     }
 }

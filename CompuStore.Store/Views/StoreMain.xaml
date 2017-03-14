@@ -27,7 +27,7 @@
             <Separator></Separator>
             <TextBlock VerticalAlignment="Center" Margin="2">اختار قسم</TextBlock>
             <ComboBox  Margin="2,0,4,0" Width="150" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" ></ComboBox>
-            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Name="txtSearch" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="بحث بالاسم او الباركود" VerticalAlignment="Center" Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="KeyDown">
                         <prism:InvokeCommandAction Command="{Binding SearchCommand}"/>

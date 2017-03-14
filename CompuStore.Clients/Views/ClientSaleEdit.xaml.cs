@@ -10,6 +10,7 @@ namespace CompuStore.Clients.Views
         public ClientSaleEdit()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => txtSearch.Focus();
         }
     }
 }
