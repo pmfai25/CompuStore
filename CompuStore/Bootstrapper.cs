@@ -35,6 +35,7 @@ namespace CompuStore
         {
             base.ConfigureContainer();
             regionManager = Container.Resolve<IRegionManager>();
+            Container.RegisterTypeForNavigation<MainSettings>("Settings");
             Container.RegisterTypeForNavigation<Login>(RegionNames.Login);
         }
 

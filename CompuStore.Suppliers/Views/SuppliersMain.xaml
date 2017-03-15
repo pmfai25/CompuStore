@@ -9,13 +9,13 @@
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>
-                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
+                <Label  Foreground="{DynamicResource IdealForegroundColorBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
                 <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
             </StackPanel>
         </Border>
         <Separator DockPanel.Dock="Top"/>
-        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">           
-            <Button Padding="4" Command="{Binding AddCommand}"  Style="{DynamicResource SquareButtonStyle}">
+        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">
+            <Button Padding="4" Command="{Binding AddCommand}"  Style="{DynamicResource AccentedSquareButtonStyle}">
                 <StackPanel>                    
                     <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" HorizontalAlignment="Center" Margin="3" />
                     <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
