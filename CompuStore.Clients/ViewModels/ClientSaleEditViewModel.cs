@@ -32,6 +32,7 @@ namespace CompuStore.Clients.ViewModels
         private string _searchText;
         private OrderDetails _selectedDetail;
         private bool _open, _completed, _edit;
+        private Account _account;
         #endregion
         #region Properties
         public ObservableCollection<OrderDetails> Details
@@ -218,8 +219,9 @@ namespace CompuStore.Clients.ViewModels
             if (_open)
                 return;
             _navigationContext = navigationContext;
+            
             Client = (Client)navigationContext.Parameters["Client"];
-            Order = (Orders)navigationContext.Parameters["Order"] ?? new Orders() { Date = DateTime.Today, ClientID = Client.ID };
+            Order = (Orders)navigationContext.Parameters["Order"] ?? new Orders() { Date = DateTime.Today, ClientID = Client.ID, AccountID=_account.ID};
             Order.ClientOrders = _clientService.GetOrders(Client);
             _edit = Order.ID != 0;
             if (!_edit)
@@ -234,8 +236,9 @@ namespace CompuStore.Clients.ViewModels
             _open = true;
         }
         #endregion
-        public ClientSaleEditViewModel(IOrderService orderService,IPurchaseService purchaseService, IItemService itemService, IClientService clientService, IEventAggregator eventAggregator)
+        public ClientSaleEditViewModel(IOrderService orderService,IPurchaseService purchaseService, IItemService itemService, IClientService clientService, IEventAggregator eventAggregator, Account account)
         {
+            _account = account;
             _purchaseService = purchaseService;
             _clientService = clientService;
             _itemService = itemService;

@@ -37,7 +37,7 @@
                 <Controls:Tile Title="المبيعات" Style="{StaticResource LargeTileStyle}" Background="#A200FF" Margin="3" Command="{Binding OrdersCommand}">
                     <iconPacks:PackIconModern Kind="Money" Width="140" Height="80"/>
                 </Controls:Tile>
-                <Controls:Tile Title="الخزنة" Style="{StaticResource LargeTileStyle}" Background="#FF0097" Command="{Binding SafeCommand}" >
+                <Controls:Tile Title="الخزنة" Style="{StaticResource LargeTileStyle}" Background="#FF0097" Command="{Binding IncomeOutcomeCommand}" >
                     <iconPacks:PackIconFontAwesome Kind="Money"  Width="140" Height="80"/>
                 </Controls:Tile>
             </StackPanel>

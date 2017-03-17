@@ -1,7 +1,9 @@
 ﻿using CompuStore.Infrastructure;
 using Microsoft.Practices.Unity;
 using Model;
+using Model.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Service;
@@ -51,12 +53,15 @@ namespace CompuStore.ViewModels
             successful = true;
             Color = Colors.White;
             _container.RegisterInstance<Account>(SelectedAccount,new ContainerControlledLifetimeManager());
-            switch(SelectedAccount.Username)
+            switch(SelectedAccount.ID)
             {
-                case "Admin":
+                case 1:                    
                     _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain);
                     break;
                 default:
+                    _eventAggregator.GetEvent<NormalUserLoggedIn>().Publish();
+                    _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain);
+
                     break;
             }
         }
@@ -67,6 +72,7 @@ namespace CompuStore.ViewModels
             set { SetProperty(ref _accounts, value); }
         }        
         private bool successful;
+        private IEventAggregator _eventAggregator;
 
         public Account SelectedAccount
         {
@@ -95,8 +101,9 @@ namespace CompuStore.ViewModels
             }
         }
 
-        public LoginViewModel(IUnityContainer container, IAccountService accountService,IRegionManager regionManager)
+        public LoginViewModel(IUnityContainer container, IAccountService accountService,IRegionManager regionManager, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             _container = container;
             _accountService = accountService;

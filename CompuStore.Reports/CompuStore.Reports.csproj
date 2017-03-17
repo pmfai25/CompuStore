@@ -112,10 +112,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ClientOrdersReportViewModel.cs" />
+    <Compile Include="ViewModels\IncomeOutcomeReportViewModel.cs" />
+    <Compile Include="ViewModels\ItemTransactionsReportViewModel.cs" />
     <Compile Include="ViewModels\ReportsMainViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchasesReportViewModel.cs" />
     <Compile Include="Views\ClientOrdersReport.xaml.cs">
       <DependentUpon>ClientOrdersReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IncomeOutcomeReport.xaml.cs">
+      <DependentUpon>IncomeOutcomeReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemTransactionsReport.xaml.cs">
+      <DependentUpon>ItemTransactionsReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportsMain.xaml.cs">
       <DependentUpon>ReportsMain.xaml</DependentUpon>
@@ -137,6 +145,14 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ClientOrdersReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IncomeOutcomeReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemTransactionsReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

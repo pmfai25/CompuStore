@@ -73,14 +73,8 @@ namespace CompuStore.Reports.ViewModels
         #region Commands
         public DelegateCommand BackCommand => new DelegateCommand(() => _navigationContext.NavigationService.Journal.GoBack());
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
-        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Mehtods
-        private void Refresh()
-        {
-            Items = new ObservableCollection<ClientOrders>(_orderService.GetOrders());
-            FixData();           
-        }
         private void Search()
         {
             Items = new ObservableCollection<ClientOrders>(_orderService.GetOrders(DateFrom, DateTo));
@@ -90,11 +84,7 @@ namespace CompuStore.Reports.ViewModels
         {
             Total = Paid = Remaining = CurrentProfit = FinalProfit = 0;
             if(Items.Count==0)
-            {
-                DateTo = DateFrom = DateTime.Today;
                 return;
-            }
-            DateFrom = DateTo = Items.First().Date;
             foreach(var i in Items)
             {
                 if (i.Date < _dateFrom)
@@ -109,8 +99,6 @@ namespace CompuStore.Reports.ViewModels
             Remaining = Total - Paid;
             OnPropertyChanged("Total");
             OnPropertyChanged("Paid");
-            OnPropertyChanged("DateFrom");
-            OnPropertyChanged("DateTo");
             OnPropertyChanged("FinalProfit");
             OnPropertyChanged("CurrentProfit");
         }
@@ -131,7 +119,8 @@ namespace CompuStore.Reports.ViewModels
         public ClientOrdersReportViewModel(IOrderService orderService)
         {
             _orderService = orderService;
-            Refresh();
+            DateTo = DateFrom = DateTime.Today;
+            Search();
         }
     }
 }

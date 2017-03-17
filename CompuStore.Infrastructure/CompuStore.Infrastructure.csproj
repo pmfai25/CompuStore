@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\PositiveNegativeColorConverter.cs" />
+    <Compile Include="Converters\VisibleHiddenBoolConverter.cs" />
     <Compile Include="DataUtils.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="RegionNames.cs" />

@@ -1,79 +1,96 @@
-﻿using MahApps.Metro;
+﻿using CompuStore.Infrastructure;
+using Model;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
+using Service;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace CompuStore.ViewModels
 {
-    public class MainSettingsViewModel : BindableBase
+    public class MainSettingsViewModel : BindableBase, INavigationAware
     {
-        public List<AccentColorMenuData> AccentColors { get; set; }
-        private AccentColorMenuData selectedAccent;
-        public AccentColorMenuData SelectedAccent
+        private List<Account> deleteList, updateList, insertList;
+        private NavigationContext _navigationContext;
+        private IAccountService _accountService;
+        private Account _selectedItem;
+        private ObservableCollection<Account> _items;
+        public ObservableCollection<Account> Items
         {
-            get { return selectedAccent; }
-            set { SetProperty(ref selectedAccent, value); DoChange(); }
+            get { return _items; }
+            set { SetProperty(ref _items, value); }
         }
-        private AppThemeMenuData selectedTheme;
-        public AppThemeMenuData SelectedTheme
+        public Account SelectedItem
         {
-            get { return selectedTheme; }
-            set { SetProperty(ref selectedTheme, value); DoChange(); }
+            get { return _selectedItem; }
+            set { SetProperty(ref _selectedItem, value); }
+        }
+        public DelegateCommand AddCommand => new DelegateCommand(()=>Items.Add(new Account()));
+        public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
+        public DelegateCommand CancelCommand => new DelegateCommand(()=>_navigationContext.NavigationService.Journal.GoBack());
+        public DelegateCommand SaveCommand => new DelegateCommand(Save);
+
+        private void Save()
+        {
+            if(Items.Any(x=>!x.IsValid))
+            {
+                Messages.Error("يوجد اخطاء في بعض البيانات");
+                return;
+            }
+            foreach (var i in Items)
+                if (i.ID == 0)
+                    insertList.Add(i);
+                else
+                    updateList.Add(i);
+            insertList.ForEach(x => _accountService.AddAccount(x));
+            updateList.ForEach(x => _accountService.UpdateAccount(x));
+            deleteList.ForEach(x => _accountService.DeleteAccount(x));
+            _navigationContext.NavigationService.Journal.GoBack();
         }
 
-        private void DoChange()
+        private void Delete()
         {
-            var accent = ThemeManager.GetAccent(SelectedAccent.Name);
-            var appTheme = ThemeManager.GetAppTheme(SelectedTheme.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, accent, appTheme);
+            if (SelectedItem == null)
+                return;
+            if (SelectedItem.ID == 0)
+            {
+                Items.Remove(SelectedItem);
+                return;
+            }
+            if(SelectedItem.ID==1)
+            {
+                Messages.Error("لا يمكن حذف مدير البرنامج");
+                return;
+            }
+            deleteList.Add(SelectedItem);
+            Items.Remove(SelectedItem);            
+        }
+        public MainSettingsViewModel(IAccountService accountService)
+        {
+            _accountService = accountService;
+            Items = new ObservableCollection<Account>(_accountService.GetAll());
+            SelectedItem = Items.Single(x => x.ID == 1);
+            deleteList = new List<Account>();
+            updateList = new List<Account>();
+            insertList = new List<Account>();
         }
 
-        public List<AppThemeMenuData> AppThemes { get; set; }
-        public MainSettingsViewModel()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            this.AccentColors = ThemeManager.Accents
-                                            .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
-                                            .ToList();
-
-            // create metro theme color menu items for the demo
-            this.AppThemes = ThemeManager.AppThemes
-                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
-                                           .ToList();
-            selectedTheme = AppThemes.Find(x => x.Name.Contains("Light"));
-            selectedAccent = AccentColors.Find(x => x.Name.Contains("Blue"));
-            DoChange();
+            _navigationContext = navigationContext;
         }
-    }
-    public class AccentColorMenuData
-    {
-        public string Name { get; set; }
-        public Brush BorderColorBrush { get; set; }
-        public Brush ColorBrush { get; set; }
 
-        private ICommand changeAccentCommand;
-        public DelegateCommand ChangeAccentCommand => new DelegateCommand(()=>DoChangeTheme());
-
-
-        protected virtual void DoChangeTheme()
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var accent = ThemeManager.GetAccent(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+            return false;
         }
-    }
 
-    public class AppThemeMenuData : AccentColorMenuData
-    {
-        protected override void DoChangeTheme()
+        public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var appTheme = ThemeManager.GetAppTheme(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
+            
         }
     }
 }

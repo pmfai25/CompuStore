@@ -7,26 +7,32 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
+        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>
                 <Label  Foreground="{DynamicResource IdealForegroundColorBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="الموردين"/>
                 <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
             </StackPanel>
         </Border>
         <Separator DockPanel.Dock="Top"/>
-        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Background="{DynamicResource AccentColorBrush4}">
-            <Button Padding="4" Command="{Binding AddCommand}"  Style="{DynamicResource AccentedSquareButtonStyle}">
+        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <Button Padding="4" Command="{Binding AddCommand}">
                 <StackPanel>                    
-                    <iconPacks:PackIconMaterial Kind="Plus" Foreground="Green" HorizontalAlignment="Center" Margin="3" />
+                    <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
                     <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
                 </StackPanel>
                 
             </Button>
-            <Button Command="{Binding UpdateCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="تعديل">
-                <iconPacks:PackIconMaterial Kind="Pencil" Foreground="BurlyWood" />
+            <Button Command="{Binding UpdateCommand}" Padding="4" >
+                <StackPanel>
+                    <iconPacks:PackIconMaterial Kind="Pencil"   HorizontalAlignment="Center" Margin="3"  />
+                    <TextBlock Text="تعديل" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Button>
-            <Button Command="{Binding DeleteCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="حذف">
-                <iconPacks:PackIconMaterial Kind="Delete" Foreground="Red" />
+            <Button Command="{Binding DeleteCommand}" Padding="4">
+                <StackPanel>
+                    <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
+                    <TextBlock Text="مسح" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Button>
             <Separator></Separator>            
             <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
@@ -37,15 +43,24 @@
                 </i:Interaction.Triggers>
             </TextBox>
             <Separator/>
-            <Button Command="{Binding RefreshCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Refresh" Foreground="Blue" />
+            <Button Command="{Binding RefreshCommand}" Padding="4">
+                <StackPanel>
+                    <iconPacks:PackIconMaterial Kind="Refresh"  HorizontalAlignment="Center" Margin="3" />
+                    <TextBlock Text="تحديث" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Button>
             <Separator></Separator>
-            <Button Command="{Binding PaymentsCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="ايصالات النقدية">
-                <iconPacks:PackIconMaterial Kind="ClockAlert" />
+            <Button Command="{Binding PaymentsCommand}" Padding="4">
+                <StackPanel>
+                    <iconPacks:PackIconOcticons Kind="CreditCard" HorizontalAlignment="Center" Margin="3" />
+                    <TextBlock Text="ايصالات النقدية" HorizontalAlignment="Center"/>                    
+                </StackPanel>
             </Button>
-            <Button Command="{Binding PurchasesCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="فواتير المشتريات">
-                <iconPacks:PackIconMaterial Kind="CurrencyUsd" Foreground="Gold" />
+            <Button Command="{Binding PurchasesCommand}" Padding="4">
+                <StackPanel>
+                    <iconPacks:PackIconEntypo Kind="ShoppingCart"  HorizontalAlignment="Center" Margin="3" />
+                    <TextBlock Text="المشتريات" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Button>
         </ToolBar>
         <Separator DockPanel.Dock="Top"></Separator>

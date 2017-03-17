@@ -17,7 +17,7 @@
         >
     <Window.Resources>
         <Style x:Key="defaultStyle" TargetType="Button" BasedOn="{StaticResource AccentedSquareButtonStyle}" >
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Height" Value="75"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Times New Roman"/>
@@ -48,71 +48,66 @@
     <DockPanel FlowDirection="RightToLeft" LastChildFill="True">
         <Border Background="{DynamicResource AccentColorBrush}"
                 BorderBrush="{DynamicResource AccentColorBrush}"
-                BorderThickness="2,2,2,2"
-                CornerRadius="20"
-                Padding="8"
-                Margin="5" DockPanel.Dock="left" >
-            <Border.Effect>
-                <DropShadowEffect Color="Silver" />
-            </Border.Effect>
+                BorderThickness="2,2,0,2"
+                Padding="8" DockPanel.Dock="left" >
             <StackPanel Orientation="Vertical">
-                <Button x:Name="btnSuppliers" Style="{DynamicResource defaultStyle}" Command="{Binding SuppliersCommand}" Click="btnSuppliers_Click">
+                <Button x:Name="btnSuppliers" Style="{DynamicResource defaultStyle}" Command="{Binding SuppliersCommand}" Click="btnSuppliers_Click" Visibility="{Binding IsAdmin,Converter={StaticResource HiddenVisibleConverter}}" >
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="Domain" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3"><Run Text="الموردين"/></TextBlock>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconMaterial Margin="5" Kind="Domain" Width="30" Height="30"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الموردين"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>
                 <Button x:Name="btnClients"  Command="{Binding ClientsCommand}" Style="{DynamicResource defaultStyle}" Click="btnClients_Click">
                     <Button.Content>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Kind="User" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3"><Run Text="العملاء"/></TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Right" Margin="5" Kind="User" Width="30" Height="30"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="العملاء"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>
                 <Button x:Name="btnItems"  Command="{Binding ItemsCommand}" Style="{DynamicResource defaultStyle}" Click="btnItems_Click">
                     <Button.Content>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="LaptopChromebook" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="الاصناف"/></TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconMaterial Margin="5" Kind="LaptopChromebook" Width="30" Height="30"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الاصناف"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>
                 <Button x:Name="btnSales"  Command="{Binding ReportsCommand}" Style="{DynamicResource defaultStyle}" Click="btnSales_Click">
                     <Button.Content>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <iconPacks:PackIconModern HorizontalAlignment="Center" Kind="CabinetFiles" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="التقارير"/></TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconModern Margin="5" Kind="CabinetFiles" Width="30" Height="30"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="التقارير"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="btnSettings"  Command="{Binding SettingsCommand}" Style="{DynamicResource defaultStyle}">
+                <Button x:Name="btnSettings" Click="btnSettings_Click"  Command="{Binding SettingsCommand}" Style="{DynamicResource defaultStyle}"  Visibility="{Binding IsAdmin,Converter={StaticResource HiddenVisibleConverter}}" >
                     <Button.Content>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="Settings" Width="30" Height="30" />
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="1,3" ><Run Text="الاعدادات"/></TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconModern Margin="5" Kind="Settings" Width="30" Height="30"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الاعدادات"/></TextBlock>
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -120,9 +115,7 @@
         </Border>
         <Border  BorderBrush="{DynamicResource AccentColorBrush}"
                  Padding="3"
-                BorderThickness="10,10,10,10"
-                CornerRadius="20"
-                Margin="5">
+                BorderThickness="0,10,10,10">
             <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"/>
         </Border>
     </DockPanel>

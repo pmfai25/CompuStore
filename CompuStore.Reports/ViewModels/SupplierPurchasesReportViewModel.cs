@@ -61,26 +61,12 @@ namespace CompuStore.Reports.ViewModels
         #region Commands
         public DelegateCommand BackCommand => new DelegateCommand(()=>_navigationContext.NavigationService.Journal.GoBack());
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
-        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Mehtods
-        private void Refresh()
-        {
-            Items = new ObservableCollection<SupplierPurchases>(_purchaseService.GetPurchases());
-            if (Items.Count > 0)
-            {
-                DateFrom = Items.Min(x => x.Date).Date;
-                DateTo = Items.Max(x => x.Date).Date;
-                Total = Items.Sum(x => x.Total);
-                Paid = Items.Sum(x => x.Paid);
-                Remaining = Total - Paid;
-            }
-            else
-                DateFrom = DateTo = DateTime.Today;
-        }
         private void Search()
         {
             Items = new ObservableCollection<SupplierPurchases>(_purchaseService.GetPurchases(DateFrom,DateTo));
+            Total = Paid = Remaining = 0;
             if (Items.Count == 0)
                 return;
             Total = Items.Sum(x => x.Total);
@@ -105,7 +91,7 @@ namespace CompuStore.Reports.ViewModels
         public SupplierPurchasesReportViewModel(IPurchaseService purchaseService)
         {
             _purchaseService = purchaseService;
-            Refresh();
+            DateFrom = DateTo = DateTime.Today;
         }
     }
 }

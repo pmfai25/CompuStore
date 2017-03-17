@@ -14,6 +14,7 @@ namespace CompuStore.Infrastructure
         public const string NavContentRegion = "NavContentRegion";
         public const string SupplierPurchasesReport = "SupplierPurchasesReport";        
         public const string ClientOrdersReport = "ClientOrdersReport";
+        public const string ReportIncomeOutcomeView = "ReportIncomeOutcomeView";
         public const string ReportsMain = "ReportsMain";
         public const string Settings = "Settings";
         public const string Login = "Login";

@@ -40,6 +40,7 @@ namespace Service
             _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IAccountService, AccountService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IReportService, ReportService>(new ContainerControlledLifetimeManager());
             _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.Login);
         }
     }

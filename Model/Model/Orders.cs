@@ -18,7 +18,7 @@ namespace Model
         private decimal total;
         private decimal remaining;
         private decimal profit;
-        
+        public int AccountID { get; set; }
         public int ID { get; set; }
         public int Number
         {

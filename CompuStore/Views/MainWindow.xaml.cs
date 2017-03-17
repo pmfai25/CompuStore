@@ -53,6 +53,11 @@ namespace CompuStore.Views
         {
             SetActive(sender as Button);
         }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
         private void SetActive(Button button)
         {
             foreach (var b in btns)

@@ -13,6 +13,7 @@ namespace CompuStore.Reports.ViewModels
         private IRegionManager _regionManager;
         public DelegateCommand PurchasesCommand => new DelegateCommand(()=>_regionManager.RequestNavigate(RegionNames.MainContentRegion,RegionNames.SupplierPurchasesReport));
         public DelegateCommand OrdersCommand => new DelegateCommand(() => _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientOrdersReport));
+        public DelegateCommand IncomeOutcomeCommand => new DelegateCommand(() => _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ReportIncomeOutcomeView));
         public ReportsMainViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;

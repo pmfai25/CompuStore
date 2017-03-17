@@ -36,9 +36,6 @@
                 </i:Interaction.Triggers>
             </DatePicker>
             <Separator/>
-            <Button Command="{Binding RefreshCommand}" Width="40" Height="40" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="بحث">
-                <iconPacks:PackIconMaterial Kind="Refresh" Foreground="Blue" />
-            </Button>
             <TextBlock Margin="4,0" VerticalAlignment="Center" Foreground="Blue" Text="{Binding Total,StringFormat=N2}"></TextBlock>
         </ToolBar>
         <Separator DockPanel.Dock="Top"/>
