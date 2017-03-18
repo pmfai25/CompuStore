@@ -5,72 +5,66 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
-    <DockPanel LastChildFill="True">
-        <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Padding="4" Command="{Binding AddCommand}">
-                <StackPanel>                    
-                    <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
-                    <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
-                </StackPanel>
-                
-            </Button>
-            <Button Command="{Binding UpdateCommand}" Padding="4" >
-                <StackPanel>
-                    <iconPacks:PackIconMaterial Kind="Pencil"   HorizontalAlignment="Center" Margin="3"  />
-                    <TextBlock Text="تعديل" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <Button Command="{Binding DeleteCommand}" Padding="4">
-                <StackPanel>
-                    <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
-                    <TextBlock Text="مسح" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <Separator></Separator>            
-            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBox>
-            <Separator/>
-            <Button Command="{Binding RefreshCommand}" Padding="4">
-                <StackPanel>
-                    <iconPacks:PackIconMaterial Kind="Refresh"  HorizontalAlignment="Center" Margin="3" />
-                    <TextBlock Text="تحديث" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <Separator></Separator>
-            <Button Command="{Binding PaymentsCommand}" Padding="4">
-                <StackPanel>
-                    <iconPacks:PackIconOcticons Kind="CreditCard" HorizontalAlignment="Center" Margin="3" />
-                    <TextBlock Text="ايصالات النقدية" HorizontalAlignment="Center"/>                    
-                </StackPanel>
-            </Button>
-            <Button Command="{Binding PurchasesCommand}" Padding="4">
-                <StackPanel>
-                    <iconPacks:PackIconEntypo Kind="ShoppingCart"  HorizontalAlignment="Center" Margin="3" />
-                    <TextBlock Text="المشتريات" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-        </ToolBar>
-        <Separator DockPanel.Dock="Top"></Separator>
-        <DataGrid MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
-            <DataGrid.InputBindings>
-                <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
-            </DataGrid.InputBindings>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="المشتريات" Width="100" Binding="{Binding Purchases, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="سداد المشتريات" Width="100" Binding="{Binding InstantPayments, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="ايصالات النقدية" Width="100" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="المبلغ المتبقي" Width="100" Binding="{Binding Remaining, StringFormat=N2}"/>
-                    <DataGridTextColumn Header="العنوان" Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-    </DockPanel>
+             prism:ViewModelLocator.AutoWireViewModel="True"
+            Style="{StaticResource UserControlStyle}">
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width=".4*" MinWidth="400"/>
+                <ColumnDefinition Width=".6*" MinWidth="600"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MinHeight="300"/>
+                <RowDefinition Height="*" MinHeight="300"/>
+            </Grid.RowDefinitions>
+        
+        <GroupBox Header="الاسماء" Grid.RowSpan="2">
+            <StackPanel>
+                <ToolBar ToolBarTray.IsLocked="True">
+                    <Button Padding="4" Command="{Binding AddCommand}">
+                        <StackPanel>
+                            <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
+                            <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding UpdateCommand}" Padding="4" >
+                        <StackPanel>
+                            <iconPacks:PackIconMaterial Kind="Pencil"   HorizontalAlignment="Center" Margin="3"  />
+                            <TextBlock Text="تعديل" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding DeleteCommand}" Padding="4">
+                        <StackPanel>
+                            <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
+                            <TextBlock Text="مسح" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+                <ToolBar ToolBarTray.IsLocked="True">
+                    <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </ToolBar>
+                <Separator/>
+                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Name">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
+                    </ListBox.InputBindings>
+                </ListBox>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="البيانات" Grid.Column="1">
+            
+        </GroupBox>
+        <GroupBox Header="ايصالات النقدية المؤجلة" Grid.Row="1" Grid.Column="1">
+            
+        </GroupBox>
+        <GroupBox Header="المشتريات" Grid.RowSpan="2" Grid.Column="2">
+            
+        </GroupBox>
+    </Grid>
 </UserControl>

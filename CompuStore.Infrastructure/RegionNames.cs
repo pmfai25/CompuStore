@@ -8,6 +8,10 @@ namespace CompuStore.Infrastructure
 {
     public static class RegionNames
     {
+        public const string SuppliersRegion = "SuppliersRegion";
+        public const string ClientsRegion = "ClientsRegion";
+        public const string ItemsRegion = "ItemsRegion";
+        public const string ReportsRegion = "ReportsRegion";
         public const string RegisterNow = "RegisterNow";
 
         public const string MainContentRegion = "MainContentRegion";

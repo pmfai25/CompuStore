@@ -4,7 +4,8 @@
              xmlns:prism="http://prismlibrary.com/"            
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Style="{StaticResource UserControlStyle}">
     <UserControl.Resources>
         <Style x:Key="LargeTileStyle" TargetType="Controls:Tile">
             <Setter Property="Width" Value="300" />
@@ -17,14 +18,7 @@
             <Setter Property="Height" Value="125" />
         </Style>
     </UserControl.Resources>
-    <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
-            <StackPanel>
-                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="التقارير"/>
-                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" />
-            </StackPanel>
-        </Border>
-        <Separator DockPanel.Dock="Top"/>
+    <DockPanel LastChildFill="True">       
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>

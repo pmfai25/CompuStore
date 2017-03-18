@@ -27,6 +27,7 @@ namespace CompuStore.Clients
             _container.RegisterTypeForNavigation<ClientPaymentEdit>(RegionNames.ClientPaymentEdit);
             _container.RegisterTypeForNavigation<ClientSalesMain>(RegionNames.ClientSalesMain);
             _container.RegisterTypeForNavigation<ClientSaleEdit>(RegionNames.ClientSaleEdit);
+            _regionManager.RegisterViewWithRegion(RegionNames.ClientsRegion, typeof(ClientsMain));
         }
     }
 }

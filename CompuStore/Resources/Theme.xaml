@@ -23,7 +23,12 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="DemiBold"/>        
     </Style>
-    
+    <Style x:Key="UserControlStyle" TargetType="UserControl">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0,5,0,5"/>
+    </Style>
     <conv:PositiveNegativeColorConverter x:Key="PositiveNegativeConverter"/>
     <conv:VisibleHiddenBoolConverter x:Key="HiddenVisibleConverter"/>
 </ResourceDictionary>

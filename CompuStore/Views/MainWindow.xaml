@@ -11,32 +11,9 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        GlowBrush="{DynamicResource AccentColorBrush}"
-                      WindowState="Maximized"                      
+        GlowBrush="{DynamicResource AccentColorBrush}" WindowState="Maximized"                      
         BorderThickness="2"  ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" Icon="/CompuStore;component/MainIcon.ico"                      
         >
-    <Window.Resources>
-        <Style x:Key="defaultStyle" TargetType="Button" BasedOn="{StaticResource AccentedSquareButtonStyle}" >
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="Height" Value="75"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Opacity" Value="1"/>
-            <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="White"/>
-                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="activeStyle" TargetType="Button" BasedOn="{StaticResource defaultStyle}" >
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="OrangeRed"></Setter>
-        </Style>
-    </Window.Resources>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Grid Width="{TemplateBinding Width}"
@@ -45,78 +22,13 @@
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
-    <DockPanel FlowDirection="RightToLeft" LastChildFill="True">
-        <Border Background="{DynamicResource AccentColorBrush}"
-                BorderBrush="{DynamicResource AccentColorBrush}"
-                BorderThickness="5"
-                Padding="8" DockPanel.Dock="left" >
-            <StackPanel Orientation="Vertical">
-                <Button x:Name="btnSuppliers" Style="{DynamicResource defaultStyle}" Command="{Binding SuppliersCommand}" Click="btnSuppliers_Click" Visibility="{Binding IsAdmin,Converter={StaticResource HiddenVisibleConverter}}" >
-                    <Button.Content>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <iconPacks:PackIconMaterial Margin="5" Kind="Domain" Width="30" Height="30"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الموردين"/></TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnClients"  Command="{Binding ClientsCommand}" Style="{DynamicResource defaultStyle}" Click="btnClients_Click">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Right" Margin="5" Kind="User" Width="30" Height="30"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="العملاء"/></TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnItems"  Command="{Binding ItemsCommand}" Style="{DynamicResource defaultStyle}" Click="btnItems_Click">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <iconPacks:PackIconMaterial Margin="5" Kind="LaptopChromebook" Width="30" Height="30"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الاصناف"/></TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnSales"  Command="{Binding ReportsCommand}" Style="{DynamicResource defaultStyle}" Click="btnSales_Click">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <iconPacks:PackIconModern Margin="5" Kind="CabinetFiles" Width="30" Height="30"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="التقارير"/></TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnSettings" Click="btnSettings_Click"  Command="{Binding SettingsCommand}" Style="{DynamicResource defaultStyle}"  Visibility="{Binding IsAdmin,Converter={StaticResource HiddenVisibleConverter}}" >
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <iconPacks:PackIconModern Margin="5" Kind="Settings" Width="30" Height="30"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5"><Run Text="الاعدادات"/></TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </Border>
-        <Border  BorderBrush="{DynamicResource AccentColorBrush}"
-                 Padding="8"
-                BorderThickness="5">
-            <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"/>
-        </Border>
-    </DockPanel>
+    <Grid FlowDirection="RightToLeft">
+        <Controls:MetroAnimatedTabControl>
+            <TabItem Header="الموردين" Padding="10" prism:RegionManager.RegionName="SuppliersRegion"/>
+            <TabItem Header="العملاء" Padding="10" prism:RegionManager.RegionName="ClientsRegion"/>
+            <TabItem Header="الاصناف" Padding="10" prism:RegionManager.RegionName="ItemsRegion"/>
+            <TabItem Header="التقارير" Padding="10" prism:RegionManager.RegionName="ReportsRegion"/>
+            <TabItem Header="المستخدمين" Padding="10" prism:RegionManager.RegionName="UsersRegion"/>
+        </Controls:MetroAnimatedTabControl>
+    </Grid>
 </Controls:MetroWindow>

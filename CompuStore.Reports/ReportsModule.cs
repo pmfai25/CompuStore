@@ -25,6 +25,7 @@ namespace CompuStore.Reports
             _container.RegisterTypeForNavigation<ClientOrdersReport>(RegionNames.ClientOrdersReport);
             _container.RegisterTypeForNavigation<SupplierPurchasesReport>(RegionNames.SupplierPurchasesReport);
             _container.RegisterTypeForNavigation<IncomeOutcomeReport>(RegionNames.ReportIncomeOutcomeView);
+            _regionManager.RegisterViewWithRegion(RegionNames.ReportsRegion, typeof(ReportsMain));
         }
     }
 }
