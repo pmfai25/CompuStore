@@ -48,7 +48,7 @@
     <DockPanel FlowDirection="RightToLeft" LastChildFill="True">
         <Border Background="{DynamicResource AccentColorBrush}"
                 BorderBrush="{DynamicResource AccentColorBrush}"
-                BorderThickness="2,2,0,2"
+                BorderThickness="5"
                 Padding="8" DockPanel.Dock="left" >
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btnSuppliers" Style="{DynamicResource defaultStyle}" Command="{Binding SuppliersCommand}" Click="btnSuppliers_Click" Visibility="{Binding IsAdmin,Converter={StaticResource HiddenVisibleConverter}}" >
@@ -114,8 +114,8 @@
             </StackPanel>
         </Border>
         <Border  BorderBrush="{DynamicResource AccentColorBrush}"
-                 Padding="3"
-                BorderThickness="0,10,10,10">
+                 Padding="8"
+                BorderThickness="5">
             <Controls:TransitioningContentControl Transition="LeftReplace"  prism:RegionManager.RegionName="{x:Static infrastrucure:RegionNames.MainContentRegion}"/>
         </Border>
     </DockPanel>

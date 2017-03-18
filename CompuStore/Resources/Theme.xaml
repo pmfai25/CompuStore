@@ -2,6 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:conv="clr-namespace:CompuStore.Infrastructure.Converters;assembly=CompuStore.Infrastructure">
     <BitmapImage x:Key="Logo" UriSource="../Images/Logo.png"></BitmapImage>
+    <Style x:Key="MainHead" TargetType="Label">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource IdealForeGroundColorBrush}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontFamily" Value="Times New Roman"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
+    </Style>
     <Style x:Key="SummeryLabel" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Times New Roman"/>
         <Setter Property="FontSize" Value="20"/>
@@ -12,6 +23,7 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="DemiBold"/>        
     </Style>
+    
     <conv:PositiveNegativeColorConverter x:Key="PositiveNegativeConverter"/>
     <conv:VisibleHiddenBoolConverter x:Key="HiddenVisibleConverter"/>
 </ResourceDictionary>

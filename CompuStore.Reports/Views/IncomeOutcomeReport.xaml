@@ -51,7 +51,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="الصادر" Margin="4,6">
+            <GroupBox Header="الصادر" Grid.Column="1" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Outcome}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="اسم المورد" Width="200" Binding="{Binding Name}"/>
@@ -62,7 +62,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
-            <GroupBox Grid.Column="1" Header="الوارد" Margin="4,6">
+            <GroupBox Grid.Column="0" Header="الوارد" Margin="4,6">
                 <DataGrid ItemsSource="{Binding Income}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="اسم العميل" Width="200" Binding="{Binding Name}"/>
