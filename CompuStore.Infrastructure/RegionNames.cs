@@ -38,9 +38,9 @@ namespace CompuStore.Infrastructure
         #region Supplier Module
         public const string SuppliersMain = "SuppliersMain";
         public const string SupplierEdit = "SupplierEdit";
-        public const string SupplierPaymentMain = "SupplierPaymentMain";
+        public const string SupplierPaymentRegion = "SupplierPaymentRegion";
         public const string SupplierPaymentEdit = "SupplierPaymentEdit";
-        public const string SupplierPurchasesMain = "SupplierPurchasesMain";
+        public const string SupplierPurchasesRegion = "SupplierPurchasesRegion";
         public const string SupplierPurchaseEdit = "SupplierPurchaseEdit";
         #endregion
     }

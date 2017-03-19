@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"          
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" FlowDirection="RightToLeft">
     <UserControl.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
     </UserControl.InputBindings>

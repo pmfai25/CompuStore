@@ -97,6 +97,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Confirmations\SupplierEditConfirmation.cs" />
     <Compile Include="SuppliersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

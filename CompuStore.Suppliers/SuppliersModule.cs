@@ -25,10 +25,12 @@ namespace CompuStore.Suppliers
             _container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
             _container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
             _container.RegisterTypeForNavigation<SupplierEdit>(RegionNames.SupplierEdit);
-            _container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentMain);
+            _container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentRegion);
             _container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
-            _container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesMain);
+            _container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesRegion);
             _container.RegisterTypeForNavigation<SupplierPurchaseEdit>(RegionNames.SupplierPurchaseEdit);
+            _regionManager.RegisterViewWithRegion("SupplierPaymentRegion", typeof(SupplierPaymentMain));
+            _regionManager.RegisterViewWithRegion("SupplierPurchasesRegion", typeof(SupplierPurchasesMain)); 
             _regionManager.RegisterViewWithRegion(RegionNames.SuppliersRegion, typeof(SuppliersMain));     
         }
     }

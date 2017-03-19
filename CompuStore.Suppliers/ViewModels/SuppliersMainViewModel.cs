@@ -8,6 +8,8 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
+using Prism.Interactivity.InteractionRequest;
+using CompuStore.Suppliers.Confirmations;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -19,12 +21,14 @@ namespace CompuStore.Suppliers.ViewModels
         private ObservableCollection<Supplier> items;
         private readonly ISupplierService _supplierService;
         private readonly IRegionManager _regionManager;
+        private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
+        public InteractionRequest<SupplierEditConfirmation> SupplierEditRequest { get; set; }
         public Supplier SelectedItem
         {
             get { return _selectedItem; }
-            set { SetProperty(ref _selectedItem, value); }
+            set { SetProperty(ref _selectedItem, value);_eventAggregator.GetEvent<SupplierSelected>().Publish(SelectedItem); }
         }
         public ObservableCollection<Supplier> Items
         {
@@ -44,24 +48,33 @@ namespace CompuStore.Suppliers.ViewModels
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
-        public DelegateCommand PaymentsCommand => new DelegateCommand(ShowPayments, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
-        public DelegateCommand PurchasesCommand => new DelegateCommand(ShowPurchases, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
-        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Methods
-        private void Refresh()
-        {
-            SearchText = "";
-            Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
-        }
         private void Add()
         {
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierEdit);
+            SupplierEditConfirmation confirmation = new Confirmations.SupplierEditConfirmation();
+            confirmation.Title = "اضافة مورد جديد";
+            SupplierEditRequest.Raise(confirmation, x =>
+            {
+                if(x.Confirmed)
+                {
+                    Items.Add(x.Supplier);
+                    _supplierService.Add(x.Supplier);
+                }
+            });
         }
         private void Update()
         {
-            var parameters = new NavigationParameters { { "Supplier", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierEdit, parameters);
+            SupplierEditConfirmation confirmation = new Confirmations.SupplierEditConfirmation();
+            confirmation.Title = "تعديل مورد";
+            confirmation.Supplier = SelectedItem;
+            SupplierEditRequest.Raise(confirmation, x =>
+            {
+                if (x.Confirmed)
+                    _supplierService.Update(x.Supplier);
+                else
+                    DataUtils.Copy(SelectedItem, _supplierService.Find(SelectedItem.ID));
+            });
         }
         private void Delete()
         {
@@ -80,16 +93,6 @@ namespace CompuStore.Suppliers.ViewModels
         private void Search()
         {
             Items = new ObservableCollection<Supplier>(_supplierService.SearchBy(SearchText));
-        }
-        private void ShowPurchases()
-        {
-            NavigationParameters parameters = new NavigationParameters { { "Supplier", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPurchasesMain, parameters);
-        }
-        private void ShowPayments()
-        {
-            NavigationParameters parameters = new NavigationParameters { { "Supplier", SelectedItem } };
-            _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SupplierPaymentMain, parameters);
         }
         private void RefreshSupplierPayments(SupplierPayment obj)
         {
@@ -110,6 +113,8 @@ namespace CompuStore.Suppliers.ViewModels
         #endregion
         public SuppliersMainViewModel(ISupplierService supplierService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
+            _eventAggregator = eventAggregator;
+            SupplierEditRequest = new InteractionRequest<Confirmations.SupplierEditConfirmation>();
             _searchText = "";
             _regionManager = regionManager;
             _supplierService = supplierService;
@@ -121,6 +126,7 @@ namespace CompuStore.Suppliers.ViewModels
             eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(RefreshPurchases);
             eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(RefreshPurchases);
             Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
+            SelectedItem = Items.FirstOrDefault();
         }
        
     }

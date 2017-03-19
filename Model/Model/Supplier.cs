@@ -91,9 +91,6 @@ namespace Model
                 return true;
             }
         }
-        [Computed]
-        public List<Supplier> Suppliers { get; set; }
-
         private string GetValidationError(string property)
         {
             switch(property)
@@ -103,9 +100,6 @@ namespace Model
                         return "يجب ادخال اسم للمورد";
                     break;
                 case "Phone":
-                    var y = Suppliers.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
-                    if (y != null)
-                        return "هذا التليفون مستخدم من قبل مع مورد اخر اسمه" + y.Name;
                     if (string.IsNullOrWhiteSpace(Phone))
                         return "يجب ادخال رقم تليفون للمورد";
 
@@ -117,9 +111,5 @@ namespace Model
             return null;
         }
         #endregion
-        public Supplier()
-        {
-            Suppliers = new List<Supplier>();
-        }
     }
 }

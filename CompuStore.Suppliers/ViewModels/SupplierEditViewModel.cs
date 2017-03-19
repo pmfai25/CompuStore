@@ -8,86 +8,61 @@ using Prism.Regions;
 using System;
 using Model.Events;
 using System.Collections.Generic;
+using Prism.Interactivity.InteractionRequest;
+using CompuStore.Suppliers.Confirmations;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierEditViewModel : BindableBase,INavigationAware,IRegionMemberLifetime
+    public class SupplierEditViewModel : BindableBase, IInteractionRequestAware
     {
-        #region Fields
-        private bool _edit;
         private Supplier _supplier;
-        private readonly ISupplierService _supplierService;
-        private readonly IEventAggregator _eventAggregator;
-        private NavigationContext _navigationContext;
-        #endregion
-        #region Properties
         public Supplier Supplier
         {
             get { return _supplier; }
             set { SetProperty(ref _supplier, value); }
         }
+        public SupplierEditConfirmation Confirmation { get; set; }
         public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
 
-        public bool KeepAlive
+        public INotification Notification
         {
             get
             {
-                return false;
+                return Confirmation;
+            }
+
+            set
+            {
+                if(value is SupplierEditConfirmation)
+                {
+                    Confirmation = (SupplierEditConfirmation)value;
+                    Supplier = Confirmation.Supplier;
+                    OnPropertyChanged(() => this.Notification);
+                }
             }
         }
-        #endregion
-        #region Methods
-        private void Save()
+
+        public Action FinishInteraction
         {
-            if (!Supplier.IsValid)
-            {
-                Messages.Error("يوجد خطا في بعض البيانات");
-                return;
-            }
-
-            if (_edit && _supplierService.Update(Supplier))
-                _eventAggregator.GetEvent<SupplierUpdated>().Publish(Supplier);
-            else
-            if (!_edit && _supplierService.Add(Supplier))
-                _eventAggregator.GetEvent<SupplierAdded>().Publish(Supplier);
-            else
-            {
-                Messages.ErrorDataNotSaved();
-                return;
-            }
-            _navigationContext.NavigationService.Journal.GoBack();
-
+            get;set;
         }
         private void Cancel()
         {
-            if (_edit)
-            {
-                var s2 = _supplierService.Find(Supplier.ID);
-                DataUtils.Copy(Supplier, s2);
-            }
-            _navigationContext.NavigationService.Journal.GoBack();
+            if (this.Confirmation != null)
+                this.Confirmation.Confirmed = false;
+            this.FinishInteraction();
         }
-        #endregion
-        #region Interface
-        public bool IsNavigationTarget(NavigationContext navigationContext)
+        private void Save()
         {
-            return false;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext) { }
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            _navigationContext = navigationContext;
-            Supplier = (Supplier)(navigationContext.Parameters["Supplier"]) ?? new Supplier();
-            Supplier.Suppliers = new List<Supplier>(_supplierService.GetAll(true));
-            _edit = Supplier.ID != 0;
-        }
-        #endregion
-        public SupplierEditViewModel(IEventAggregator eventAggregator, ISupplierService supplierService)
-        {
-            _eventAggregator = eventAggregator;
-            _supplierService = supplierService;
+            if (this.Confirmation != null&&!this.Confirmation.Supplier.IsValid)
+                {
+                    Messages.ErrorValidation();
+                    return;
+                }
+            this.Confirmation.Confirmed = true;
+            this.Supplier = Supplier;
+            this.FinishInteraction();
         }
     }
 }

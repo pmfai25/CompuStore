@@ -94,7 +94,7 @@ namespace CompuStore.Suppliers.ViewModels
             }
             _completed = true;
             NavigationParameters parameters = new NavigationParameters { { "Supplier", Supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesMain, parameters);
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesRegion, parameters);
         }
 
         private void Save()
@@ -112,7 +112,7 @@ namespace CompuStore.Suppliers.ViewModels
             else
                 _eventAggregator.GetEvent<PurchaseAdded>().Publish(Purchase);
             NavigationParameters parameters = new NavigationParameters { { "Supplier", Supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesMain,parameters);
+            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesRegion,parameters);
         }
 
         private void SaveDetails()

@@ -4,23 +4,28 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"   
+             xmlns:views="clr-namespace:CompuStore.Suppliers.Views"
              prism:ViewModelLocator.AutoWireViewModel="True"
             Style="{StaticResource UserControlStyle}">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding SupplierEditRequest, Mode=OneWay}">
+            <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views:SupplierEdit />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width=".4*" MinWidth="400"/>
-                <ColumnDefinition Width=".6*" MinWidth="600"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" MinHeight="300"/>
-                <RowDefinition Height="*" MinHeight="300"/>
-            </Grid.RowDefinitions>
-        
-        <GroupBox Header="الاسماء" Grid.RowSpan="2">
-            <StackPanel>
-                <ToolBar ToolBarTray.IsLocked="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".6*" MinWidth="600"/>
+            <ColumnDefinition Width=".4*" MinWidth="400"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="البيانات">
+            <DockPanel LastChildFill="True">
+                <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top">
                     <Button Padding="4" Command="{Binding AddCommand}">
                         <StackPanel>
                             <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
@@ -39,8 +44,7 @@
                             <TextBlock Text="مسح" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                </ToolBar>
-                <ToolBar ToolBarTray.IsLocked="True">
+                    <Separator></Separator>
                     <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TextChanged">
@@ -49,22 +53,33 @@
                         </i:Interaction.Triggers>
                     </TextBox>
                 </ToolBar>
-                <Separator/>
-                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Name">
-                    <ListBox.InputBindings>
+                <DataGrid MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid.InputBindings>
                         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
-                    </ListBox.InputBindings>
-                </ListBox>
-            </StackPanel>
+                    </DataGrid.InputBindings>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="المشتريات" Width="100" Binding="{Binding Purchases, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="سداد المشتريات" Width="100" Binding="{Binding InstantPayments, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="ايصالات النقدية" Width="100" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="المبلغ المتبقي" Width="100" Binding="{Binding Remaining, StringFormat=N2}"/>
+                        <DataGridTextColumn Header="العنوان" Binding="{Binding Address}"/>
+                        <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
         </GroupBox>
-        <GroupBox Header="البيانات" Grid.Column="1">
-            
+        <GroupBox Header="العمليات" Grid.Column="1" >
+            <controls:MetroAnimatedTabControl >
+                <TabItem Header="المشتريات" prism:RegionManager.RegionName="SupplierPurchasesRegion"/>
+                <TabItem Header="ايصالات نقدية" prism:RegionManager.RegionName="SupplierPaymentRegion"/>
+            </controls:MetroAnimatedTabControl>
         </GroupBox>
-        <GroupBox Header="ايصالات النقدية المؤجلة" Grid.Row="1" Grid.Column="1">
-            
-        </GroupBox>
-        <GroupBox Header="المشتريات" Grid.RowSpan="2" Grid.Column="2">
-            
-        </GroupBox>
+       
+
+        
+       
+        
     </Grid>
 </UserControl>

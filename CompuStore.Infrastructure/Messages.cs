@@ -9,6 +9,10 @@ namespace CompuStore.Infrastructure
 {
     public static class Messages
     {
+        public static void ErrorValidation()
+        {
+            Messages.Error("يوجد خطاء في بعض البيانات");
+        }
         public static void Error(string error)
         {
             MessageBox.Show(error, "error", MessageBoxButton.OK, MessageBoxImage.Error);
