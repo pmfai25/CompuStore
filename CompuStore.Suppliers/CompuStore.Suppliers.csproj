@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -98,6 +99,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Confirmations\SupplierEditConfirmation.cs" />
+    <Compile Include="Confirmations\SupplierPaymentConfirmation.cs" />
+    <Compile Include="Confirmations\SupplierPurchaseConfirmation.cs" />
     <Compile Include="SuppliersModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

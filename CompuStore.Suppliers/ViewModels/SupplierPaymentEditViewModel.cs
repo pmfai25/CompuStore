@@ -15,7 +15,6 @@ namespace CompuStore.Suppliers.ViewModels
         #region Fields
         private bool _edit;
         private SupplierPayment _supplierPayment;
-        private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         private ISupplierPaymentService _supplierPaymentService;
         private Supplier _supplier;

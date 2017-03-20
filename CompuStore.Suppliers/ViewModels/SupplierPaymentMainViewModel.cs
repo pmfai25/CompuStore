@@ -22,7 +22,6 @@ namespace CompuStore.Suppliers.ViewModels
         private SupplierPayment _selectedItem;
         private ObservableCollection<SupplierPayment> _items;
         private ISupplierPaymentService _supplierPaymentService;
-        private NavigationContext _navigationContext;
         private IEventAggregator _eventAggregator;
         #endregion
         #region Properties

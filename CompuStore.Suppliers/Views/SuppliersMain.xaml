@@ -11,7 +11,7 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="600"/>
+            <ColumnDefinition Width="*" MinWidth="400"/>
             <ColumnDefinition Width="*" MinWidth="400"/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="البيانات" prism:RegionManager.RegionName="SupplierNavigationRegion">
