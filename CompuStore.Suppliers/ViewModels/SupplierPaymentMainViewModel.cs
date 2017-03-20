@@ -12,7 +12,7 @@ using Model.Events;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierPaymentMainViewModel : BindableBase,INavigationAware,IRegionMemberLifetime
+    public class SupplierPaymentMainViewModel : BindableBase
     {
         #region Fields
         private Supplier _supplier;
@@ -56,17 +56,9 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _items; }
             set { SetProperty(ref _items, value); }
         }
-        public bool KeepAlive
-        {
-            get
-            {
-                return false;
-            }
-        }
         #endregion
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
-        public DelegateCommand BackCommand => new DelegateCommand(Back);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
@@ -75,50 +67,42 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Refresh()
         {
+            if (Supplier == null)
+                return;
             Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.GetAll(Supplier));
             if (Items.Count > 0)
             {
                 DateFrom = Items.Min(x => x.Date).Date;
                 DateTo = Items.Max(x => x.Date).Date;
             }
-            else
-                DateFrom = DateTo = DateTime.Today;
             Total = Items.Sum(s => s.Money);
         }
-        private void Back()
+        private void Search()
         {
-            if (_navigationContext.NavigationService.Journal.CanGoBack)
-                _navigationContext.NavigationService.Journal.GoBack();
+            if (Supplier == null)
+                return;
+            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(Supplier, DateFrom, DateTo));
+            Total = Items.Sum(x => x.Money);
         }
         private void Add()
         {
-            var parameters = new NavigationParameters { { "Supplier", _supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPaymentEdit, parameters);
+
         }
         private void Update()
         {
-            var parameters = new NavigationParameters { { "SupplierPayment", SelectedItem }, { "Supplier", _supplier } };
-            _navigationContext.NavigationService.RequestNavigate( RegionNames.SupplierPaymentEdit, parameters);
+
         }
         private void Delete()
         {
             if (SelectedItem == null)
                 return;
             if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number.ToString())) return;
-            if (!_supplierPaymentService.Delete(SelectedItem))
-            {
-                Messages.ErrorDataNotSaved();
-                return;
-            }
+            _supplierPaymentService.Delete(SelectedItem);           
             _eventAggregator.GetEvent<SupplierPaymentDeleted>().Publish(SelectedItem);
             Items.Remove(SelectedItem);
             Total = Items.Sum(x => x.Money);
         }
-        private void Search()
-        {
-            Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.SearchByInterval(Supplier, DateFrom, DateTo));
-            Total = Items.Sum(x => x.Money);
-        }
+       
         private void OnSupplierPaymentUpdated(SupplierPayment obj)
         {
             Search();
@@ -130,26 +114,20 @@ namespace CompuStore.Suppliers.ViewModels
             Search();
         }
         #endregion
-        #region Interfaces
-        void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
-            RefreshCommand.Execute();
-            _navigationContext = navigationContext;
-        }
-
-        bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
-        void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
-        #endregion
         public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IEventAggregator eventAggregator)
         {
+            DateTo = DateFrom = DateTime.Today;
             _supplierPaymentService = supplierPaymentService;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(OnSupplierPaymentAdded);
             _eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(OnSupplierPaymentUpdated);
+            _eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
+        }
+
+        private void OnSupplierSelected(Supplier obj)
+        {
+            Supplier = obj;
+            Refresh();
         }
     }
 }

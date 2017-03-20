@@ -113,6 +113,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\SupplierEditViewModel.cs" />
+    <Compile Include="ViewModels\SupplierNavigationViewModel.cs" />
     <Compile Include="ViewModels\SupplierPaymentEditViewModel.cs" />
     <Compile Include="ViewModels\SupplierPaymentMainViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchaseEditViewModel.cs" />
@@ -120,6 +121,9 @@
     <Compile Include="ViewModels\SuppliersMainViewModel.cs" />
     <Compile Include="Views\SupplierEdit.xaml.cs">
       <DependentUpon>SupplierEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SupplierNavigation.xaml.cs">
+      <DependentUpon>SupplierNavigation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SupplierPaymentEdit.xaml.cs">
       <DependentUpon>SupplierPaymentEdit.xaml</DependentUpon>
@@ -163,6 +167,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\SupplierEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplierNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="CompuStore.Suppliers.Views.SupplierNavigation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:prism="http://prismlibrary.com/"   
+             xmlns:views="clr-namespace:CompuStore.Suppliers.Views"          
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding SupplierEditRequest, Mode=OneWay}">
+            <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views:SupplierEdit />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <DockPanel LastChildFill="True">
+        <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top">
+            <Button Padding="4" Command="{Binding AddCommand}">
+                <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
+            </Button>
+            <Button Command="{Binding UpdateCommand}" Padding="4" >
+                <iconPacks:PackIconMaterial Kind="Pencil"   HorizontalAlignment="Center" Margin="3"  />
+            </Button>
+            <Button Command="{Binding DeleteCommand}" Padding="4">
+                <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
+            </Button>
+            <Separator></Separator>
+            <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+        </ToolBar>
+        <DataGrid MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="اسم المورد" Width="150" FontWeight="DemiBold" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="العنوان" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

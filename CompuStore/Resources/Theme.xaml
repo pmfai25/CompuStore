@@ -15,13 +15,14 @@
     </Style>
     <Style x:Key="SummeryLabel" TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Times New Roman"/>
         <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Foreground" Value="{DynamicResource IdealForeGroundColorBrush}"/>
         <Setter Property="Margin" Value="5"/>
     </Style>
     <Style x:Key="SummeryValue" TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Times New Roman"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="DemiBold"/>

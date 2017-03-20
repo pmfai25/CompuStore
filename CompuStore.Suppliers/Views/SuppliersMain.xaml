@@ -8,67 +8,13 @@
              xmlns:views="clr-namespace:CompuStore.Suppliers.Views"
              prism:ViewModelLocator.AutoWireViewModel="True"
             Style="{StaticResource UserControlStyle}">
-    <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{Binding SupplierEditRequest, Mode=OneWay}">
-            <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">
-                <prism:PopupWindowAction.WindowContent>
-                    <views:SupplierEdit />
-                </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".6*" MinWidth="600"/>
-            <ColumnDefinition Width=".4*" MinWidth="400"/>
+            <ColumnDefinition Width="*" MinWidth="600"/>
+            <ColumnDefinition Width="*" MinWidth="400"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="البيانات">
-            <DockPanel LastChildFill="True">
-                <ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top">
-                    <Button Padding="4" Command="{Binding AddCommand}">
-                        <StackPanel>
-                            <iconPacks:PackIconMaterial Kind="Plus"  HorizontalAlignment="Center" Margin="3" />
-                            <TextBlock Text="اضافة" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding UpdateCommand}" Padding="4" >
-                        <StackPanel>
-                            <iconPacks:PackIconMaterial Kind="Pencil"   HorizontalAlignment="Center" Margin="3"  />
-                            <TextBlock Text="تعديل" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding DeleteCommand}" Padding="4">
-                        <StackPanel>
-                            <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
-                            <TextBlock Text="مسح" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Separator></Separator>
-                    <TextBox controls:TextBoxHelper.ClearTextButton="True" controls:TextBoxHelper.Watermark="بحث بالاسم او رقم التليفون" VerticalAlignment="Center" Width="200" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="TextChanged">
-                                <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
-                </ToolBar>
-                <DataGrid MinHeight="500" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
-                    <DataGrid.InputBindings>
-                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"></KeyBinding>
-                    </DataGrid.InputBindings>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="اسم المورد" Width="250" FontWeight="DemiBold" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="رقم التليفون" Width="150" Binding="{Binding Phone}"/>
-                        <DataGridTextColumn Header="المشتريات" Width="100" Binding="{Binding Purchases, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="سداد المشتريات" Width="100" Binding="{Binding InstantPayments, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="ايصالات النقدية" Width="100" Binding="{Binding DelayedPayments, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="المبلغ المتبقي" Width="100" Binding="{Binding Remaining, StringFormat=N2}"/>
-                        <DataGridTextColumn Header="العنوان" Binding="{Binding Address}"/>
-                        <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </DockPanel>
+        <GroupBox Header="البيانات" prism:RegionManager.RegionName="SupplierNavigationRegion">
         </GroupBox>
         <GroupBox Header="العمليات" Grid.Column="1" >
             <controls:MetroAnimatedTabControl >

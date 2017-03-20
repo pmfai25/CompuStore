@@ -13,21 +13,20 @@ using System.Linq;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierPurchasesMainViewModel : BindableBase, INavigationAware
+    public class SupplierPurchasesMainViewModel : BindableBase
     {
         #region Fields
         private ISupplierService _supplierService;
         private IPurchaseService _purchaseService;
-        private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
-        private NavigationContext _navigationContext;
         private Supplier _supplier;
         private Purchase _selectedItem;
         private decimal _total;
+        private decimal _paid;       
+        private decimal _remaining;        
         private DateTime _dateFrom;
         private DateTime _dateTo;
         private ObservableCollection<Purchase> _items;
-        private ObservableCollection<PurchaseDetails> _details;
         #endregion
         #region Properties        
         public DateTime DateTo
@@ -45,6 +44,16 @@ namespace CompuStore.Suppliers.ViewModels
             get { return _total; }
             set { SetProperty(ref _total, value); }
         }
+        public decimal Paid
+        {
+            get { return _paid; }
+            set { SetProperty(ref _paid, value); }
+        }
+        public decimal Remaining
+        {
+            get { return _remaining; }
+            set { SetProperty(ref _remaining, value); }
+        }
         public Supplier Supplier
         {
             get { return _supplier; }
@@ -53,26 +62,13 @@ namespace CompuStore.Suppliers.ViewModels
         public Purchase SelectedItem
         {
             get { return _selectedItem; }
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                if (_selectedItem != null)
-                    Details = new ObservableCollection<PurchaseDetails>(_purchaseService.GetPurchaseDetails(_selectedItem.ID));
-                else
-                    Details = null;
-            }
+            set { SetProperty(ref _selectedItem, value); }
         }
         public ObservableCollection<Purchase> Items
         {
             get { return _items; }
             set { SetProperty(ref _items, value); }
-        }
-        public ObservableCollection<PurchaseDetails> Details
-        {
-            get { return _details; }
-            set { SetProperty(ref _details, value); }
-        }
-        
+        }        
         #endregion
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
@@ -80,18 +76,20 @@ namespace CompuStore.Suppliers.ViewModels
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
         public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
-        public DelegateCommand BackCommand => new DelegateCommand(Back);
         #endregion
         #region Methods
+        private void OnSupplierSelected(Supplier x)
+        {
+            Supplier = x;
+            Refresh();
+        }
         private void Add()
         {
-            NavigationParameters parameters = new NavigationParameters { { "Supplier", Supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchaseEdit,parameters);
+
         }
         private void Update()
         {
-            NavigationParameters parameters = new NavigationParameters { { "Purchase", SelectedItem }, { "Supplier", Supplier }, { "Details", Details } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchaseEdit, parameters);
+
         }
         private void Delete()
         {
@@ -107,56 +105,50 @@ namespace CompuStore.Suppliers.ViewModels
                 _purchaseService.DeletePurchase( SelectedItem);
                 _eventAggregator.GetEvent<PurchaseDeleted>().Publish(SelectedItem);
                 Items.Remove(SelectedItem);
-                Total = Items.Sum(i => i.Total);                
+                FixData();
             }
         }
+
+        private void FixData()
+        {
+            Total = Items.Sum(x => x.Total);
+            Paid = Items.Sum(x => x.Paid);
+            Remaining = Total - Paid;
+        }
+
         private void Search()
         {
+            if (Supplier == null)
+                return;
             Items = new ObservableCollection<Purchase>(_supplierService.GetPurchases(Supplier, DateFrom, DateTo));
-            SelectedItem = Items.FirstOrDefault();
-            Total = Items.Sum(x => x.Total);            
+            FixData();
         }
         private void Refresh()
         {
+            Total = Paid = Remaining = 0;
+            if (Supplier == null)
+                return;
             Items = new ObservableCollection<Purchase>(_supplierService.GetPurchases(Supplier));
             if (Items.Count > 0)
             {
                 DateFrom = Items.Min(x => x.Date).Date;
                 DateTo = Items.Max(x => x.Date).Date;
-                Total = Items.Sum(x => x.Total);
+                FixData();
                 SelectedItem = Items.First();
             }
-            else
-                DateFrom = DateTo = DateTime.Today;
-        }
-        private void Back()
-        {
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SuppliersMain);
         }
         #endregion
-        #region Interface
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator)
         {
-            _navigationContext = navigationContext;
-            Supplier = (Supplier)navigationContext.Parameters["Supplier"];
-            Refresh();            
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            var s2 = (Supplier)navigationContext.Parameters["Supplier"];
-            return s2.ID == Supplier.ID;
-        }
-        public void OnNavigatedFrom(NavigationContext navigationContext) { }
-        #endregion
-        public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator, IRegionManager regionManager)
-        {
+            DateTo = DateFrom = DateTime.Today;
             _supplierService = supplierService;
             _purchaseService = purchaseService;
             _eventAggregator = eventAggregator;
-            _regionManager = regionManager;
             _eventAggregator.GetEvent<PurchaseAdded>().Subscribe(x=>Search());
             _eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(x => Search());
+            _eventAggregator.GetEvent<SupplierSelected>().Subscribe(x => OnSupplierSelected(x));
         }
+
+        
     }
 }

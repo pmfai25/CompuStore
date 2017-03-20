@@ -19,7 +19,7 @@
                 </Button>
             <Separator></Separator>
             <Label Content="من: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="100">
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="130">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedDateChanged">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
@@ -28,7 +28,7 @@
             </DatePicker>
 
             <Label Content="الى: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="100">
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="130">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedDateChanged">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
