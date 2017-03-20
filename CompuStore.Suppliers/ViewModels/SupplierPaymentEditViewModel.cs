@@ -55,7 +55,6 @@ namespace CompuStore.Suppliers.ViewModels
                 Messages.ErrorDataNotSaved();
                 return;
             }
-            _navigationContext.NavigationService.Journal.GoBack();
         }
         private void Cancel()
         {
@@ -64,13 +63,11 @@ namespace CompuStore.Suppliers.ViewModels
                 var c = _supplierPaymentService.Find(SupplierPayment.ID);
                 DataUtils.Copy(SupplierPayment, c);
             }
-            _navigationContext.NavigationService.Journal.GoBack();
         }
         #endregion
         #region Inteface
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _navigationContext = navigationContext;
             Supplier = (Supplier)(navigationContext.Parameters["Supplier"]);
             SupplierPayment = (SupplierPayment)(navigationContext.Parameters["SupplierPayment"]) ?? new SupplierPayment() { SupplierID = Supplier.ID };
             _edit = SupplierPayment.ID != 0;
