@@ -45,7 +45,7 @@ namespace Model
         }
         public int SupplierID { get; set; }
         [Computed]
-        public List<Purchase> SupplierPurchases { get; set; }
+        
         #region IDataErrorInfo
         string IDataErrorInfo.Error
         {
@@ -64,7 +64,7 @@ namespace Model
         }
         #endregion
         #region Validation
-        private readonly string[] properties = { "Number", "Paid","Total" };
+        private readonly string[] properties = { "Paid","Total" };
         [Computed]
         public bool IsValid
         {
@@ -82,13 +82,6 @@ namespace Model
             string error = null;
             switch (property)
             {
-                case "Number":
-                    if (Number <= 0)
-                        error = "يجب ادخال رقم فاتورة اكبر من صفر";
-                    else
-                        if (SupplierPurchases.Any(x=>x.Number==Number && (ID==0 ||x.ID!=ID)))
-                        error = "هذا الرقم محجوز من قبل";
-                    break;
                 case "Paid":
                     if (Paid < 0)
                         error = " المدفوع يجب ان يكون اكبر من او يساوي صفر";
@@ -106,7 +99,12 @@ namespace Model
         #endregion
         public Purchase()
         {
-            SupplierPurchases = new List<Purchase>();
+            Date = DateTime.Today;
+        }
+        public Purchase(int supplierID)
+        {
+            SupplierID = supplierID;
+            Date = DateTime.Today;
         }
     }
 }

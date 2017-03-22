@@ -7,15 +7,17 @@ using Model;
 using Prism.Interactivity.InteractionRequest;
 namespace CompuStore.Suppliers.Confirmations
 {
-    class SupplierPaymentConfirmation:Confirmation
+    public class SupplierPaymentConfirmation:Confirmation
     {
         public SupplierPayment SupplierPayment { get; set; }
         public SupplierPaymentConfirmation()
         {
+            Title = "";
             SupplierPayment = new SupplierPayment();
         }
         public SupplierPaymentConfirmation(SupplierPayment supplierPayment)
         {
+            Title = "";
             SupplierPayment = supplierPayment;
         }
     }

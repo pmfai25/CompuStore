@@ -28,6 +28,16 @@
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Margin" Value="5"/>
     </Style>
+    <Style x:Key="SummeryText" TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Times New Roman"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
     <Style x:Key="UserControlStyle" TargetType="UserControl">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Padding" Value="2"/>

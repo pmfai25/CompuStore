@@ -7,8 +7,6 @@ using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Service;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -24,7 +22,7 @@ namespace CompuStore.Suppliers.ViewModels
         private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
-        public InteractionRequest<SupplierEditConfirmation> SupplierEditRequest { get; set; }
+        public InteractionRequest<SupplierConfirmation> SupplierEditRequest { get; set; }
         public Supplier SelectedItem
         {
             get { return _selectedItem; }
@@ -54,28 +52,33 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Add()
         {
-            SupplierEditConfirmation confirmation = new SupplierEditConfirmation();
-            confirmation.Title = "اضافة مورد جديد";
+            SupplierConfirmation confirmation = new SupplierConfirmation();
             SupplierEditRequest.Raise(confirmation, x =>
             {
                 if (x.Confirmed)
                 {
-                    Items.Add(x.Supplier);
-                    _supplierService.Add(x.Supplier);
+                    if (_supplierService.Add(x.Supplier))
+                        Items.Add(x.Supplier);
+                    else
+                        Messages.Error("يوجد عميل بنفس رقم التليفون");
                 }
             });
         }
         private void Update()
         {
-            SupplierEditConfirmation confirmation = new Confirmations.SupplierEditConfirmation();
-            confirmation.Title = "تعديل مورد";
-            confirmation.Supplier = SelectedItem;
+            SupplierConfirmation confirmation = new SupplierConfirmation(SelectedItem);
             SupplierEditRequest.Raise(confirmation, x =>
             {
-                if (x.Confirmed)
-                    _supplierService.Update(x.Supplier);
-                else
+                if(!x.Confirmed)
+                {
                     DataUtils.Copy(SelectedItem, _supplierService.Find(SelectedItem.ID));
+                    return;
+                }
+                if (!_supplierService.Update(x.Supplier))
+                {
+                    Messages.Error("يوجد عميل بنفس رقم التليفون");
+                    DataUtils.Copy(SelectedItem, _supplierService.Find(SelectedItem.ID));
+                }                   
             });
         }
         private void Delete()
@@ -86,53 +89,25 @@ namespace CompuStore.Suppliers.ViewModels
                 Messages.Error("لايمكن حذف شركة لها عمليات شراء الا بعد حذف المشتريات اولا");
             else
             {
-                if (!Messages.Delete(SelectedItem.Name)) return;
+                if (!Messages.Delete(SelectedItem.Name))
+                    return;
                 _supplierService.Delete(SelectedItem);
                 Items.Remove(SelectedItem);
-
             }
         }
         private void Search()
         {
             Items = new ObservableCollection<Supplier>(_supplierService.SearchBy(SearchText));
         }
-        private void RefreshSupplierPayments(SupplierPayment obj)
-        {
-            var supplier = Items.SingleOrDefault(x => x.ID == obj.SupplierID);
-            if (supplier == null)
-                return;
-            Supplier newSupplier = _supplierService.Find(supplier.ID);
-            DataUtils.Copy(supplier, newSupplier);
-        }
-        private void RefreshPurchases(Purchase obj)
-        {
-            var supplier = Items.SingleOrDefault(x => x.ID == obj.SupplierID);
-            if (supplier == null)
-                return;
-            Supplier newSupplier = _supplierService.Find(supplier.ID);
-            DataUtils.Copy(supplier, newSupplier);
-        }
         #endregion
         public SupplierNavigationViewModel(ISupplierService supplierService, IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            SupplierEditRequest = new InteractionRequest<Confirmations.SupplierEditConfirmation>();
             _searchText = "";
             _supplierService = supplierService;
-            eventAggregator.GetEvent<SupplierAdded>().Subscribe(x => Items.Add(x));
-            eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(RefreshSupplierPayments);
-            eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(RefreshSupplierPayments);
-            eventAggregator.GetEvent<SupplierPaymentDeleted>().Subscribe(RefreshSupplierPayments);
-            eventAggregator.GetEvent<PurchaseAdded>().Subscribe(RefreshPurchases);
-            eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(RefreshPurchases);
-            eventAggregator.GetEvent<PurchaseDeleted>().Subscribe(RefreshPurchases);
+            SupplierEditRequest = new InteractionRequest<SupplierConfirmation>();            
             Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
             SelectedItem = Items.FirstOrDefault();
-        }
-
-        public SupplierNavigationViewModel()
-        {
-
         }
     }
 }

@@ -17,11 +17,17 @@ namespace Service
         }
         public bool Add(Supplier supplier)
         {
-            return Connection.Insert(supplier) != 0;            
+            try
+            { return Connection.Insert(supplier) != 0; }
+            catch { return false; }
         }        
         public bool Update(Supplier supplier)
         {
-            return Connection.Update(supplier);
+            try
+            {
+                return Connection.Update(supplier);
+            }
+            catch { return false; }
         }
         public bool Delete(Supplier supplier)
         {

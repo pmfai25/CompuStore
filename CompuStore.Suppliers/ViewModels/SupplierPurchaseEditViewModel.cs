@@ -1,9 +1,12 @@
 ﻿using CompuStore.Infrastructure;
+using CompuStore.Store.Confirmations;
+using CompuStore.Suppliers.Confirmations;
 using Model;
 using Model.Events;
 using Model.Views;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
 using Service;
@@ -15,25 +18,43 @@ using System.Windows.Input;
 
 namespace CompuStore.Suppliers.ViewModels
 {
-    public class SupplierPurchaseEditViewModel : BindableBase,INavigationAware, IRegionMemberLifetime
+    public class SupplierPurchaseEditViewModel : BindableBase, IInteractionRequestAware
     {
         #region Fields
-        private decimal oldTotal, newTotal;
+        private SupplierPurchaseConfirmation _confirmation;
+        private decimal _oldTotal, _newTotal;
+        private string _searchText;
         private List<PurchaseItem> _deletedDetails;
-        private NavigationContext _navigationContext;
-        private IEventAggregator _eventAggregator;
+        private Purchase _purchase;
+        private ObservableCollection<PurchaseDetails> _details;
+        private PurchaseDetails _selectedDetail;
         private IPurchaseService _purchaseService;
         private IItemService _itemService;
-        private ISupplierService _supplierService;
-        private Purchase  _purchase;
-        private Supplier _supplier;
-        private ObservableCollection<PurchaseDetails> _details;
-        private string _searchText;
-        private PurchaseDetails _selectedDetail;
-        private bool _open, _completed, _edit;
-        private ICategoryService _categoryService;
         #endregion
         #region Properties
+        public InteractionRequest<ItemConfirmation> NewItemRequest { get; set; }
+        public INotification Notification
+        {
+            get
+            {
+                return _confirmation;
+            }
+
+            set
+            {
+                _confirmation = (SupplierPurchaseConfirmation)value;
+                Purchase = _confirmation.SupplierPurchase;
+                Details = _confirmation.Details;
+                _oldTotal = Purchase.Total;
+                foreach (var d in Details)
+                    d.OnUpdateValues += () => Purchase.Total = Details.Sum(x => x.Total);
+                OnPropertyChanged(() => this.Notification);
+            }
+        }
+        public Action FinishInteraction
+        {
+            set; get;
+        }
         public ObservableCollection<PurchaseDetails> Details
         {
             get { return _details; }
@@ -43,11 +64,6 @@ namespace CompuStore.Suppliers.ViewModels
         {
             get { return _purchase; }
             set { SetProperty(ref _purchase, value); }
-        }
-        public Supplier Supplier
-        {
-            get { return _supplier; }
-            set { SetProperty(ref _supplier, value); }
         }
         public string SearchText
         {
@@ -61,11 +77,12 @@ namespace CompuStore.Suppliers.ViewModels
         }
         #endregion
         #region Commands
-        public DelegateCommand DeleteCommand => new DelegateCommand(Delete);
+        public DelegateCommand DeleteItemCommand => new DelegateCommand(Delete);
         public DelegateCommand AddItemCommand => new DelegateCommand(AddItem);
         public DelegateCommand<KeyEventArgs> SearchCommand => new DelegateCommand<KeyEventArgs>(Search);
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
-        public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
+        public DelegateCommand CancelCommand => new DelegateCommand(()=>FinishInteraction());
+        public DelegateCommand SetPaidCommand => new DelegateCommand(() => Purchase.Paid = Purchase.Total);
         #endregion
         #region Methods
         private void Delete()
@@ -85,36 +102,19 @@ namespace CompuStore.Suppliers.ViewModels
                 Purchase.Total = Details.Sum(i => i.Total);
             }
         }
-        private void Cancel()
-        {
-            if (_edit)
-            {
-                Purchase p2 = _purchaseService.FindPurchase(Purchase.ID);
-                DataUtils.Copy(Purchase, p2);
-            }
-            _completed = true;
-            NavigationParameters parameters = new NavigationParameters { { "Supplier", Supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesRegion, parameters);
-        }
-
         private void Save()
         {
             if (!Purchase.IsValid || Details.Any(x=>!x.IsValid))
             {
-                Messages.Error("يوجد اخطاء في بعض البيانات");
+                Messages.ErrorValidation();
                 return;
             }
             SavePurchase();
-            SaveDetails();                       
-            _completed = true;
-            if (_edit)
-                _eventAggregator.GetEvent<PurchaseUpdated>().Publish(Purchase);
-            else
-                _eventAggregator.GetEvent<PurchaseAdded>().Publish(Purchase);
-            NavigationParameters parameters = new NavigationParameters { { "Supplier", Supplier } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.SupplierPurchasesRegion,parameters);
+            SaveDetails();
+            _confirmation.Confirmed = true;
+            FinishInteraction();        
+            
         }
-
         private void SaveDetails()
         {
             List<PurchaseItem> lstInsert = new List<PurchaseItem>();
@@ -147,28 +147,28 @@ namespace CompuStore.Suppliers.ViewModels
             if (_deletedDetails.Count > 0)
                 _purchaseService.DeletePurchaseItems(_deletedDetails);
         }
-
         private void SavePurchase()
         {
-            newTotal = Purchase.Total;
-            Purchase.Total = oldTotal;
+            _newTotal = Purchase.Total;
+            Purchase.Total = _oldTotal;
             if (Purchase.ID == 0)
                 _purchaseService.AddPurchase(Purchase);
             else
                 _purchaseService.UpdatePurchase(Purchase);
-            Purchase.Total = newTotal;
+            Purchase.Total = _newTotal;
         }
         private void AddItem()
         {
-            ObservableCollection<Category> categories = new ObservableCollection<Category>(_categoryService.GetAll());
-            if(categories.Count==0)
+            ItemConfirmation y = new ItemConfirmation();
+            y.Item = new Item();
+            NewItemRequest.Raise(y, x =>
             {
-                Messages.Error("يجب اضافة اقسام من شاشة الاصناف اولا قبل اضافة صنف جديد");
-                return;
-            }
-            NavigationParameters parameters = new NavigationParameters();
-            parameters.Add("Categories", categories);
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.StoreEdit);
+                if (x.Confirmed)
+                {
+                    _itemService.Add(x.Item);
+                    OnItemAdded(x.Item);
+                }
+            });
         }
         private void Search(KeyEventArgs e)
         {
@@ -194,54 +194,13 @@ namespace CompuStore.Suppliers.ViewModels
             Details.Add(pd);
             SelectedDetail = pd;
         }     
-        #endregion
-        #region Interface
-        public bool KeepAlive
+        #endregion       
+        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService)
         {
-            get
-            {
-                return !_completed;
-            }
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            if (_open)
-                return;
-            _navigationContext = navigationContext;
-            Supplier = (Supplier)navigationContext.Parameters["Supplier"];
-            Purchase =(Purchase)navigationContext.Parameters["Purchase"]??new Purchase() { Date = DateTime.Today, SupplierID = _supplier.ID };
-            Purchase.SupplierPurchases = _supplierService.GetPurchases(Supplier);
-            _edit = Purchase.ID != 0;
-            if (!_edit)
-                if (Purchase.SupplierPurchases.Count > 0)
-                    Purchase.Number = Purchase.SupplierPurchases.Max(x=>x.Number) + 1;
-                else
-                    Purchase.Number = 1;
-            oldTotal = Purchase.Total;
-            Details = (ObservableCollection<PurchaseDetails>)navigationContext.Parameters["Details"] ?? new ObservableCollection<PurchaseDetails>();
-            foreach (var d in Details)
-                d.OnUpdateValues +=()=> Purchase.Total = Details.Sum(x => x.Total);
-            _open = true;
-        }
-        #endregion
-        public SupplierPurchaseEditViewModel(IPurchaseService purchaseService,IItemService itemService,ICategoryService categoryService,ISupplierService supplierService, IEventAggregator eventAggregator)
-        {
-            _categoryService = categoryService;
-            _supplierService = supplierService;
-            _itemService = itemService;
             _purchaseService = purchaseService;
-            _eventAggregator = eventAggregator;
+            _itemService = itemService;
             _deletedDetails = new List<PurchaseItem>();
-            _eventAggregator.GetEvent<ItemAdded>().Subscribe(OnItemAdded);
-        }     
+            NewItemRequest = new InteractionRequest<ItemConfirmation>();
+        }
     }
 }

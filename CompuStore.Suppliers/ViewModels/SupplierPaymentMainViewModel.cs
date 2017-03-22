@@ -9,6 +9,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
+using Prism.Interactivity.InteractionRequest;
+using CompuStore.Suppliers.Confirmations;
 
 namespace CompuStore.Suppliers.ViewModels
 {
@@ -22,9 +24,9 @@ namespace CompuStore.Suppliers.ViewModels
         private SupplierPayment _selectedItem;
         private ObservableCollection<SupplierPayment> _items;
         private ISupplierPaymentService _supplierPaymentService;
-        private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
+        public InteractionRequest<SupplierPaymentConfirmation> SupplierPaymentRequest { get; set; }
         public decimal Total
         {
             get { return _total; }
@@ -85,44 +87,48 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Add()
         {
-
+            SupplierPaymentRequest.Raise(new SupplierPaymentConfirmation(),
+                x =>
+                {
+                    if (x.Confirmed)
+                    {
+                        x.SupplierPayment.SupplierID = Supplier.ID;
+                        _supplierPaymentService.Add(x.SupplierPayment);
+                        Search();
+                    }
+                });
         }
         private void Update()
         {
-
+            SupplierPaymentRequest.Raise(new SupplierPaymentConfirmation(SelectedItem),
+                x =>
+                {
+                    if (x.Confirmed)
+                    {
+                        _supplierPaymentService.Update(x.SupplierPayment);
+                        Search();
+                    }
+                    else
+                        DataUtils.Copy(SelectedItem, _supplierPaymentService.Find(SelectedItem.ID));
+                });
         }
         private void Delete()
         {
             if (SelectedItem == null)
                 return;
-            if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number.ToString())) return;
+            if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number)) return;
             _supplierPaymentService.Delete(SelectedItem);           
-            _eventAggregator.GetEvent<SupplierPaymentDeleted>().Publish(SelectedItem);
             Items.Remove(SelectedItem);
             Total = Items.Sum(x => x.Money);
-        }
-       
-        private void OnSupplierPaymentUpdated(SupplierPayment obj)
-        {
-            Search();
-        }
-
-        private void OnSupplierPaymentAdded(SupplierPayment obj)
-        {
-            Items.Add(obj);
-            Search();
-        }
+        }        
         #endregion
         public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IEventAggregator eventAggregator)
         {
+            SupplierPaymentRequest = new InteractionRequest<SupplierPaymentConfirmation>();
             DateTo = DateFrom = DateTime.Today;
             _supplierPaymentService = supplierPaymentService;
-            _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<SupplierPaymentAdded>().Subscribe(OnSupplierPaymentAdded);
-            _eventAggregator.GetEvent<SupplierPaymentUpdated>().Subscribe(OnSupplierPaymentUpdated);
-            _eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
+            eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
         }
-
         private void OnSupplierSelected(Supplier obj)
         {
             Supplier = obj;

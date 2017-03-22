@@ -1,9 +1,11 @@
 ﻿using CompuStore.Infrastructure;
+using CompuStore.Suppliers.Confirmations;
 using Model;
 using Model.Events;
 using Model.Views;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
 using Service;
@@ -18,7 +20,6 @@ namespace CompuStore.Suppliers.ViewModels
         #region Fields
         private ISupplierService _supplierService;
         private IPurchaseService _purchaseService;
-        private IEventAggregator _eventAggregator;
         private Supplier _supplier;
         private Purchase _selectedItem;
         private decimal _total;
@@ -29,6 +30,7 @@ namespace CompuStore.Suppliers.ViewModels
         private ObservableCollection<Purchase> _items;
         #endregion
         #region Properties        
+        public InteractionRequest<SupplierPurchaseConfirmation> SupplierPurchaseRequest { get; set; }
         public DateTime DateTo
         {
             get { return _dateTo; }
@@ -71,7 +73,7 @@ namespace CompuStore.Suppliers.ViewModels
         }        
         #endregion
         #region Commands
-        public DelegateCommand AddCommand => new DelegateCommand(Add);
+        public DelegateCommand AddCommand => new DelegateCommand(Add,()=>Supplier!=null).ObservesProperty(()=>Supplier);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
@@ -85,11 +87,23 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Add()
         {
-
+            SupplierPurchaseRequest.Raise(new SupplierPurchaseConfirmation(new Purchase(Supplier.ID)),
+                x =>
+                {
+                    if (x.Confirmed)
+                        Search();
+                });
         }
         private void Update()
         {
-
+            SupplierPurchaseRequest.Raise(new SupplierPurchaseConfirmation(SelectedItem, _purchaseService.GetPurchaseDetails(SelectedItem.ID)),
+                x =>
+                {
+                    if (x.Confirmed)
+                        Search();
+                    else
+                        DataUtils.Copy(SelectedItem, _purchaseService.FindPurchase(SelectedItem.ID));
+                });
         }
         private void Delete()
         {
@@ -103,7 +117,6 @@ namespace CompuStore.Suppliers.ViewModels
             if (Messages.Delete("فاتورة رقم " + _selectedItem.Number))
             {
                 _purchaseService.DeletePurchase( SelectedItem);
-                _eventAggregator.GetEvent<PurchaseDeleted>().Publish(SelectedItem);
                 Items.Remove(SelectedItem);
                 FixData();
             }
@@ -140,13 +153,11 @@ namespace CompuStore.Suppliers.ViewModels
         #endregion
         public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator)
         {
+            SupplierPurchaseRequest = new InteractionRequest<SupplierPurchaseConfirmation>();
             DateTo = DateFrom = DateTime.Today;
             _supplierService = supplierService;
             _purchaseService = purchaseService;
-            _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<PurchaseAdded>().Subscribe(x=>Search());
-            _eventAggregator.GetEvent<PurchaseUpdated>().Subscribe(x => Search());
-            _eventAggregator.GetEvent<SupplierSelected>().Subscribe(x => OnSupplierSelected(x));
+            eventAggregator.GetEvent<SupplierSelected>().Subscribe(x => OnSupplierSelected(x));
         }
 
         

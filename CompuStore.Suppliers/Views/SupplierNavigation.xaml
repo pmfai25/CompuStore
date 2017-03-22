@@ -43,7 +43,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="اسم المورد" Width="150" FontWeight="DemiBold" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="رقم التليفون" Width="120" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="العنوان" Width="*" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="العنوان"  Binding="{Binding Address}"/>
                 <DataGridTextColumn Header="الملاحظات" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>

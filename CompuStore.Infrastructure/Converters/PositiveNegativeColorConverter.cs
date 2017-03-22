@@ -13,11 +13,16 @@ namespace CompuStore.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return new SolidColorBrush(Colors.Black);
             decimal v = (decimal)value;
             if (v > 0)
                 return new SolidColorBrush(Colors.Green);
             else
+                if (v < 0)
                 return new SolidColorBrush(Colors.Red);
+            else
+                return new SolidColorBrush(Colors.Black);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

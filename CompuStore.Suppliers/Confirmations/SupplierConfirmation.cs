@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace CompuStore.Suppliers.Confirmations
 {
-    public class SupplierEditConfirmation:Confirmation
+    public class SupplierConfirmation:Confirmation
     {
         public Supplier Supplier { get; set; }
-        public SupplierEditConfirmation()
+        public SupplierConfirmation()
         {
+            Title = "";
             Supplier = new Supplier();
         }
-        public SupplierEditConfirmation(Supplier supplier)
+        public SupplierConfirmation(Supplier supplier)
         {
+            Title = "";
             Supplier = supplier;
         }
     }

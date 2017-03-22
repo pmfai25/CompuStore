@@ -98,7 +98,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Notification\CategoryEditNotification.cs" />
+    <Compile Include="Confirmations\CategoryEditNotification.cs" />
+    <Compile Include="Confirmations\ItemConfirmation.cs" />
     <Compile Include="StoreModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

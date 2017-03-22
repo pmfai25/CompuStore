@@ -2,9 +2,19 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
+             xmlns:views="clr-namespace:CompuStore.Suppliers.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True" Style="{StaticResource InnerUserControlStyle}">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding SupplierPaymentRequest, Mode=OneWay}">
+            <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views:SupplierPaymentEdit/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
     <DockPanel LastChildFill="True">
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">

@@ -8,8 +8,7 @@
         <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
     </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
-        <Label DockPanel.Dock="Top" Style="{StaticResource MainHead}" Content="اضافة او تعديل مورد"></Label>
-    
+        <Label DockPanel.Dock="Top" Style="{StaticResource MainHead}" Content="اضافة او تعديل مورد"></Label>    
     <Grid Margin="5,15,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>

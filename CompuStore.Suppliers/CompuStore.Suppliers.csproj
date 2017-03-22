@@ -98,7 +98,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Confirmations\SupplierEditConfirmation.cs" />
+    <Compile Include="Confirmations\SupplierConfirmation.cs" />
     <Compile Include="Confirmations\SupplierPaymentConfirmation.cs" />
     <Compile Include="Confirmations\SupplierPurchaseConfirmation.cs" />
     <Compile Include="SuppliersModule.cs" />
@@ -158,6 +158,10 @@
     <ProjectReference Include="..\CompuStore.Infrastructure\CompuStore.Infrastructure.csproj">
       <Project>{cb38702b-7e25-4896-b74d-727f3486db86}</Project>
       <Name>CompuStore.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompuStore.Store\CompuStore.Store.csproj">
+      <Project>{3153ea48-1f07-44d2-a3b5-8ac8bfb1194d}</Project>
+      <Name>CompuStore.Store</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{e3090564-2b83-4b09-948e-a9f1ca887e97}</Project>
