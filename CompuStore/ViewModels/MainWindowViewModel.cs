@@ -9,6 +9,23 @@ namespace CompuStore.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private int index;
+        public int Index
+        {
+            get { return index; }
+            set {
+                SetProperty(ref index, value);
+                switch(index)
+                {
+                    case 0:
+                        this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain);
+                        break;
+                    case 1:
+                        this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain);
+                        break;
+                }
+            }
+        }
         public IRegionManager RegionManager;
         public DelegateCommand ItemsCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.StoreMain));
         public DelegateCommand ClientsCommand => new DelegateCommand(() => this.RegionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain));

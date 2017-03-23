@@ -16,12 +16,27 @@ namespace Service{
         }
         public bool Add(Client client)
         {
-            return Connection.Insert(client) != 0;
+            try
+            {
+                return Connection.Insert(client) != 0;
+            }
+            catch
+            {
+                return false;
+            }
+            
             
         }
         public bool Update(Client client)
         {
-           return Connection.Update(client);            
+            try
+            {
+                return Connection.Update(client);
+            }
+            catch 
+            {
+                return false;
+            }
         }
         public bool Delete(Client client)
         {            

@@ -3,17 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"            
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" FlowDirection="RightToLeft">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
+    </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
-            <StackPanel>
-                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="ايصالات النقدية"/>
-                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
-            </StackPanel>
-        </Border>
-        <Separator DockPanel.Dock="Top"/>
-        <Separator DockPanel.Dock="Top"/>
-        <Grid>
+        <Label DockPanel.Dock="Top" Style="{StaticResource MainHead}" Content="اضافة او تعديل ايصال نقدية"></Label>
+        <Grid Margin="5,15,5,5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" ></RowDefinition>
                 <RowDefinition Height="40" ></RowDefinition>
@@ -23,7 +19,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Label Content="رقم الفاتورة" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding  ClientPayment.Number, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
@@ -36,20 +32,20 @@
 
             <Label Content="ملاحظات" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding ClientPayment.Notes}" Grid.Row="3" Grid.Column="1" Margin="4,6" TextWrapping="Wrap" AcceptsReturn="True"/>
-            
-            <StackPanel Margin="10" Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
+
+            <StackPanel Margin="4,10" Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" >
+                <Button Command="{Binding SaveCommand}" Width="80" Margin="5,0">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
                             <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
+                <Button Command="{Binding CancelCommand}" Width="80" Margin="0">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel" Foreground="Red"/>
+                            <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
                             <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
                         </StackPanel>
                     </Button.Content>

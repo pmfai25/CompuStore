@@ -17,7 +17,7 @@ namespace CompuStore.Suppliers.ViewModels
         #region Fields
         private Supplier _selectedItem;
         private string _searchText;
-        private ObservableCollection<Supplier> items;
+        private ObservableCollection<Supplier> _items;
         private readonly ISupplierService _supplierService;
         private IEventAggregator _eventAggregator;
         #endregion
@@ -34,8 +34,8 @@ namespace CompuStore.Suppliers.ViewModels
         }
         public ObservableCollection<Supplier> Items
         {
-            get { return items; }
-            set { SetProperty(ref items, value); SelectedItem = Items.FirstOrDefault(); }
+            get { return _items; }
+            set { SetProperty(ref _items, value); SelectedItem = Items.FirstOrDefault(); }
         }
         public string SearchText
         {
@@ -52,22 +52,20 @@ namespace CompuStore.Suppliers.ViewModels
         #region Methods
         private void Add()
         {
-            SupplierConfirmation confirmation = new SupplierConfirmation();
-            SupplierEditRequest.Raise(confirmation, x =>
+            SupplierEditRequest.Raise(new SupplierConfirmation(), x =>
             {
                 if (x.Confirmed)
                 {
                     if (_supplierService.Add(x.Supplier))
                         Items.Add(x.Supplier);
                     else
-                        Messages.Error("يوجد عميل بنفس رقم التليفون");
+                        Messages.Error("يوجد مورد بنفس رقم التليفون");
                 }
             });
         }
         private void Update()
         {
-            SupplierConfirmation confirmation = new SupplierConfirmation(SelectedItem);
-            SupplierEditRequest.Raise(confirmation, x =>
+            SupplierEditRequest.Raise(new SupplierConfirmation(SelectedItem), x =>
             {
                 if(!x.Confirmed)
                 {
@@ -76,7 +74,7 @@ namespace CompuStore.Suppliers.ViewModels
                 }
                 if (!_supplierService.Update(x.Supplier))
                 {
-                    Messages.Error("يوجد عميل بنفس رقم التليفون");
+                    Messages.Error("يوجد مورد بنفس رقم التليفون");
                     DataUtils.Copy(SelectedItem, _supplierService.Find(SelectedItem.ID));
                 }                   
             });
@@ -107,7 +105,6 @@ namespace CompuStore.Suppliers.ViewModels
             _supplierService = supplierService;
             SupplierEditRequest = new InteractionRequest<SupplierConfirmation>();            
             Items = new ObservableCollection<Supplier>(_supplierService.GetAll());
-            SelectedItem = Items.FirstOrDefault();
         }
     }
 }

@@ -9,10 +9,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Model.Events;
+using Prism.Interactivity.InteractionRequest;
+using CompuStore.Clients.Confirmations;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientPaymentMainViewModel : BindableBase, INavigationAware
+    public class ClientPaymentMainViewModel : BindableBase
     {
         #region Fields
         private Client _client;        
@@ -22,10 +24,9 @@ namespace CompuStore.Clients.ViewModels
         private ClientPayment _selectedItem;        
         private ObservableCollection<ClientPayment> _items;        
         private IClientPaymentService _clientPaymentService;
-        private NavigationContext _navigationContext;
-        private IEventAggregator _eventAggregator;
         #endregion
         #region Properties
+        public InteractionRequest<ClientPaymentConfirmation> ClientPaymentRequest { get; set; }
         public decimal Total
         {
             get { return _total; }
@@ -59,89 +60,76 @@ namespace CompuStore.Clients.ViewModels
         #endregion
         #region Commands
         public DelegateCommand AddCommand => new DelegateCommand(Add);
-        public DelegateCommand BackCommand => new DelegateCommand(Back);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
         public DelegateCommand SearchCommand => new DelegateCommand(Search);
+        public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Methods
-
-        private void Back()
+        private void OnClientSelected(Client obj)
         {
-            if(_navigationContext.NavigationService.Journal.CanGoBack)
-                _navigationContext.NavigationService.Journal.GoBack();
+            Client = obj;
+            Refresh();
+        }
+        private void Refresh()
+        {
+            if (Client == null)
+                return;
+            Items = new ObservableCollection<ClientPayment>(_clientPaymentService.GetAll(Client));
+            if (Items.Count > 0)
+            {
+                DateFrom = Items.Min(x => x.Date).Date;
+                DateTo = Items.Max(x => x.Date).Date;
+            }
+            Total = Items.Sum(s => s.Money);
+        }
+        private void Search()
+        {
+            if (Client == null)
+                return;
+            Items = new ObservableCollection<ClientPayment>(_clientPaymentService.SearchByInterval(_client, DateFrom, DateTo));
+            Total = Items.Sum(x => x.Money);
         }
         private void Add()
         {
-            var parameters = new NavigationParameters { { "Client", _client } };
-            _navigationContext.NavigationService.RequestNavigate( RegionNames.ClientPaymentEdit, parameters);
+            ClientPaymentRequest.Raise(new ClientPaymentConfirmation(Client.ID), x =>
+             {
+                 if(x.Confirmed)
+                 {
+                     _clientPaymentService.Add(x.ClientPayment);
+                     Search();
+                 }
+             });
         }
         private void Update()
         {
-            var parameters = new NavigationParameters { { "ClientPayment", SelectedItem } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.ClientPaymentEdit, parameters);
+            ClientPaymentRequest.Raise(new ClientPaymentConfirmation(SelectedItem), x =>
+             {
+                 if (x.Confirmed)
+                 {
+                     _clientPaymentService.Update(x.ClientPayment);
+                     Search();
+                 }
+                 else
+                     DataUtils.Copy(SelectedItem, _clientPaymentService.Find(SelectedItem.ID));
+             });
         }
         private void Delete()
         {
             if (SelectedItem == null)
                 return;
             if (!Messages.Delete("فاتورة ايصال نقدية رقم " + SelectedItem.Number.ToString())) return;
-            if(!_clientPaymentService.Delete(SelectedItem))
-            {
-                Messages.ErrorDataNotSaved();
-                return;
-            }
-            _eventAggregator.GetEvent<ClientPaymentDeleted>().Publish(SelectedItem);
+            _clientPaymentService.Delete(SelectedItem);
             Items.Remove(SelectedItem);
             Total = Items.Sum(x => x.Money);            
-        }
-        private void Search()
-        {
-            Items = new ObservableCollection<ClientPayment>( _clientPaymentService.SearchByInterval(_client, DateFrom, DateTo));
-            Total = Items.Sum(x => x.Money);
-        }
+        }        
         #endregion
-        #region Interfaces
-        void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
+        public ClientPaymentMainViewModel(IClientPaymentService clientPaymentService,IEventAggregator eventAggregator)
         {
-            _navigationContext = navigationContext;
-            var c2 = (Client)(navigationContext.Parameters["Client"]);
-            DataUtils.Copy(_client, c2);
-            Items = new ObservableCollection<ClientPayment>(_clientPaymentService.GetAll(_client));
-            Total = Items.Sum(s => s.Money);            
-        }
-
-        bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
-        {
-            var c2= (Client)(navigationContext.Parameters["Client"]);
-            return c2.ID == _client.ID;
-        }
-
-        void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext) { }
-        #endregion
-        public ClientPaymentMainViewModel(IClientPaymentService clientPaymentService,IRegionManager regionManager,IEventAggregator eventAggregator)
-        {
-            Items = new ObservableCollection<Model.ClientPayment>();
-            _client = new Client();
+            ClientPaymentRequest = new InteractionRequest<ClientPaymentConfirmation>();
             _clientPaymentService = clientPaymentService;
-            _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<ClientPaymentAdded>().Subscribe(OnClientAdded);
-            _eventAggregator.GetEvent<ClientPaymentUpdated>().Subscribe(OnClientPaymentUpdated);
-            DateTo = DateTime.Today;
-            DateFrom = DateTime.Today;
-        }
-        private void OnClientPaymentUpdated(ClientPayment obj)
-        {
-            Total = Items.Sum(i => i.Money);
-        }
-
-        private void OnClientAdded(ClientPayment obj)
-        {
-            if (obj.Date <= DateTo && obj.Date >= DateFrom)
-            {
-                Items.Add(obj);
-                Total = Items.Sum(i => i.Money);
-            }
-        }
+            eventAggregator.GetEvent<ClientSelected>().Subscribe(OnClientSelected);
+            DateTo = DateFrom = DateTime.Today;
+        }      
     }
 }

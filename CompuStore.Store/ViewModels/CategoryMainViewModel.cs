@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CompuStore.Infrastructure;
 using Prism.Interactivity.InteractionRequest;
-using CompuStore.Store.Notification;
+using CompuStore.Store.Confirmations;
 
 namespace CompuStore.Store.ViewModels
 {
@@ -41,7 +41,7 @@ namespace CompuStore.Store.ViewModels
                 SetProperty(ref _selectedItem, value);
             }
         }
-        public InteractionRequest<CategoryEditNotification> CategoryEditInteraction { get; set; }
+        public InteractionRequest<CategoryConfirmation> CategoryEditInteraction { get; set; }
         public DelegateCommand AddCommand => new DelegateCommand(Add);
         public DelegateCommand DeleteCommand => new DelegateCommand(Delete, () =>Products!=null&& Products.Count==0).ObservesProperty(() => Products);
         public DelegateCommand UpdateCommand => new DelegateCommand(Update, () => SelectedItem != null).ObservesProperty(() => SelectedItem);
@@ -55,7 +55,7 @@ namespace CompuStore.Store.ViewModels
 
         private void Add()
         {
-            CategoryEditNotification notification = new Notification.CategoryEditNotification();
+            CategoryConfirmation notification = new CategoryConfirmation();
             notification.Title = "اضافة نوع جديد";
             
             CategoryEditInteraction.Raise(notification, x =>
@@ -71,7 +71,7 @@ namespace CompuStore.Store.ViewModels
         }
         private void Update()
         {
-            CategoryEditNotification notification = new Notification.CategoryEditNotification();
+            CategoryConfirmation notification = new CategoryConfirmation();
             notification.Title = "تعديل النوع";
             notification.Name = SelectedItem.Name;
             CategoryEditInteraction.Raise(notification, x =>
@@ -114,7 +114,7 @@ namespace CompuStore.Store.ViewModels
         public CategoryMainViewModel(ICategoryService categoryService)
         {
             _categoryService = categoryService;
-            CategoryEditInteraction = new InteractionRequest<Notification.CategoryEditNotification>();
+            CategoryEditInteraction = new InteractionRequest<CategoryConfirmation>();
         }
     }
 }

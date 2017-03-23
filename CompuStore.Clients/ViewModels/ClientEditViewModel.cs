@@ -8,89 +8,49 @@ using CompuStore.Infrastructure;
 using Prism.Events;
 using Model.Events;
 using System.Collections.Generic;
+using Prism.Interactivity.InteractionRequest;
+using CompuStore.Clients.Confirmations;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientEditViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
+    public class ClientEditViewModel : BindableBase, IInteractionRequestAware
     {
-        #region Fields
-        private bool _edit;
+        private ClientConfirmation _confirmation;
         private Client _client;
-        private readonly IClientService _clientService;
-        private readonly IEventAggregator _eventAggregator;
-        private NavigationContext _navigationContext;
-        #endregion
-        #region Properties
         public Client Client
         {
             get { return _client; }
             set { SetProperty(ref _client, value); }
         }
-        public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
+        public DelegateCommand CancelCommand => new DelegateCommand(()=>FinishInteraction());
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
-
-        public bool KeepAlive
+        public INotification Notification
         {
             get
             {
-                return false;
+                return _confirmation;
+            }
+
+            set
+            {
+                _confirmation = (ClientConfirmation)value;
+                Client = _confirmation.Client;
+                OnPropertyChanged(() => Notification);
             }
         }
-        #endregion
-        #region Interface
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public Action FinishInteraction
         {
-            Client = (Client)(navigationContext.Parameters["Client"]) ?? new Client();
-            Client.Clients = new List<Client>(_clientService.GetAll(true));
-            _navigationContext = navigationContext;
-            _edit = Client.ID != 0;            
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        #endregion
-        #region Methods
+            set;get;
+        }       
         private void Save()
         {
             if (!Client.IsValid)
             {
-                Messages.Error("يوجد خطا في بعض البيانات");
+                Messages.ErrorValidation();
                 return;
             }
-            if (_edit && _clientService.Update(Client))
-                _eventAggregator.GetEvent<ClientUpdated>().Publish(Client);
-            else if (!_edit && _clientService.Add(Client))
-                _eventAggregator.GetEvent<ClientAdded>().Publish(Client);
-            else
-            {
-                Messages.ErrorDataNotSaved();
-                return;
-            }
-            _navigationContext.NavigationService.Journal.GoBack();
+            _confirmation.Confirmed = true;
+            FinishInteraction();
         }
-        private void Cancel()
-        {
-            if (_edit)
-            {
-                var c2 = _clientService.Find(Client.ID);
-                DataUtils.Copy(Client, c2);
-            }
-            _navigationContext.NavigationService.Journal.GoBack();
-        }
-        
-        #endregion
-        public ClientEditViewModel(IClientService clientService,  IEventAggregator eventAggregator)
-        {
-            _clientService = clientService;
-            _eventAggregator = eventAggregator;            
-        }
-
     }
 }

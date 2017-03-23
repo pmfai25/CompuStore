@@ -22,6 +22,8 @@ namespace CompuStore.Store.ViewModels
         private Category _selectedCategory;
         private ObservableCollection<Category> _categories;
         private IItemService _itemService;
+        private ICategoryService _categoryService;
+        public InteractionRequest<CategoryConfirmation> NewCategoryRequest { set; get; }
         public Category SelectedCategory
         {
             get { return _selectedCategory; }
@@ -38,6 +40,7 @@ namespace CompuStore.Store.ViewModels
             set { SetProperty(ref _categories, value); }
         }
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
+        public DelegateCommand AddCategoryCommand => new DelegateCommand(AddCategory);
         public DelegateCommand CancelCommand => new DelegateCommand(()=>FinishInteraction());
         public INotification Notification
         {
@@ -59,8 +62,25 @@ namespace CompuStore.Store.ViewModels
         {
             get;set;
         }
+        private void AddCategory()
+        {
+            NewCategoryRequest.Raise(new CategoryConfirmation(), x =>
+            {
+                if (x.Confirmed)
+                {
+                    _categoryService.Add(x.Category);
+                    Categories.Add(x.Category);
+                    SelectedCategory = x.Category;
+                }
+            });
+        }
         private void Save()
         {
+            if(SelectedCategory==null)
+            {
+                Messages.Error("يجب اضافة قسم اولا ");
+                return;
+            }
             if (Item.IsValid)
             {
                 Item.CategoryID = SelectedCategory.ID;
@@ -72,7 +92,9 @@ namespace CompuStore.Store.ViewModels
         }
         public StoreEditViewModel(ICategoryService categoryService, IItemService itemService)
         {
+            NewCategoryRequest = new InteractionRequest<CategoryConfirmation>();
             _itemService = itemService;
+            _categoryService = categoryService;
             Categories = new ObservableCollection<Category>(categoryService.GetAll());
         }
     }

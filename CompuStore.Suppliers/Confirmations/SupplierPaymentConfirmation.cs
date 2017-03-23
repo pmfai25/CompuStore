@@ -10,10 +10,11 @@ namespace CompuStore.Suppliers.Confirmations
     public class SupplierPaymentConfirmation:Confirmation
     {
         public SupplierPayment SupplierPayment { get; set; }
-        public SupplierPaymentConfirmation()
+        public SupplierPaymentConfirmation(int supplierID)
         {
             Title = "";
             SupplierPayment = new SupplierPayment();
+            SupplierPayment.SupplierID = supplierID;
         }
         public SupplierPaymentConfirmation(SupplierPayment supplierPayment)
         {

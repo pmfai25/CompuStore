@@ -11,7 +11,6 @@ namespace Model
     {
         public int ID { get; set; }
         private string name;
-        public List<Category> Categories { get; set; }
         public string Name
         {
             get { return name; }
@@ -52,13 +51,9 @@ namespace Model
             switch (property)
             {
                 case "Name":
-                    Name = Name.Trim();
-                    if (Categories.Any(x => x.Name == Name && x.ID!=ID))
-                        return "يوجد قسم اخر بنفس الاسم";
                     if (string.IsNullOrWhiteSpace(Name))
                         return "يجب ادخال اسم ";
-                    break;
-                  
+                    break;                  
             }
             return null;
         }

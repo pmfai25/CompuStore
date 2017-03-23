@@ -99,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientsModule.cs" />
+    <Compile Include="Confirmations\ClientConfirmation.cs" />
+    <Compile Include="Confirmations\ClientPaymentConfirmation.cs" />
+    <Compile Include="Confirmations\ClientPurchaseConfirmation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,6 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ClientNavigationViewModel.cs" />
     <Compile Include="ViewModels\ClientPaymentEditViewModel.cs" />
     <Compile Include="ViewModels\ClientPaymentMainViewModel.cs" />
     <Compile Include="ViewModels\ClientSaleEditViewModel.cs" />
@@ -120,6 +124,9 @@
     <Compile Include="ViewModels\ClientsMainViewModel.cs" />
     <Compile Include="Views\ClientEdit.xaml.cs">
       <DependentUpon>ClientEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientNavigation.xaml.cs">
+      <DependentUpon>ClientNavigation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientPaymentMain.xaml.cs">
       <DependentUpon>ClientPaymentMain.xaml</DependentUpon>
@@ -149,6 +156,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ClientEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

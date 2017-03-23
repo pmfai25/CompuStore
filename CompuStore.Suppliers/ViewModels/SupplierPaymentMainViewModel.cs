@@ -66,6 +66,11 @@ namespace CompuStore.Suppliers.ViewModels
         public DelegateCommand RefreshCommand => new DelegateCommand(Refresh);
         #endregion
         #region Methods
+        private void OnSupplierSelected(Supplier obj)
+        {
+            Supplier = obj;
+            Refresh();
+        }
         private void Refresh()
         {
             if (Supplier == null)
@@ -87,12 +92,11 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Add()
         {
-            SupplierPaymentRequest.Raise(new SupplierPaymentConfirmation(),
+            SupplierPaymentRequest.Raise(new SupplierPaymentConfirmation(Supplier.ID),
                 x =>
                 {
                     if (x.Confirmed)
                     {
-                        x.SupplierPayment.SupplierID = Supplier.ID;
                         _supplierPaymentService.Add(x.SupplierPayment);
                         Search();
                     }
@@ -128,11 +132,6 @@ namespace CompuStore.Suppliers.ViewModels
             DateTo = DateFrom = DateTime.Today;
             _supplierPaymentService = supplierPaymentService;
             eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
-        }
-        private void OnSupplierSelected(Supplier obj)
-        {
-            Supplier = obj;
-            Refresh();
-        }
+        }        
     }
 }

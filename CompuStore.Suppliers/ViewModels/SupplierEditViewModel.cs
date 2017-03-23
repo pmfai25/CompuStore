@@ -15,7 +15,7 @@ namespace CompuStore.Suppliers.ViewModels
 {
     public class SupplierEditViewModel : BindableBase, IInteractionRequestAware
     {
-        private SupplierConfirmation _confirmation { get; set; }
+        private SupplierConfirmation _confirmation;
         private Supplier _supplier;
         public Supplier Supplier
         {
@@ -32,7 +32,7 @@ namespace CompuStore.Suppliers.ViewModels
             {
                 _confirmation = (SupplierConfirmation)value;
                 Supplier = _confirmation.Supplier;
-                OnPropertyChanged(() => this.Notification);                
+                OnPropertyChanged(() => Notification);                
             }
         }
         public Action FinishInteraction
@@ -46,8 +46,8 @@ namespace CompuStore.Suppliers.ViewModels
                     Messages.ErrorValidation();
                     return;
                 }
-            this._confirmation.Confirmed = true;
-            this.FinishInteraction();
+            _confirmation.Confirmed = true;
+            FinishInteraction();
         }
     }
 }

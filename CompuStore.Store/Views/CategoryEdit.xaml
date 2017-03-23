@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
-             prism:ViewModelLocator.AutoWireViewModel="True" Width="400">
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="300" FlowDirection="RightToLeft">
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
             <StackPanel>
@@ -22,7 +22,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">النوع</Label>
-        <TextBox Margin="4,8" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Margin="4,8" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Category.Name,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
         <StackPanel Margin="10" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
                 <Button.Content>

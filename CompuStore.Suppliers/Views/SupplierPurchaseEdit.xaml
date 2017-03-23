@@ -71,15 +71,15 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="رقم الفاتورة" Margin="4,6" ></Label>
-                <TextBox TextAlignment="Center" Text="{Binding  Purchase.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="4,6"/>
+                <TextBox TextAlignment="Center" Width="150" Text="{Binding  Purchase.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="4,6"/>
                 <Label Content="التاريخ" Grid.Column="3" Margin="4,6"></Label>
-                <DatePicker VerticalAlignment="Center" SelectedDate="{Binding Purchase.Date}" Grid.Column="4" Margin="4,6"/>
+                <DatePicker VerticalAlignment="Center" Width="150" SelectedDate="{Binding Purchase.Date}" Grid.Column="4" Margin="4,6"/>
             </Grid>
         </GroupBox>
         <Grid >
@@ -94,7 +94,7 @@
             <GroupBox Grid.Column="1" Grid.RowSpan="2" Header="الاصناف">
                 <DockPanel LastChildFill="True"  >
                     <ToolBar HorizontalAlignment="Left"  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-                        <Label Content="بحث بالباركود: " VerticalAlignment="Center"/>
+                        <Label Content="بحث باركود :" VerticalAlignment="Center"/>
                         <TextBox Name="txtSearch" VerticalAlignment="Center" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="KeyDown">
@@ -102,12 +102,9 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
-                        <Separator></Separator>
-                        <Button Margin="4,6" Grid.Row="2" Grid.Column="2" Style="{DynamicResource SquareButtonStyle}" Command="{Binding AddItemCommand}">
-                            <StackPanel>
-                                <iconPacks:PackIconModern Kind="Add" HorizontalAlignment="Center"/>
-                                <TextBlock Text="صنف جديد"/>
-                            </StackPanel>
+                        
+                        <Button Margin="4,6" Grid.Row="2" Grid.Column="2" Style="{DynamicResource SquareButtonStyle}" Command="{Binding AddItemCommand}" ToolTip="صنف جديد">
+                            <iconPacks:PackIconModern Kind="Add" HorizontalAlignment="Center"/>
                         </Button>
                     </ToolBar>
                     <Separator DockPanel.Dock="Top"></Separator>

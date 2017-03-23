@@ -1,5 +1,4 @@
 ﻿using CompuStore.Infrastructure;
-using Service;
 using CompuStore.Suppliers.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -21,18 +20,10 @@ namespace CompuStore.Suppliers
 
         public void Initialize()
         {
-            _container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ISupplierPaymentService, SupplierPaymentService>(new ContainerControlledLifetimeManager());
-            _container.RegisterTypeForNavigation<SuppliersMain>(RegionNames.SuppliersMain);
-            _container.RegisterTypeForNavigation<SupplierEdit>(RegionNames.SupplierEdit);
-            _container.RegisterTypeForNavigation<SupplierPaymentMain>(RegionNames.SupplierPaymentRegion);
-            _container.RegisterTypeForNavigation<SupplierPaymentEdit>(RegionNames.SupplierPaymentEdit);
-            _container.RegisterTypeForNavigation<SupplierPurchasesMain>(RegionNames.SupplierPurchasesRegion);
-            _container.RegisterTypeForNavigation<SupplierPurchaseEdit>(RegionNames.SupplierPurchaseEdit);
             _regionManager.RegisterViewWithRegion("SupplierPaymentRegion", typeof(SupplierPaymentMain));
             _regionManager.RegisterViewWithRegion("SupplierPurchasesRegion", typeof(SupplierPurchasesMain));
             _regionManager.RegisterViewWithRegion("SupplierNavigationRegion", typeof(SupplierNavigation));
-            _regionManager.RegisterViewWithRegion(RegionNames.SuppliersRegion, typeof(SuppliersMain));     
+            _regionManager.RegisterViewWithRegion("SuppliersRegion", typeof(SuppliersMain));     
         }
     }
 }

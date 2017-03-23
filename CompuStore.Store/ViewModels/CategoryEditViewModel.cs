@@ -1,4 +1,6 @@
-﻿using CompuStore.Store.Notification;
+﻿using CompuStore.Infrastructure;
+using CompuStore.Store.Confirmations;
+using Model;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -10,42 +12,28 @@ namespace CompuStore.Store.ViewModels
 {
     public class CategoryEditViewModel : BindableBase, IInteractionRequestAware
     {
-        private string name;
-        public string Name
+        private Category _category;
+        public Category Category
         {
-            get { return name; }
-            set { SetProperty(ref name, value); }
+            get { return _category; }
+            set { SetProperty(ref _category, value); }
         }
 
-        CategoryEditNotification notification;
-        public DelegateCommand SaveCommand => new DelegateCommand(Save,()=>!string.IsNullOrWhiteSpace(Name)).ObservesProperty(() => Name);
+        CategoryConfirmation notification;
+        public DelegateCommand SaveCommand => new DelegateCommand(Save);
 
         private void Save()
         {
-            if(notification!=null)
+            if(!Category.IsValid)
             {
-                notification.Name = name;
-                notification.Confirmed = true;
-                FinishInteraction?.Invoke();
+                Messages.ErrorValidation();
+                return;
             }
+            notification.Confirmed = true;
+            FinishInteraction();
         }
 
-        public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
-
-        private void Cancel()
-        {
-            if (notification != null)
-            {
-                notification.Confirmed = false;
-                FinishInteraction?.Invoke();
-            }
-        }
-
-        public CategoryEditViewModel()
-        {
-
-        }
-
+        public DelegateCommand CancelCommand => new DelegateCommand(()=>FinishInteraction());
         public Action FinishInteraction
         {
             get;set;
@@ -60,12 +48,9 @@ namespace CompuStore.Store.ViewModels
 
             set
             {
-                if (value is CategoryEditNotification)
-                {
-                    notification = value as CategoryEditNotification;
-                    Name = notification.Name;
-                    OnPropertyChanged(() => Notification);
-                }
+                notification = value as CategoryConfirmation;
+                Category = notification.Category;
+                OnPropertyChanged(() => Notification);
             }
         }
     }

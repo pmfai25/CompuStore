@@ -14,16 +14,10 @@ namespace CompuStore.Suppliers.Confirmations
     {
         public  Purchase SupplierPurchase { get; set; }
         public ObservableCollection<PurchaseDetails> Details { get; set; }
-        public SupplierPurchaseConfirmation()
+        public SupplierPurchaseConfirmation(int supplierID)
         {
             Title = "";
-            SupplierPurchase = new Purchase();
-            Details = new ObservableCollection<PurchaseDetails>();
-        }
-        public SupplierPurchaseConfirmation(Purchase purchase)
-        {
-            Title = "";
-            SupplierPurchase = purchase;
+            SupplierPurchase = new Purchase(supplierID);
             Details = new ObservableCollection<PurchaseDetails>();
         }
         public SupplierPurchaseConfirmation(Purchase supplierPurchase, IEnumerable<PurchaseDetails> purchaseDetails)

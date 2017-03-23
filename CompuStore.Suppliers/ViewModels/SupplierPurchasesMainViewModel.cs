@@ -87,7 +87,7 @@ namespace CompuStore.Suppliers.ViewModels
         }
         private void Add()
         {
-            SupplierPurchaseRequest.Raise(new SupplierPurchaseConfirmation(new Purchase(Supplier.ID)),
+            SupplierPurchaseRequest.Raise(new SupplierPurchaseConfirmation(Supplier.ID),
                 x =>
                 {
                     if (x.Confirmed)

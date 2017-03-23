@@ -60,8 +60,7 @@ namespace Model
         }
         [Computed]
         public decimal Remaining { get { return Sales - DelayedPayments - InstantPayments; } }
-        [Computed]
-        public List<Client> Clients { get; set; }
+
         #region IDataErrorInfo
         string IDataErrorInfo.Error
         {
@@ -101,10 +100,6 @@ namespace Model
                         return"يجب ادخال اسم للعميل";
                     break;
                 case "Phone":
-                    
-                    var y = Clients.SingleOrDefault(x => x.Phone == Phone && x.ID != ID);
-                    if(y!=null)
-                        return "هذا الرقم مسجل من قبل مع العميل " + y.Name;
                     if (string.IsNullOrWhiteSpace(Phone))
                         return "يجب ادخال رقم تليفون للعميل";
                     foreach (char c in Phone)
@@ -115,9 +110,5 @@ namespace Model
             return null;
         }
         #endregion
-        public Client()
-        {
-            Clients = new List<Client>();
-        }
     }
 }
