@@ -10,7 +10,7 @@
         <prism:InteractionRequestTrigger SourceObject="{Binding NewItemRequest, Mode=OneWay}">
             <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">
                 <prism:PopupWindowAction.WindowContent>
-                    <views:StoreEdit />
+                    <views:ItemEdit />
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>

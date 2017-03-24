@@ -116,6 +116,7 @@
     <Compile Include="ViewModels\IncomeOutcomeReportViewModel.cs" />
     <Compile Include="ViewModels\ItemTransactionsReportViewModel.cs" />
     <Compile Include="ViewModels\ReportsMainViewModel.cs" />
+    <Compile Include="ViewModels\RequiredItemsReportViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchasesReportViewModel.cs" />
     <Compile Include="Views\ClientOrdersReport.xaml.cs">
       <DependentUpon>ClientOrdersReport.xaml</DependentUpon>
@@ -128,6 +129,9 @@
     </Compile>
     <Compile Include="Views\ReportsMain.xaml.cs">
       <DependentUpon>ReportsMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequiredItemsReport.xaml.cs">
+      <DependentUpon>RequiredItemsReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SupplierPurchasesReport.xaml.cs">
       <DependentUpon>SupplierPurchasesReport.xaml</DependentUpon>
@@ -158,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportsMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequiredItemsReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -38,6 +38,11 @@ namespace Service
             return income - outcome;
         }
 
+        public List<ViewItems> GetRequiredItems()
+        {
+            return Connection.Query<ViewItems>("Select * from ViewItems").AsList();
+        }
+
         public ReportService(IDbConnection connection)
         {
             Connection = connection;

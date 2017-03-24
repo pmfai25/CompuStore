@@ -10,13 +10,35 @@ namespace CompuStore.Reports.ViewModels
 {
     public class ReportsMainViewModel : BindableBase
     {
-        private IRegionManager _regionManager;
-        public DelegateCommand PurchasesCommand => new DelegateCommand(()=>_regionManager.RequestNavigate(RegionNames.MainContentRegion,RegionNames.SupplierPurchasesReport));
-        public DelegateCommand OrdersCommand => new DelegateCommand(() => _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientOrdersReport));
-        public DelegateCommand IncomeOutcomeCommand => new DelegateCommand(() => _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ReportIncomeOutcomeView));
-        public ReportsMainViewModel(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-        }
+        //private int index;
+        //public int Index
+        //{
+        //    get { return index; }
+        //    set
+        //    {
+        //        SetProperty(ref index, value);
+        //        switch(index)
+        //        {
+        //            case 0:
+        //                _regionManager.RequestNavigate("PurchasesRegion", "SupplierPurchasesReport");
+        //                break;
+        //            case 1:
+        //                _regionManager.RequestNavigate("SalesRegion", "ClientOrdersReport");
+        //                break;
+        //            case 2:
+        //                _regionManager.RequestNavigate("SafeRegion", "IncomeOutcomeReport");
+        //                break;
+        //            case 3:
+        //                _regionManager.RequestNavigate("RequiredItemsRejoin", "");
+        //                break;
+        //        }
+        //    }
+        //}   
+        //private IRegionManager _regionManager;
+        //public ReportsMainViewModel(IRegionManager regionManager)
+        //{
+        //    _regionManager = regionManager;
+        //    _regionManager.RequestNavigate("PurchasesRegion", "SupplierPurchasesReport");
+        //}
     }
 }

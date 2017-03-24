@@ -16,5 +16,11 @@ namespace CompuStore.Store.Confirmations
         {
             Title = "";
         }
+        public ItemConfirmation(Item item, Category category)
+        {
+            Title = "";
+            Item = item;
+            Category = category;
+        }
     }
 }

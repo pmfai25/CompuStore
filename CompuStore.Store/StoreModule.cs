@@ -21,10 +21,7 @@ namespace CompuStore.Store
 
         public void Initialize()
         {
-            _container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
-            _container.RegisterTypeForNavigation<StoreEdit>(RegionNames.StoreEdit);
-            _container.RegisterTypeForNavigation<CategoryMain>(RegionNames.CategoryMain);
-            _container.RegisterTypeForNavigation<StoreMain>("StoreMain");
+            _container.RegisterTypeForNavigation<ItemsMain>("StoreMain");
         }
     }
 }

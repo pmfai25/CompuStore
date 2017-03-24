@@ -19,7 +19,8 @@ namespace CompuStore.Store.ViewModels
             set { SetProperty(ref _category, value); }
         }
 
-        CategoryConfirmation notification;
+        private CategoryConfirmation _confirmation;
+        public DelegateCommand CancelCommand => new DelegateCommand(() => FinishInteraction());
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
 
         private void Save()
@@ -29,11 +30,10 @@ namespace CompuStore.Store.ViewModels
                 Messages.ErrorValidation();
                 return;
             }
-            notification.Confirmed = true;
+            _confirmation.Confirmed = true;
             FinishInteraction();
         }
 
-        public DelegateCommand CancelCommand => new DelegateCommand(()=>FinishInteraction());
         public Action FinishInteraction
         {
             get;set;
@@ -43,13 +43,13 @@ namespace CompuStore.Store.ViewModels
         {
             get
             {
-                return notification;
+                return _confirmation;
             }
 
             set
             {
-                notification = value as CategoryConfirmation;
-                Category = notification.Category;
+                _confirmation = value as CategoryConfirmation;
+                Category = _confirmation.Category;
                 OnPropertyChanged(() => Notification);
             }
         }

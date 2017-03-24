@@ -6,52 +6,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Style="{StaticResource UserControlStyle}">
-    <UserControl.Resources>
-        <Style x:Key="LargeTileStyle" TargetType="Controls:Tile">
-            <Setter Property="Width" Value="300" />
-            <Setter Property="Height" Value="125" />
-            
-        </Style>
-
-        <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
-            <Setter Property="Width" Value="147" />
-            <Setter Property="Height" Value="125" />
-        </Style>
-    </UserControl.Resources>
-    <DockPanel LastChildFill="True">       
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Margin="5">
-                <Controls:Tile Title="المشتريات" Style="{StaticResource LargeTileStyle}" Background="Salmon" Margin="3" Command="{Binding PurchasesCommand}">
-                    <iconPacks:PackIconModern Kind="CurrencyDollar"  Width="140" Height="80"/>
-                </Controls:Tile>
-                <Controls:Tile Title="المبيعات" Style="{StaticResource LargeTileStyle}" Background="#A200FF" Margin="3" Command="{Binding OrdersCommand}">
-                    <iconPacks:PackIconModern Kind="Money" Width="140" Height="80"/>
-                </Controls:Tile>
-                <Controls:Tile Title="الخزنة" Style="{StaticResource LargeTileStyle}" Background="#FF0097" Command="{Binding IncomeOutcomeCommand}" >
-                    <iconPacks:PackIconFontAwesome Kind="Money"  Width="140" Height="80"/>
-                </Controls:Tile>
-            </StackPanel>
-            <StackPanel Grid.Column="1" Margin="5">
-                <Controls:Tile Title="حركة الاصناف" Style="{StaticResource LargeTileStyle}" Background="#F09609">
-                    <iconPacks:PackIconModern Kind="Stock" Width="140" Height="80" />
-                </Controls:Tile>
-                <Controls:Tile Title="اصناف مطلوبة" Style="{StaticResource LargeTileStyle}" Background="#1E90FF">
-                    <iconPacks:PackIconFontAwesome Kind="ExclamationTriangle" Width="140" Height="80"/>
-                </Controls:Tile>
-                <!--<StackPanel Orientation="Horizontal">
-                    <Controls:Tile Title="الاصناف الاكثر بيعا" Style="{StaticResource SmallTileStyle}" Background="Gold">
-                        <iconPacks:PackIconEntypo Kind="ThumbsUp" Width="100" Height="60"  />
-                    </Controls:Tile>
-                    <Controls:Tile Title="الاصناف الاقل بيعا" Style="{StaticResource SmallTileStyle}" Background="Silver">
-                        <iconPacks:PackIconEntypo Kind="ThumbsDown" Width="100" Height="60"  />
-                    </Controls:Tile>
-                </StackPanel>-->
-
-            </StackPanel>
-        </Grid>
-    </DockPanel>
+    <Grid>
+        <Controls:MetroAnimatedTabControl SelectedIndex="{Binding Index}">
+        <TabItem Header="المشتريات" Padding="10" prism:RegionManager.RegionName="PurchasesRegion"/>
+        <TabItem Header="المبيعات"  Padding="10" prism:RegionManager.RegionName="SalesRegion"/>
+        <TabItem Header="حركة الخزنة" Padding="10" prism:RegionManager.RegionName="SafeRegion"/>
+            <TabItem Header="اصناف مطلوبة" Padding="10" prism:RegionManager.RegionName="RequiredItemsRegion"/>
+    </Controls:MetroAnimatedTabControl>
+    </Grid>
 </UserControl>

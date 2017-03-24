@@ -21,11 +21,11 @@ namespace CompuStore.Reports
 
         public void Initialize()
         {
-            _container.RegisterTypeForNavigation<ReportsMain>(RegionNames.ReportsMain);
-            _container.RegisterTypeForNavigation<ClientOrdersReport>(RegionNames.ClientOrdersReport);
-            _container.RegisterTypeForNavigation<SupplierPurchasesReport>(RegionNames.SupplierPurchasesReport);
-            _container.RegisterTypeForNavigation<IncomeOutcomeReport>(RegionNames.ReportIncomeOutcomeView);
-            _regionManager.RegisterViewWithRegion(RegionNames.ReportsRegion, typeof(ReportsMain));
+            _container.RegisterTypeForNavigation<ReportsMain>("ReportsMain");
+            _regionManager.RegisterViewWithRegion("PurchasesRegion", typeof(SupplierPurchasesReport));
+            _regionManager.RegisterViewWithRegion("SalesRegion", typeof(ClientOrdersReport));
+            _regionManager.RegisterViewWithRegion("SafeRegion", typeof(IncomeOutcomeReport));
+            _regionManager.RegisterViewWithRegion("RequiredItemsRegion", typeof(RequiredItemsReport));
         }
     }
 }

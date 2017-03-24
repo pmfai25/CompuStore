@@ -5,9 +5,9 @@ namespace CompuStore.Store.Views
     /// <summary>
     /// Interaction logic for ItemsMain
     /// </summary>
-    public partial class StoreMain : UserControl
+    public partial class ItemsMain : UserControl
     {
-        public StoreMain()
+        public ItemsMain()
         {
             InitializeComponent();
            

@@ -37,12 +37,11 @@ namespace Service
         {
             return Connection.Update(category);
         }
-
-        public List<string> GetNamesOfItemsForCategory(Category category)
+        public Category Find(int id)
         {
             DynamicParameters args = new DynamicParameters();
-            args.Add("CategoryID", category.ID);
-            return Connection.Query<string>("Select Name from Item where CategoryID=@CategoryID", args).AsList();
+            args.Add("ID", id);
+            return Connection.QuerySingle<Category>("Select * from Category where ID=@ID", args);
         }
 
         public CategoryService(IDbConnection connection)

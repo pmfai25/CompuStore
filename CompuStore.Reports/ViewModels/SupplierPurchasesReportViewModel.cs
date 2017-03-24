@@ -91,7 +91,7 @@ namespace CompuStore.Reports.ViewModels
         public SupplierPurchasesReportViewModel(IPurchaseService purchaseService)
         {
             _purchaseService = purchaseService;
-            DateFrom = DateTo = DateTime.Today;
+            DateTo = DateFrom = DateTime.Today;
         }
     }
 }

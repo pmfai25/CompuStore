@@ -10,6 +10,6 @@ namespace Service
         bool Delete(Category category);
         bool IsDeletable(Category category);
         IEnumerable<Category> GetAll();
-        List<string> GetNamesOfItemsForCategory(Category selectedItem);
+        Category Find(int id);
     }
 }

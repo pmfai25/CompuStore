@@ -139,7 +139,7 @@ namespace CompuStore.Accounts.ViewModels
             Items = new ObservableCollection<Account>(_accountService.GetAll());
             AccountEditRequest = new InteractionRequest<AccountConfirmation>();
             Percent = 1;
-            SelectedItem = Items.First();                        
+            SelectedItem = Items.First();
         }
     }
 }

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace CompuStore.Store.ViewModels
 {
-    public class StoreEditViewModel : BindableBase, IInteractionRequestAware
+    public class ItemEditViewModel : BindableBase, IInteractionRequestAware
     {
         private ItemConfirmation _confirmation;
         private Item _item;
@@ -54,7 +54,17 @@ namespace CompuStore.Store.ViewModels
                 _confirmation = (ItemConfirmation)value;
                 Item = _confirmation.Item;
                 Item.Items = new List<Item>(_itemService.GetAll());
-                SelectedCategory = _confirmation.Category ?? Categories.First();
+                if (_confirmation.Category != null)
+                {
+                    foreach (Category c in Categories)
+                        if (c.ID == _confirmation.Category.ID)
+                        {
+                            SelectedCategory = c;
+                            break;
+                        }
+                }
+                else
+                    SelectedCategory = Categories.FirstOrDefault();
                 OnPropertyChanged(() => this.Notification);
             }
         }
@@ -90,7 +100,7 @@ namespace CompuStore.Store.ViewModels
             else
                 Messages.ErrorValidation();
         }
-        public StoreEditViewModel(ICategoryService categoryService, IItemService itemService)
+        public ItemEditViewModel(ICategoryService categoryService, IItemService itemService)
         {
             NewCategoryRequest = new InteractionRequest<CategoryConfirmation>();
             _itemService = itemService;

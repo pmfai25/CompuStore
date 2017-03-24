@@ -80,9 +80,7 @@ namespace CompuStore.Reports.ViewModels
         public IncomeOutcomeReportViewModel(IReportService reportService)
         {
             _reportService = reportService;
-            DateTo = DateTime.Today;
-            DateFrom = DateTime.Today;
-            Search();
+            DateTo = DateFrom = DateTime.Today;
         }
         #region Methods
         private void Search()

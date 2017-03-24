@@ -11,8 +11,6 @@ namespace CompuStore.Store.Confirmations
     public class CategoryConfirmation : Confirmation
     {
         public Category Category { get; set; }
-        public string Name { get; set; }
-
         public CategoryConfirmation()
         {
             Category = new Category();

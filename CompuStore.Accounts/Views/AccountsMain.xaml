@@ -17,8 +17,8 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".3*" MinWidth="300"/>
-            <ColumnDefinition Width=".7*" MinWidth="500"/>
+            <ColumnDefinition Width=".2*" MinWidth="200"/>
+            <ColumnDefinition Width=".8*" MinWidth="500"/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="البيانات">
             <DockPanel LastChildFill="True">

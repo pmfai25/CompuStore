@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="CompuStore.Reports.Views.RequiredItemsReport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" Style="{StaticResource InnerUserControlStyle}">
+    <Grid>
+        
+            <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                <DataGridTextColumn Header="القسم" Width="250" Binding="{Binding Category}"/>
+                <DataGridTextColumn Header="الصنف" Width="250" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="الكمية الحالية" Width="100" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="حد الطلب" Width="100"  Binding="{Binding Limit}"/>
+                <DataGridTextColumn Header="سعر البيع" Width="100"  Binding="{Binding Price}"/>
+                <DataGridTextColumn Header="المواصفات" Width="*"  Binding="{Binding Description}"/>
+
+            </DataGrid.Columns>
+            </DataGrid>
+    </Grid>
+</UserControl>

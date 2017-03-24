@@ -120,7 +120,6 @@ namespace CompuStore.Reports.ViewModels
         {
             _orderService = orderService;
             DateTo = DateFrom = DateTime.Today;
-            Search();
         }
     }
 }

@@ -115,20 +115,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\CategoryEditViewModel.cs" />
-    <Compile Include="ViewModels\CategoryMainViewModel.cs" />
-    <Compile Include="ViewModels\StoreEditViewModel.cs" />
-    <Compile Include="ViewModels\StoreMainViewModel.cs" />
+    <Compile Include="ViewModels\ItemEditViewModel.cs" />
+    <Compile Include="ViewModels\ItemsMainViewModel.cs" />
     <Compile Include="Views\CategoryEdit.xaml.cs">
       <DependentUpon>CategoryEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CategoryMain.xaml.cs">
-      <DependentUpon>CategoryMain.xaml</DependentUpon>
+    <Compile Include="Views\ItemEdit.xaml.cs">
+      <DependentUpon>ItemEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StoreEdit.xaml.cs">
-      <DependentUpon>StoreEdit.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StoreMain.xaml.cs">
-      <DependentUpon>StoreMain.xaml</DependentUpon>
+    <Compile Include="Views\ItemsMain.xaml.cs">
+      <DependentUpon>ItemsMain.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,15 +156,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoryMain.xaml">
+    <Page Include="Views\ItemEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StoreEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StoreMain.xaml">
+    <Page Include="Views\ItemsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

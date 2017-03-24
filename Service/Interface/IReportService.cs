@@ -12,5 +12,6 @@ namespace Service
         decimal GetCurrentMoney(DateTime to);
         List<ViewIncome> GetIncome(DateTime from, DateTime to);
         List<ViewOutcome> GetOutcome(DateTime from, DateTime to);
+        List<ViewItems> GetRequiredItems();
     }
 }

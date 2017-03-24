@@ -7,84 +7,55 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"  
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
-        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
-            <StackPanel>
-                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="مبيعات العملاء"/>
-                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1"/>
-            </StackPanel>
-        </Border><Separator DockPanel.Dock="Top"/>
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Command="{Binding BackCommand}" DockPanel.Dock="Left" Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Width="40" Height="40" ToolTip="الرجوع للخلف">
-                <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="White" />
-            </Button>
-            <Separator/>
-            <Label Content="بحث في الفترة من: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="150">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDateChanged">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DatePicker>
+            <Label Content="من: " VerticalAlignment="Center"/>
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="130"/>
 
             <Label Content="الى: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="150">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDateChanged">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DatePicker>
-            <Separator/>
-            <TextBlock Margin="4,0" VerticalAlignment="Center" Foreground="Blue" Text="{Binding Total,StringFormat=N2}"></TextBlock>
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="130"/>
+
+            <Button Command="{Binding SearchCommand}" Padding="4">
+                <iconPacks:PackIconOcticons Kind="Search" HorizontalAlignment="Center" Flip="Horizontal" Margin="3" />
+            </Button>
         </ToolBar>
-        <Separator DockPanel.Dock="Top"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <GroupBox Header="الفواتير" Margin="4,6">
-                <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="العميل" Width="250" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
-                        <DataGridTextColumn Header="رقم الفاتورة" Width="100"  Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="الاجمالي" Width="100" Binding="{Binding Total,StringFormat=N2}"/>
-                        <DataGridTextColumn Header="المدفوع" Width="100" Binding="{Binding Paid,StringFormat=N2}"/>
-                        <DataGridTextColumn Header="المتبقي" Width="100" Binding="{Binding Remaining,StringFormat=N2}"/>
-                        <DataGridTextColumn Header="الربح الحالي" Width="100" Binding="{Binding CurrentProfit,StringFormat=N2}"/>
-                        <DataGridTextColumn Header="الربح النهائي" Width="100" Binding="{Binding FinalProfit,StringFormat=N2}"/>
-                    </DataGrid.Columns></DataGrid>
-            </GroupBox>
-            <Separator Grid.Row="1"/>
-            <GroupBox Margin="-4" Header="المحصلة النهائية" Grid.Row="2" Padding="0">
-                <Grid Background="{DynamicResource AccentColorBrush4}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Margin="10,6" Grid.Row="0"  Text="المبلغ" FontSize="14"/>
-                    <TextBlock Margin="10,6" Grid.Row="1"  Text="المدفوع" FontSize="14"/>
-                    <TextBlock Margin="10,6" Grid.Row="0" Grid.Column="3"  Text="الارباح الحالية" FontSize="14"/>
-                    <TextBlock Margin="10,6" Grid.Row="1" Grid.Column="3" Text="الارباح النهائية" FontSize="14"/>
-                    <TextBlock Margin="10,6" Grid.Row="2"  Text="المتبقي" FontSize="14"/>
-                    <TextBlock Margin="10,6" Grid.Row="0" Grid.Column="1" Text="{Binding Total, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
-                    <TextBlock Margin="10,6" Grid.Row="1" Grid.Column="1" Text="{Binding Paid, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
-                    <TextBlock Margin="10,6" Grid.Row="2" Grid.Column="1" Text="{Binding Remaining, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
-                    <TextBlock Margin="10,6" Grid.Row="0" Grid.Column="4" Text="{Binding CurrentProfit, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
-                    <TextBlock Margin="10,6" Grid.Row="1" Grid.Column="4" Text="{Binding FinalProfit, StringFormat=N2}" Foreground="{DynamicResource HighlightBrush}" FontSize="16"/>
-                </Grid>
-            </GroupBox>
-        </Grid>
+        <GroupBox Header="المحصلة النهائية" DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Row="0"  Text="المبلغ"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="1"  Text="المدفوع"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="2"  Text="المتبقي"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="3"  Text="الارباح الحالية"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="4"  Text="الارباح النهائية"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="0" Text="{Binding Total, StringFormat=N2}" Foreground="{Binding Total, Converter={StaticResource PositiveNegativeConverter}}"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="1" Text="{Binding Paid, StringFormat=N2}" Foreground="{Binding Paid, Converter={StaticResource PositiveNegativeConverter}}"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="2" Text="{Binding Remaining, StringFormat=N2}" Foreground="{Binding Remaining, Converter={StaticResource PositiveNegativeConverter}}"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="3" Text="{Binding CurrentProfit, StringFormat=N2}" Foreground="{Binding CurrentProfit, Converter={StaticResource PositiveNegativeConverter}}"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="4" Text="{Binding FinalProfit, StringFormat=N2}" Foreground="{Binding FinalProfit, Converter={StaticResource PositiveNegativeConverter}}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="الفواتير" Margin="4,6">
+            <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="العميل" Width="250" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="التاريخ" Width="150" Binding="{Binding Date, StringFormat=dd / MM / yyyy,ConverterCulture=ar-eg}"/>
+                    <DataGridTextColumn Header="رقم الفاتورة" Width="100"  Binding="{Binding Number}"/>
+                    <DataGridTextColumn Header="الاجمالي" Width="100" Binding="{Binding Total,StringFormat=N2}"/>
+                    <DataGridTextColumn Header="المدفوع" Width="100" Binding="{Binding Paid,StringFormat=N2}"/>
+                    <DataGridTextColumn Header="المتبقي" Width="100" Binding="{Binding Remaining,StringFormat=N2}"/>
+                    <DataGridTextColumn Header="الربح الحالي" Width="100" Binding="{Binding CurrentProfit,StringFormat=N2}"/>
+                    <DataGridTextColumn Header="الربح النهائي" Width="100" Binding="{Binding FinalProfit,StringFormat=N2}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
     </DockPanel>
 </UserControl>

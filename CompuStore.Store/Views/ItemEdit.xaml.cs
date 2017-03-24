@@ -3,14 +3,13 @@
 namespace CompuStore.Store.Views
 {
     /// <summary>
-    /// Interaction logic for CategoryEdit
+    /// Interaction logic for StoreEdit
     /// </summary>
-    public partial class CategoryMain : UserControl
+    public partial class ItemEdit : UserControl
     {
-
-        public CategoryMain()
+        public ItemEdit()
         {
             InitializeComponent();
-        }               
+        }
     }
 }
