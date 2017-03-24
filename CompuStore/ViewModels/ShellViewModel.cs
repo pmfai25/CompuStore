@@ -88,7 +88,7 @@ namespace CompuStore.ViewModels
                         _regionManager.RequestNavigate("ReportsRegion", "ReportsMain");
                         break;
                     case 4:
-                        _regionManager.RequestNavigate("UsersRegion", "UsersMain");
+                        _regionManager.RequestNavigate("AccountsRegion", "AccountsMain");
                         break;
 
                 }

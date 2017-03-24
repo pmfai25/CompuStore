@@ -30,8 +30,12 @@ namespace CompuStore.Clients.ViewModels
             get { return _selectedItem; }
             set
             {
+                bool skip = false;
+                if ((SelectedItem != null && value != null && SelectedItem.ID == value.ID))
+                    skip = true;
                 SetProperty(ref _selectedItem, value);
-                _eventAggregator.GetEvent<ClientSelected>().Publish(SelectedItem);
+                if (!skip)
+                    _eventAggregator.GetEvent <ClientSelected>().Publish(SelectedItem);
             }
         }
         public ObservableCollection<Client> Items

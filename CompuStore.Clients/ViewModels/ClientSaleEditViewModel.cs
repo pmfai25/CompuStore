@@ -1,9 +1,11 @@
-﻿using CompuStore.Infrastructure;
+﻿using CompuStore.Clients.Confirmations;
+using CompuStore.Infrastructure;
 using Model;
 using Model.Events;
 using Model.Views;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
 using Service;
@@ -15,26 +17,45 @@ using System.Windows.Input;
 
 namespace CompuStore.Clients.ViewModels
 {
-    public class ClientSaleEditViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
+    public class ClientSaleEditViewModel : BindableBase, IInteractionRequestAware
     {
         #region Fields
+        private ClientSaleConfirmation _confirmation;
         private decimal oldTotal, newTotal;
-        private List<OrderItem> _deletedDetails;
-        private NavigationContext _navigationContext;
-        private IEventAggregator _eventAggregator;
+        private string _searchText;
+        private List<OrderItem> _deletedDetails;  
+        private Orders _order;
+        private ObservableCollection<OrderDetails> _details;
+        private OrderDetails _selectedDetail;
         private IOrderService _orderService;
         private IItemService _itemService;
         private IPurchaseService _purchaseService;
-        private readonly IClientService _clientService;
-        private Orders _order;
-        private Client _client;
-        private ObservableCollection<OrderDetails> _details;
-        private string _searchText;
-        private OrderDetails _selectedDetail;
-        private bool _open, _completed, _edit;
         private Account _account;
         #endregion
         #region Properties
+        public INotification Notification
+        {
+            get
+            {
+                return _confirmation;
+            }
+
+            set
+            {
+                _confirmation = (ClientSaleConfirmation)value;
+                Order = _confirmation.ClientOrder;
+                Details = _confirmation.Details;
+                oldTotal = Order.Total;
+                foreach (var d in Details)
+                    d.UpdateValues += () => Order.Total = Details.Sum(x => x.Total);
+                OnPropertyChanged(() => Notification);
+            }
+        }
+
+        public Action FinishInteraction
+        {
+            get;set;
+        }
         public ObservableCollection<OrderDetails> Details
         {
             get { return _details; }
@@ -44,11 +65,6 @@ namespace CompuStore.Clients.ViewModels
         {
             get { return _order; }
             set { SetProperty(ref _order, value); }
-        }
-        public Client Client
-        {
-            get { return _client; }
-            set { SetProperty(ref _client, value); }
         }
         public string SearchText
         {
@@ -62,10 +78,11 @@ namespace CompuStore.Clients.ViewModels
         }
         #endregion
         #region Commands
-        public DelegateCommand DeleteCommand => new DelegateCommand(Delete);
+        public DelegateCommand DeleteItemCommand => new DelegateCommand(Delete);
         public DelegateCommand<KeyEventArgs> SearchCommand => new DelegateCommand<KeyEventArgs>(Search);
         public DelegateCommand SaveCommand => new DelegateCommand(Save);
-        public DelegateCommand CancelCommand => new DelegateCommand(Cancel);
+        public DelegateCommand CancelCommand => new DelegateCommand(() => FinishInteraction());
+        public DelegateCommand SetPaidCommand => new DelegateCommand(() => Order.Paid = Order.Total);
         #endregion
         #region Methods
         private void Delete()
@@ -79,17 +96,6 @@ namespace CompuStore.Clients.ViewModels
             Details.Remove(SelectedDetail);
             Order.Total = Details.Sum(i => i.Total);
         }
-        private void Cancel()
-        {
-            if (_edit)
-            {
-                Orders o2 = _orderService.FindOrder(Order.ID);
-                DataUtils.Copy(Order, o2);
-            }
-            _completed = true;
-            NavigationParameters parameters = new NavigationParameters { { "Client", Client } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.ClientSalesMain, parameters);
-        }
         private void Save()
         {
             if (!Order.IsValid || Details.Any(x => !x.IsValid))
@@ -99,13 +105,8 @@ namespace CompuStore.Clients.ViewModels
             }
             SaveOrder();
             SaveDetails();
-            _completed = true;
-            if (_edit)
-                _eventAggregator.GetEvent<OrderUpdated>().Publish(Order);
-            else
-                _eventAggregator.GetEvent<OrderAdded>().Publish(Order);
-            NavigationParameters parameters = new NavigationParameters { { "Client", Client } };
-            _navigationContext.NavigationService.RequestNavigate(RegionNames.ClientSalesMain, parameters);
+            _confirmation.Confirmed = true;
+            FinishInteraction();
         }
 
         private void SaveOrder()
@@ -113,7 +114,10 @@ namespace CompuStore.Clients.ViewModels
             newTotal = Order.Total;
             Order.Total = oldTotal;
             if (Order.ID == 0)
+            {
+                Order.AccountID = _account.ID;
                 _orderService.AddOrder(Order);
+            }
             else
                 _orderService.UpdateOrder(Order);
             Order.Total = newTotal;
@@ -197,53 +201,12 @@ namespace CompuStore.Clients.ViewModels
             SearchText = "";
         }
         #endregion
-        #region Interface
-        public bool KeepAlive
-        {
-            get
-            {
-                return !_completed;
-            }
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            if (_open)
-                return;
-            _navigationContext = navigationContext;
-            
-            Client = (Client)navigationContext.Parameters["Client"];
-            Order = (Orders)navigationContext.Parameters["Order"] ?? new Orders() { Date = DateTime.Today, ClientID = Client.ID, AccountID=_account.ID};
-            Order.ClientOrders = _clientService.GetOrders(Client);
-            _edit = Order.ID != 0;
-            if (!_edit)
-                if (Order.ClientOrders.Count > 0)
-                    Order.Number = Order.ClientOrders.Max(x => x.Number) + 1;
-                else
-                    Order.Number = 1;
-            oldTotal = Order.Total;
-            Details = (ObservableCollection<OrderDetails>)navigationContext.Parameters["Details"] ?? new ObservableCollection<OrderDetails>();
-            foreach (var d in Details)
-                d.UpdateValues += ()=> Order.Total = Details.Sum(x => x.Total);
-            _open = true;
-        }
-        #endregion
-        public ClientSaleEditViewModel(IOrderService orderService,IPurchaseService purchaseService, IItemService itemService, IClientService clientService, IEventAggregator eventAggregator, Account account)
+        public ClientSaleEditViewModel(IOrderService orderService,IPurchaseService purchaseService, IItemService itemService, Account account)
         {
             _account = account;
             _purchaseService = purchaseService;
-            _clientService = clientService;
             _itemService = itemService;
             _orderService = orderService;
-            _eventAggregator = eventAggregator;
             _deletedDetails = new List<OrderItem>();
         }
     }

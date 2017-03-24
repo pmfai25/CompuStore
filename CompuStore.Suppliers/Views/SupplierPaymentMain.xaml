@@ -15,7 +15,6 @@
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
     <DockPanel LastChildFill="True">
         <ToolBar  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
             <Button Padding="4" Command="{Binding AddCommand}">
@@ -35,7 +34,7 @@
                 <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="130"/>
 
                 <Button Command="{Binding SearchCommand}" Padding="4">
-                    <iconPacks:PackIconOcticons Kind="Search" HorizontalAlignment="Center" Margin="3" />
+                    <iconPacks:PackIconOcticons Kind="Search" HorizontalAlignment="Center" Flip="Horizontal" Margin="3" />
                 </Button>
                 <Separator/>
             <Button Command="{Binding RefreshCommand}" Padding="4">
@@ -56,5 +55,4 @@
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
-    </ScrollViewer>
 </UserControl>

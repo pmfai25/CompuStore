@@ -69,18 +69,13 @@ namespace CompuStore.Suppliers.ViewModels
         private void OnSupplierSelected(Supplier obj)
         {
             Supplier = obj;
-            Refresh();
+            Search();
         }
         private void Refresh()
         {
             if (Supplier == null)
                 return;
             Items = new ObservableCollection<SupplierPayment>(_supplierPaymentService.GetAll(Supplier));
-            if (Items.Count > 0)
-            {
-                DateFrom = Items.Min(x => x.Date).Date;
-                DateTo = Items.Max(x => x.Date).Date;
-            }
             Total = Items.Sum(s => s.Money);
         }
         private void Search()
@@ -98,7 +93,7 @@ namespace CompuStore.Suppliers.ViewModels
                     if (x.Confirmed)
                     {
                         _supplierPaymentService.Add(x.SupplierPayment);
-                        Search();
+                        Items.Add(x.SupplierPayment);
                     }
                 });
         }
@@ -108,10 +103,7 @@ namespace CompuStore.Suppliers.ViewModels
                 x =>
                 {
                     if (x.Confirmed)
-                    {
                         _supplierPaymentService.Update(x.SupplierPayment);
-                        Search();
-                    }
                     else
                         DataUtils.Copy(SelectedItem, _supplierPaymentService.Find(SelectedItem.ID));
                 });
@@ -129,7 +121,8 @@ namespace CompuStore.Suppliers.ViewModels
         public SupplierPaymentMainViewModel(ISupplierPaymentService supplierPaymentService, IEventAggregator eventAggregator)
         {
             SupplierPaymentRequest = new InteractionRequest<SupplierPaymentConfirmation>();
-            DateTo = DateFrom = DateTime.Today;
+            DateFrom = DateTime.Now.AddDays(-DateTime.Now.Day + 1);
+            DateTo = DateTime.Now.AddMonths(1).AddDays(-DateTime.Now.Day);
             _supplierPaymentService = supplierPaymentService;
             eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
         }        

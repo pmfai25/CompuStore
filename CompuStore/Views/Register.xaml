@@ -21,14 +21,5 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-
-        <!--<ComboBox DisplayMemberPath="Username" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" Grid.Row="1"  Margin="10" HorizontalAlignment="Stretch"/>
-    <PasswordBox Background="Yellow" Name="txtPassword" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="أدخل كلمة المرور" Grid.Row="2"  Margin="10" HorizontalAlignment="Stretch">
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="KeyDown">
-                <prism:InvokeCommandAction Command="{Binding PasswordEnterCommand}"></prism:InvokeCommandAction>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-    </PasswordBox>-->
     </Grid>
 </UserControl>

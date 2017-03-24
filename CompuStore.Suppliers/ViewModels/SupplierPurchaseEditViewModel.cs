@@ -2,13 +2,10 @@
 using CompuStore.Store.Confirmations;
 using CompuStore.Suppliers.Confirmations;
 using Model;
-using Model.Events;
 using Model.Views;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
-using Prism.Regions;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -48,7 +45,7 @@ namespace CompuStore.Suppliers.ViewModels
                 _oldTotal = Purchase.Total;
                 foreach (var d in Details)
                     d.OnUpdateValues += () => Purchase.Total = Details.Sum(x => x.Total);
-                OnPropertyChanged(() => this.Notification);
+                OnPropertyChanged(() => Notification);
             }
         }
         public Action FinishInteraction

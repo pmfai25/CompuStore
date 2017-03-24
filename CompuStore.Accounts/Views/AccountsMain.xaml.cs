@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace CompuStore.Views
+namespace CompuStore.Accounts.Views
 {
     /// <summary>
     /// Interaction logic for MainSettings
     /// </summary>
-    public partial class Users : UserControl
+    public partial class AccountsMain : UserControl
     {
-        public Users()
+        public AccountsMain()
         {
             InitializeComponent();
         }

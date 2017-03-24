@@ -46,7 +46,7 @@
             <TabItem Header="العملاء"  Padding="10" prism:RegionManager.RegionName="ClientsRegion"/>
             <TabItem Header="الاصناف" Padding="10" prism:RegionManager.RegionName="StoreRegion"/>
             <TabItem Header="التقارير" Visibility="{Binding HideReports,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="ReportsRegion"/>
-            <TabItem Header="المستخدمين" Visibility="{Binding HideUsers,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="UsersRegion"/>
+            <TabItem Header="المستخدمين" Visibility="{Binding HideUsers,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="AccountsRegion"/>
         </Controls:MetroAnimatedTabControl>
     </Grid>
 </Controls:MetroWindow>

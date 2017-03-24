@@ -3,17 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"     
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" FlowDirection="RightToLeft" Width="600"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel>
-        <Border DockPanel.Dock="Top" Margin="-4" Background="{DynamicResource AccentColorBrush4}" BorderThickness="0,0,0,10" BorderBrush="{DynamicResource AccentColorBrush}">
-            <StackPanel>
-                <Label  Foreground="{DynamicResource HighlightBrush}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="20" DockPanel.Dock="Top" Content="فاتورة مبيعات"/>
-                <Label  Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" DockPanel.Dock="Top" Margin="1" Content="{Binding Client.Name}"/>
-            </StackPanel>
-        </Border>
-        <Separator DockPanel.Dock="Top"/>
-        <Grid>
+        <Label DockPanel.Dock="Top" Style="{StaticResource MainHead}" Content="اضافة او تعديل فاتورة بيع"></Label>
+        <StackPanel Margin="4,10" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Command="{Binding SaveCommand}" Width="80" Margin="5,0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save"/>
+                        <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding CancelCommand}" Width="80" Margin="0">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel"/>
+                        <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <GroupBox Header="التحصيل النهائي" DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Row="0"  Text="الاجمالي"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="1"  Text="المدفوع"/>
+                <TextBlock Style="{StaticResource SummeryLabel}" Grid.Column="2"  Text="المتبقي"/>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource SummeryValue}"  Text="{Binding Order.Total, StringFormat=N2}" Foreground="{Binding Order.Total, Converter={StaticResource PositiveNegativeConverter}}"/>
+                    <Button Grid.Column="1" Padding="5" Command="{Binding SetPaidCommand}">
+                        <iconPacks:PackIconEntypo Kind="ArrowLeft"/>
+                    </Button>
+                </Grid>
+
+                <TextBox  Style="{StaticResource SummeryText}" Grid.Row="1" Grid.Column="1" Text="{Binding Order.Paid, StringFormat=N2,ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Order.Paid, Converter={StaticResource PositiveNegativeConverter}}"/>
+                <TextBlock Style="{StaticResource SummeryValue}" Grid.Row="1" Grid.Column="2" Text="{Binding Order.Remaining, StringFormat=N2}" Foreground="{Binding Order.Remaining, Converter={StaticResource PositiveNegativeConverter}}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="بيانات الفاتورة" DockPanel.Dock="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="رقم الفاتورة" Margin="4,6" ></Label>
+                <TextBox TextAlignment="Center" Width="150" Text="{Binding  Order.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="4,6"/>
+                <Label Content="التاريخ" Grid.Column="3" Margin="4,6"></Label>
+                <DatePicker VerticalAlignment="Center" Width="150" SelectedDate="{Binding Order.Date}" Grid.Column="4" Margin="4,6"/>
+            </Grid>
+        </GroupBox>
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -21,60 +77,12 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="بيانات الفاتورة">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" ></RowDefinition>
-                        <RowDefinition Height="40" ></RowDefinition>
-                        <RowDefinition Height="40" ></RowDefinition>
-                        <RowDefinition Height="40" ></RowDefinition>
-                        <RowDefinition Height="40" ></RowDefinition>
-                        <RowDefinition Height="auto" ></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="رقم الفاتورة" Margin="4,6" ></Label>
-                    <TextBox Background="Yellow" TextAlignment="Center" Text="{Binding  Order.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="4,6"/>
 
-                    <Label Content="التاريخ" Grid.Row="1" Margin="4,6"></Label>
-                    <DatePicker VerticalAlignment="Center" SelectedDate="{Binding Order.Date}" Grid.Row="1" Grid.Column="1" Margin="4,6"/>
-
-                    <Label Content="الاجمالي" Grid.Row="2"  Margin="4,6" ></Label>
-                    <TextBox Text="{Binding  Order.Total, StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Grid.Row="2" Grid.Column="1"  Margin="4,6" FontSize="14"/>
-
-                    <Label Content="دفع" Grid.Row="3" Margin="4,6"></Label>
-                    <TextBox Background="Yellow" Text="{Binding Order.Paid, StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="3" Grid.Column="1" Margin="4,6" FontSize="14"/>
-
-                    <Label Content="المتبقي" Grid.Row="4"  Margin="4,6"></Label>
-                    <TextBox Text="{Binding Order.Remaining, StringFormat=N2}" IsReadOnly="True"  Grid.Row="4" Grid.Column="1" Margin="4,6" FontSize="14" Foreground="Red"/>
-
-                    <StackPanel Grid.Column="1" Grid.Row="5" Margin="10"  Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Top">
-                        <Button Command="{Binding SaveCommand}" Width="80" Margin="4,0">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Save" Foreground="Blue"/>
-                                    <TextBlock VerticalAlignment="Center" ><Run Text="حفظ"/></TextBlock>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                        <Button Command="{Binding CancelCommand}" Width="80" Margin="4,0">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <iconPacks:PackIconModern Margin="0,0,20,0" Kind="Cancel" Foreground="Red"/>
-                                    <TextBlock VerticalAlignment="Center" ><Run Text="الغاء"/></TextBlock>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </GroupBox>
             <GroupBox Grid.Column="1" Grid.RowSpan="2" Header="الاصناف">
                 <DockPanel LastChildFill="True"  >
                     <ToolBar HorizontalAlignment="Left"  DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-                        <Label Content="بحث بالباركود: " VerticalAlignment="Center"/>
-                        <TextBox Name="txtSearch" VerticalAlignment="Center" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150"  Background="Yellow">
+                        <Label Content="بحث باركود :" VerticalAlignment="Center"/>
+                        <TextBox Name="txtSearch" VerticalAlignment="Center" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Width="150">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="KeyDown">
                                     <prism:InvokeCommandAction Command="{Binding SearchCommand}"/>
@@ -83,44 +91,27 @@
                         </TextBox>
                     </ToolBar>
                     <Separator DockPanel.Dock="Top"></Separator>
-                    <DataGrid MinHeight="300" ItemsSource="{Binding Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid MinHeight="250" ItemsSource="{Binding Details}" SelectedItem="{Binding SelectedDetail}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding DeleteItemCommand}"></KeyBinding>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="30">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <iconPacks:PackIconMaterial Width="25" Height="25" Kind="Delete" HorizontalAlignment="Center" Foreground="Red">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </iconPacks:PackIconMaterial>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                             <DataGridTextColumn IsReadOnly="True"  Header="الصنف" Width="*" MinWidth="200" FontWeight="DemiBold" Binding="{Binding Name}"/>
                             <DataGridTemplateColumn Header="السعر" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Price, StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox  Text="{Binding Price,StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="الكمية" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox  Width="100" Text="{Binding Quantity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="الخصم" Width="120">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Text="{Binding Discount,StringFormat=N2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120" Binding="{Binding Total, StringFormat=N2}"/>
+                            <DataGridTextColumn IsReadOnly="True"  Header="الاجمالي" Width="120"  Binding="{Binding Total, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

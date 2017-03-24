@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace CompuStore.Clients.Confirmations
 {
-    public class ClientPurchaseConfirmation:Confirmation
+    public class ClientSaleConfirmation:Confirmation
     {
         public Orders ClientOrder { get; set; }
         public ObservableCollection<OrderDetails> Details { get; set; }
-        public ClientPurchaseConfirmation(int clientID)
+        public ClientSaleConfirmation(int clientID)
         {
             Title = "";
-            ClientOrder = new Orders();
+            ClientOrder = new Orders(clientID);
             Details = new ObservableCollection<OrderDetails>();
             ClientOrder.ClientID = clientID;
         }
-        public ClientPurchaseConfirmation(Orders clientOrder,IEnumerable<OrderDetails> orderDetails)
+        public ClientSaleConfirmation(Orders clientOrder,IEnumerable<OrderDetails> orderDetails)
         {
             Title = "";
             ClientOrder = clientOrder;

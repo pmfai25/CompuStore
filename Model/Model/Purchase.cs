@@ -44,7 +44,6 @@ namespace Model
             set { SetProperty(ref remaining, value); }
         }
         public int SupplierID { get; set; }
-        [Computed]
         
         #region IDataErrorInfo
         string IDataErrorInfo.Error

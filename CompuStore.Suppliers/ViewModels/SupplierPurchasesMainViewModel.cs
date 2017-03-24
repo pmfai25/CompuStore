@@ -83,7 +83,7 @@ namespace CompuStore.Suppliers.ViewModels
         private void OnSupplierSelected(Supplier x)
         {
             Supplier = x;
-            Refresh();
+            Search();
         }
         private void Add()
         {
@@ -91,7 +91,7 @@ namespace CompuStore.Suppliers.ViewModels
                 x =>
                 {
                     if (x.Confirmed)
-                        Search();
+                        Items.Add(x.SupplierPurchase);
                 });
         }
         private void Update()
@@ -99,9 +99,7 @@ namespace CompuStore.Suppliers.ViewModels
             SupplierPurchaseRequest.Raise(new SupplierPurchaseConfirmation(SelectedItem, _purchaseService.GetPurchaseDetails(SelectedItem.ID)),
                 x =>
                 {
-                    if (x.Confirmed)
-                        Search();
-                    else
+                    if (!x.Confirmed)
                         DataUtils.Copy(SelectedItem, _purchaseService.FindPurchase(SelectedItem.ID));
                 });
         }
@@ -131,6 +129,7 @@ namespace CompuStore.Suppliers.ViewModels
 
         private void Search()
         {
+            Total = Paid = Remaining = 0;
             if (Supplier == null)
                 return;
             Items = new ObservableCollection<Purchase>(_supplierService.GetPurchases(Supplier, DateFrom, DateTo));
@@ -142,24 +141,17 @@ namespace CompuStore.Suppliers.ViewModels
             if (Supplier == null)
                 return;
             Items = new ObservableCollection<Purchase>(_supplierService.GetPurchases(Supplier));
-            if (Items.Count > 0)
-            {
-                DateFrom = Items.Min(x => x.Date).Date;
-                DateTo = Items.Max(x => x.Date).Date;
-                FixData();
-                SelectedItem = Items.First();
-            }
+            FixData();
         }
         #endregion
         public SupplierPurchasesMainViewModel(ISupplierService supplierService, IPurchaseService purchaseService, IEventAggregator eventAggregator)
         {
             SupplierPurchaseRequest = new InteractionRequest<SupplierPurchaseConfirmation>();
-            DateTo = DateFrom = DateTime.Today;
+            DateFrom = DateTime.Now.AddDays(-DateTime.Now.Day + 1);
+            DateTo = DateTime.Now.AddMonths(1).AddDays(-DateTime.Now.Day);
             _supplierService = supplierService;
             _purchaseService = purchaseService;
-            eventAggregator.GetEvent<SupplierSelected>().Subscribe(x => OnSupplierSelected(x));
-        }
-
-        
+            eventAggregator.GetEvent<SupplierSelected>().Subscribe(OnSupplierSelected);
+        }        
     }
 }

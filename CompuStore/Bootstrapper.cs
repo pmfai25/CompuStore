@@ -18,6 +18,7 @@ using Prism.Regions;
 using Prism.Events;
 using Model.Events;
 using System.Threading.Tasks;
+using CompuStore.Accounts;
 
 namespace CompuStore
 {
@@ -53,6 +54,7 @@ namespace CompuStore
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             moduleCatalog.AddModule(typeof(ServiceModule));
+            moduleCatalog.AddModule(typeof(AccountsModule));
             moduleCatalog.AddModule(typeof(StoreModule));
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));

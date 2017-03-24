@@ -6,9 +6,6 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" FlowDirection="RightToLeft"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="600">
-    <UserControl.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
-    </UserControl.InputBindings>
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding NewItemRequest, Mode=OneWay}">
             <prism:PopupWindowAction WindowStartupLocation="CenterScreen" IsModal="True">

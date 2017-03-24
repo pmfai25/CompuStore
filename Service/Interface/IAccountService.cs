@@ -13,5 +13,8 @@ namespace Service
         bool AddAccount(Account account);
         bool UpdateAccount(Account account);
         bool DeleteAccount(Account account);
+        List<Orders> GetSales(Account account);
+        List<Orders> GetSales(Account account, DateTime dateFrom, DateTime dateTo);
+        Account Find(int ID);
     }
 }

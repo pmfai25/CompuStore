@@ -17,7 +17,7 @@
         </GroupBox>
         <GroupBox Header="العمليات" Grid.Column="1" >
             <controls:MetroAnimatedTabControl >
-                <TabItem Header="المشتريات" prism:RegionManager.RegionName="ClientSalesRegion"/>
+                <TabItem Header="المبيعات" prism:RegionManager.RegionName="ClientSalesRegion"/>
                 <TabItem Header="ايصالات نقدية" prism:RegionManager.RegionName="ClientPaymentRegion"/>
             </controls:MetroAnimatedTabControl>
         </GroupBox>
