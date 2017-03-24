@@ -41,6 +41,10 @@
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
     <Grid FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Controls:MetroAnimatedTabControl SelectedIndex="{Binding Index}">
             <TabItem Header="الموردين" Visibility="{Binding HideSuppliers,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="SuppliersRegion"/>
             <TabItem Header="العملاء"  Padding="10" prism:RegionManager.RegionName="ClientsRegion"/>
@@ -48,5 +52,11 @@
             <TabItem Header="التقارير" Visibility="{Binding HideReports,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="ReportsRegion"/>
             <TabItem Header="المستخدمين" Visibility="{Binding HideUsers,Converter={StaticResource HiddenConverter}}" Padding="10" prism:RegionManager.RegionName="AccountsRegion"/>
         </Controls:MetroAnimatedTabControl>
+        <StatusBar Grid.Row="1" Background="{StaticResource AccentColorBrush}" FlowDirection="LeftToRight">
+            <StatusBarItem Content="Developped By:" Foreground="Yellow"/>
+            <StatusBarItem Content=" Hisham Shehata Galal"/>
+            <StatusBarItem Margin="20,0,0,0" Content="Phone:" Foreground="Yellow"/>
+            <StatusBarItem Content=" +201004228584" />
+        </StatusBar>
     </Grid>
 </Controls:MetroWindow>

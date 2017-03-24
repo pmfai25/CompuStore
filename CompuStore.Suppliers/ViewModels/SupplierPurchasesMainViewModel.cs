@@ -91,7 +91,10 @@ namespace CompuStore.Suppliers.ViewModels
                 x =>
                 {
                     if (x.Confirmed)
+                    {
                         Items.Add(x.SupplierPurchase);
+                        FixData();
+                    }
                 });
         }
         private void Update()
@@ -101,6 +104,8 @@ namespace CompuStore.Suppliers.ViewModels
                 {
                     if (!x.Confirmed)
                         DataUtils.Copy(SelectedItem, _purchaseService.FindPurchase(SelectedItem.ID));
+                    else
+                        FixData();
                 });
         }
         private void Delete()

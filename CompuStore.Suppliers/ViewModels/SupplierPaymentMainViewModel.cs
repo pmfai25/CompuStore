@@ -94,6 +94,7 @@ namespace CompuStore.Suppliers.ViewModels
                     {
                         _supplierPaymentService.Add(x.SupplierPayment);
                         Items.Add(x.SupplierPayment);
+                        Total = Items.Sum(y => y.Money);
                     }
                 });
         }
@@ -103,7 +104,10 @@ namespace CompuStore.Suppliers.ViewModels
                 x =>
                 {
                     if (x.Confirmed)
+                    {
                         _supplierPaymentService.Update(x.SupplierPayment);
+                        Total = Items.Sum(y => y.Money);
+                    }
                     else
                         DataUtils.Copy(SelectedItem, _supplierPaymentService.Find(SelectedItem.ID));
                 });

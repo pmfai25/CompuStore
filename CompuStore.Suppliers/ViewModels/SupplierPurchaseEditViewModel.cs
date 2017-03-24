@@ -157,7 +157,6 @@ namespace CompuStore.Suppliers.ViewModels
         private void AddItem()
         {
             ItemConfirmation y = new ItemConfirmation();
-            y.Item = new Item();
             NewItemRequest.Raise(y, x =>
             {
                 if (x.Confirmed)

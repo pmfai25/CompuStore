@@ -21,6 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuStore.Accounts", "CompuStore.Accounts\CompuStore.Accounts.csproj", "{AB8B448C-DD74-4D60-A041-3E5D03A32180}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{F1BA2030-B960-418C-81E1-E4502E195972}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8961E7EC-A2D7-4379-A30A-DFB52289047E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\Inventory.s3db = ..\..\..\Desktop\Inventory.s3db
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +70,8 @@ Global
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB8B448C-DD74-4D60-A041-3E5D03A32180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BA2030-B960-418C-81E1-E4502E195972}.Debug|Any CPU.ActiveCfg = Debug
+		{F1BA2030-B960-418C-81E1-E4502E195972}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -90,7 +90,10 @@ namespace CompuStore.Clients.ViewModels
             ClientSaleRequest.Raise(new ClientSaleConfirmation(Client.ID), x =>
              {
                  if (x.Confirmed)
+                 {
                      Items.Add(x.ClientOrder);
+                     FixData();
+                 }
              });
         }
         private void Update()
@@ -99,6 +102,8 @@ namespace CompuStore.Clients.ViewModels
             {
                 if (!x.Confirmed)
                     DataUtils.Copy(SelectedItem, _orderService.FindOrder(SelectedItem.ID));
+                else
+                    FixData();
             });
         }
         private void Delete()

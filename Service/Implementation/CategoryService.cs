@@ -29,8 +29,7 @@ namespace Service
         {
             DynamicParameters args = new DynamicParameters();
             args.Add("CategoryID", category.ID);
-            int? x = (int?)Connection.QuerySingleOrDefault("Select top 1 1 from Item where CategoryID=@CategoryID", args);
-            return x.HasValue && x.Value != 0;
+            return Connection.Query<Item>("Select * from Item where CategoryID=@CategoryID", args).AsList().Count == 0;
         }
 
         public bool Update(Category category)

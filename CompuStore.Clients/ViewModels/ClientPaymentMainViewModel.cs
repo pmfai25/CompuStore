@@ -97,7 +97,8 @@ namespace CompuStore.Clients.ViewModels
                  if(x.Confirmed)
                  {
                      _clientPaymentService.Add(x.ClientPayment);
-                     Search();
+                     Items.Add(x.ClientPayment);
+                     Total = Items.Sum(y => y.Money);
                  }
              });
         }
@@ -108,7 +109,7 @@ namespace CompuStore.Clients.ViewModels
                  if (x.Confirmed)
                  {
                      _clientPaymentService.Update(x.ClientPayment);
-                     Search();
+                     Total = Items.Sum(y => y.Money);
                  }
                  else
                      DataUtils.Copy(SelectedItem, _clientPaymentService.Find(SelectedItem.ID));

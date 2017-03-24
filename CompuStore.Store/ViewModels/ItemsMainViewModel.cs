@@ -105,7 +105,7 @@ namespace CompuStore.Store.ViewModels
         }
         private void AddItem()
         {
-            ItemEditRequest.Raise(new ItemConfirmation(), x =>
+            ItemEditRequest.Raise(new ItemConfirmation(new Item(), SelectedCategory), x =>
              {
                  if (x.Confirmed)
                  {
