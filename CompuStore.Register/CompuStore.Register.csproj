@@ -92,8 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\ColorConverter.cs" />
-    <Compile Include="Cryptor.cs" />
-    <Compile Include="Finger.cs" />
     <Compile Include="RegisterManager.cs" />
     <Compile Include="RegisterModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

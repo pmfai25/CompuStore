@@ -2,9 +2,11 @@
 using Model;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using System.Data.SQLite;
+
 namespace Service
 {
-    class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private IDbConnection Connection;
         public bool AddAccount(Account account)
@@ -30,6 +32,15 @@ namespace Service
         public AccountService(IDbConnection connection)
         {
             Connection = connection;
+        }
+        public AccountService()
+        {
+#if DEBUG
+            Connection = new SQLiteConnection("Data Source=..\\..\\Inventory.s3db; Version = 3;");
+#else
+            Connection = new SQLiteConnection("Data Source=Inventory.s3db; Version = 3;");  
+#endif
+            Connection.Open();
         }
     }
 }

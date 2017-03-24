@@ -28,24 +28,16 @@
                     <iconPacks:PackIconMaterial Kind="Delete"  HorizontalAlignment="Center" Margin="3" />
                 </Button>
             <Separator></Separator>
-            <Label Content="من: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="130">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDateChanged">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DatePicker>
+                <Label Content="من: " VerticalAlignment="Center"/>
+                <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateFrom}" Width="130"/>
 
-            <Label Content="الى: " VerticalAlignment="Center"/>
-            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="130">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDateChanged">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DatePicker>
-            <Separator/>
+                <Label Content="الى: " VerticalAlignment="Center"/>
+                <DatePicker VerticalAlignment="Center" SelectedDate="{Binding DateTo}" Width="130"/>
+
+                <Button Command="{Binding SearchCommand}" Padding="4">
+                    <iconPacks:PackIconOcticons Kind="Search" HorizontalAlignment="Center" Margin="3" />
+                </Button>
+                <Separator/>
             <Button Command="{Binding RefreshCommand}" Padding="4">
                     <iconPacks:PackIconMaterial Kind="Refresh"  HorizontalAlignment="Center" Margin="3" />
                 </Button>

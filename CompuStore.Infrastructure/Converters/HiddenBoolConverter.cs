@@ -9,12 +9,12 @@ using System.Windows.Data;
 
 namespace CompuStore.Infrastructure.Converters
 {
-    public class VisibleHiddenBoolConverter : IValueConverter
+    public class HiddenBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool f = (bool)value;
-            return f ? Visibility.Visible : Visibility.Collapsed;
+            return f ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,5 +22,4 @@ namespace CompuStore.Infrastructure.Converters
             return null;
         }
     }
-    
 }

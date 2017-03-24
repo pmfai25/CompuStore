@@ -1,9 +1,11 @@
-﻿using CompuStore.Infrastructure;
+﻿using CompuStore.Confirmations;
+using CompuStore.Infrastructure;
 using Microsoft.Practices.Unity;
 using Model;
 using Model.Events;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
 using Service;
@@ -18,10 +20,9 @@ using System.Windows.Media;
 
 namespace CompuStore.ViewModels
 {
-    public class LoginViewModel : BindableBase, IConfirmNavigationRequest,IDataErrorInfo
+    public class LoginViewModel : BindableBase, IInteractionRequestAware, IDataErrorInfo
     {
-        IUnityContainer _container;
-        IRegionManager _regionManager;
+        private LoginConfirmation _confirmation;
         private ObservableCollection<Account> _accounts;
         private Account _selectedAccount;
         private IAccountService _accountService;
@@ -38,7 +39,6 @@ namespace CompuStore.ViewModels
             set { SetProperty(ref _password, value); }
         }
         public DelegateCommand<object> LoginCommand => new DelegateCommand<object>(LoginUser);
-        public DelegateCommand ExitCommand => new DelegateCommand(()=>Application.Current.Shutdown());
         public DelegateCommand<KeyEventArgs> PasswordEnterCommand => new DelegateCommand<KeyEventArgs>(e=> { if (e.Key != Key.Enter) return; LoginUser(e.Source); });
         private void LoginUser(object password)
         {
@@ -47,23 +47,14 @@ namespace CompuStore.ViewModels
             successful = SelectedAccount.Password == pass;
             if (!successful)
             {
-                box.Background = System.Windows.Media.Brushes.Red;
+                box.Background = Brushes.Red;
                 return;
             }
             successful = true;
             Color = Colors.White;
-            _container.RegisterInstance<Account>(SelectedAccount,new ContainerControlledLifetimeManager());
-            switch(SelectedAccount.ID)
-            {
-                case 1:                    
-                    _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.SuppliersMain);
-                    break;
-                default:
-                    _eventAggregator.GetEvent<NormalUserLoggedIn>().Publish();
-                    _regionManager.RequestNavigate(RegionNames.MainContentRegion, RegionNames.ClientsMain);
-
-                    break;
-            }
+            _confirmation.Confirmed = true;
+            _confirmation.SelectedAccount = SelectedAccount;
+            FinishInteraction();
         }
 
         public ObservableCollection<Account> Accounts
@@ -72,12 +63,29 @@ namespace CompuStore.ViewModels
             set { SetProperty(ref _accounts, value); }
         }        
         private bool successful;
-        private IEventAggregator _eventAggregator;
-
         public Account SelectedAccount
         {
             get { return _selectedAccount; }
             set { SetProperty(ref _selectedAccount, value); }
+        }
+        public INotification Notification
+        {
+            get
+            {
+                return _confirmation;
+            }
+
+            set
+            {
+                _confirmation = (LoginConfirmation)value;
+                OnPropertyChanged(() => Notification);
+            }
+        }
+
+        public Action FinishInteraction
+        {
+            get;set;
+            
         }
 
         string IDataErrorInfo.Error
@@ -92,7 +100,7 @@ namespace CompuStore.ViewModels
         {
             get
             {
-                if(columnName=="Password")
+                if (columnName == "Password")
                 {
                     if (Password != SelectedAccount.Password)
                         return "كلمة مرور خاطئة";
@@ -100,38 +108,12 @@ namespace CompuStore.ViewModels
                 return null;
             }
         }
-
-        public LoginViewModel(IUnityContainer container, IAccountService accountService,IRegionManager regionManager, IEventAggregator eventAggregator)
+        public LoginViewModel()
         {
-            _eventAggregator = eventAggregator;
-            _regionManager = regionManager;
-            _container = container;
-            _accountService = accountService;
+            _accountService = new AccountService();
             Accounts = new ObservableCollection<Account>(_accountService.GetAll());
             SelectedAccount = Accounts.First();
             Color = Colors.White;
-        }
-
-        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
-        {
-            if (navigationContext.Uri == new Uri("RegisterNow",UriKind.Relative))
-                continuationCallback(true);
-            else
-                continuationCallback(successful);
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
         }
     }
 }

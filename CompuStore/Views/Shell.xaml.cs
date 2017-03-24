@@ -11,10 +11,10 @@ namespace CompuStore.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class Shell : MetroWindow
     {
        
-        public MainWindow()
+        public Shell()
         {
             InitializeComponent();
         }

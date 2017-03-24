@@ -4,6 +4,13 @@ using Prism.Events;
 
 namespace Model.Events
 {
+    public class RegisterValues
+    {
+        public string Challenge { get; set; }
+        public string Serial { get; set; }
+    }
+    public class DoRegister : PubSubEvent<RegisterValues> { }
+    public class DoLogin : PubSubEvent { }
     public class NormalUserLoggedIn : PubSubEvent{ }
     public class SerialValid : PubSubEvent<string> { }
     public class ClientAdded : PubSubEvent<Client> { }

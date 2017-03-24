@@ -5,28 +5,21 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             prism:ViewModelLocator.AutoWireViewModel="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
-    <Grid Background="{DynamicResource AccentColorBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.ColumnSpan="2" FontFamily="Arial" FontSize="32" Foreground="White" Margin="10,20,10,30" HorizontalAlignment="Center" Text="الدخول الى البرنامج"/>
-        <ComboBox DisplayMemberPath="Username" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" Grid.Row="1"  Margin="10,5" HorizontalAlignment="Stretch"/>
-        <PasswordBox Background="Yellow" Name="txtPassword" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="أدخل كلمة المرور" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,5" HorizontalAlignment="Stretch">
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="KeyDown">
-                <prism:InvokeCommandAction Command="{Binding PasswordEnterCommand}"></prism:InvokeCommandAction>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+             prism:ViewModelLocator.AutoWireViewModel="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"  FlowDirection="RightToLeft">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <Label Style="{StaticResource MainHead}" Content="الدخول الى البرنامج"></Label>
+            <ComboBox DisplayMemberPath="Username" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" Grid.Row="1"  Margin="10" HorizontalAlignment="Stretch"/>
+        <PasswordBox Background="Yellow" Name="txtPassword" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="أدخل كلمة المرور" Grid.Row="2"  Margin="10" HorizontalAlignment="Stretch">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyDown">
+                    <prism:InvokeCommandAction Command="{Binding PasswordEnterCommand}"></prism:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </PasswordBox>
-        <Button Background="Lime" Margin="10,30,10,60" Grid.Row="3"  Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=txtPassword}">
-            <iconPacks:PackIconEntypo Kind="Login" Width="40" Height="25" Foreground="White"/>
-        </Button>
     </Grid>
 </UserControl>

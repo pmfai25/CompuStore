@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace CompuStore.ViewModels
 {
-    public class MainSettingsViewModel : BindableBase, INavigationAware
+    public class UsersViewModel : BindableBase, INavigationAware
     {
         private List<Account> deleteList, updateList, insertList;
         private NavigationContext _navigationContext;
@@ -68,7 +68,7 @@ namespace CompuStore.ViewModels
             deleteList.Add(SelectedItem);
             Items.Remove(SelectedItem);            
         }
-        public MainSettingsViewModel(IAccountService accountService)
+        public UsersViewModel(IAccountService accountService)
         {
             _accountService = accountService;
             Items = new ObservableCollection<Account>(_accountService.GetAll());

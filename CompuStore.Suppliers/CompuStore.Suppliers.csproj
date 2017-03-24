@@ -121,7 +121,6 @@
     <Compile Include="ViewModels\SupplierPaymentMainViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchaseEditViewModel.cs" />
     <Compile Include="ViewModels\SupplierPurchasesMainViewModel.cs" />
-    <Compile Include="ViewModels\SuppliersMainViewModel.cs" />
     <Compile Include="Views\SupplierEdit.xaml.cs">
       <DependentUpon>SupplierEdit.xaml</DependentUpon>
     </Compile>

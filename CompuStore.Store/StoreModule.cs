@@ -24,7 +24,7 @@ namespace CompuStore.Store
             _container.RegisterTypeForNavigation<StoreMain>(RegionNames.StoreMain);
             _container.RegisterTypeForNavigation<StoreEdit>(RegionNames.StoreEdit);
             _container.RegisterTypeForNavigation<CategoryMain>(RegionNames.CategoryMain);
-            _regionManager.RegisterViewWithRegion(RegionNames.ItemsRegion, typeof(StoreMain));
+            _container.RegisterTypeForNavigation<StoreMain>("StoreMain");
         }
     }
 }

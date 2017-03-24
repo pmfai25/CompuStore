@@ -121,7 +121,6 @@
     <Compile Include="ViewModels\ClientSaleEditViewModel.cs" />
     <Compile Include="ViewModels\ClientSalesMainViewModel.cs" />
     <Compile Include="ViewModels\ClientEditViewModel.cs" />
-    <Compile Include="ViewModels\ClientsMainViewModel.cs" />
     <Compile Include="Views\ClientEdit.xaml.cs">
       <DependentUpon>ClientEdit.xaml</DependentUpon>
     </Compile>

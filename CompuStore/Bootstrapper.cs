@@ -15,13 +15,14 @@ using System.Globalization;
 using System;
 using CompuStore.Register;
 using Prism.Regions;
+using Prism.Events;
+using Model.Events;
+using System.Threading.Tasks;
 
 namespace CompuStore
 {
     class Bootstrapper : UnityBootstrapper
     {
-        private IRegionManager regionManager;
-
         protected override DependencyObject CreateShell()
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("ar-eg");
@@ -29,40 +30,46 @@ namespace CompuStore
             ci.DateTimeFormat.FullDateTimePattern= "dd / MM / yyyy";
             ci.NumberFormat = CultureInfo.GetCultureInfo("en-us").NumberFormat;
             Thread.CurrentThread.CurrentCulture = ci;
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<Shell>();
         }
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            regionManager = Container.Resolve<IRegionManager>();
-            Container.RegisterTypeForNavigation<MainSettings>("Settings");
-            Container.RegisterTypeForNavigation<Login>(RegionNames.Login);
-        }
-
-        
+        }        
         protected override void InitializeShell()
         {
             try
             {
                 Application.Current.MainWindow.Show();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Messages.Error("حدث خطا بالبرنامج" + Environment.NewLine + ex.Message);
             }
-            
+
         }
         protected override void ConfigureModuleCatalog()
-        {
-            
+        {            
             base.ConfigureModuleCatalog();
             ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             moduleCatalog.AddModule(typeof(ServiceModule));
             moduleCatalog.AddModule(typeof(StoreModule));
             moduleCatalog.AddModule(typeof(ClientsModule));
             moduleCatalog.AddModule(typeof(SuppliersModule));
-            moduleCatalog.AddModule(typeof(ReportsModule));
-            moduleCatalog.AddModule(typeof(RegisterModule));   
-             
+            moduleCatalog.AddModule(typeof(ReportsModule));              
+        }
+        public override async void Run(bool runWithDefaultConfiguration)
+        {
+            base.Run(runWithDefaultConfiguration);
+            IEventAggregator eventAggregator = Container.Resolve<IEventAggregator>();
+            eventAggregator.GetEvent<DoLogin>().Publish();
+
+            await Task.Delay(2000);
+            ISettingsService settingsService = Container.Resolve<ISettingsService>();
+            string serial = settingsService.Get().Serial;
+            string correctSerial = Cryptor.Encrypt(Finger.Value);
+            if (serial!=correctSerial)
+                eventAggregator.GetEvent<DoRegister>().Publish(new RegisterValues() { Challenge = Finger.Value, Serial = correctSerial });
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="CompuStore.Views.Register"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"  
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             prism:ViewModelLocator.AutoWireViewModel="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+    <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="50"/>
+        <RowDefinition Height="45"/>
+        <RowDefinition Height="45"/>
+    </Grid.RowDefinitions>
+    <Label Style="{StaticResource MainHead}" Content="تسجيل البرنامج"></Label>
+        <TextBox IsReadOnly="True" Text="{Binding Challenge}" Grid.Row="1"  Margin="10,5" HorizontalAlignment="Stretch"/>
+        <TextBox Text="{Binding Serial, UpdateSourceTrigger=PropertyChanged}" Background="{Binding StatusBrush}" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="Enter Serial Here" Grid.Row="2" Margin="10,5" HorizontalAlignment="Stretch">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyDown">
+                    <prism:InvokeCommandAction Command="{Binding CheckSerialCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
+        <!--<ComboBox DisplayMemberPath="Username" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" Grid.Row="1"  Margin="10" HorizontalAlignment="Stretch"/>
+    <PasswordBox Background="Yellow" Name="txtPassword" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="أدخل كلمة المرور" Grid.Row="2"  Margin="10" HorizontalAlignment="Stretch">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="KeyDown">
+                <prism:InvokeCommandAction Command="{Binding PasswordEnterCommand}"></prism:InvokeCommandAction>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </PasswordBox>-->
+    </Grid>
+</UserControl>

@@ -3,11 +3,11 @@
 namespace CompuStore.Views
 {
     /// <summary>
-    /// Interaction logic for MainSettings
+    /// Interaction logic for Register
     /// </summary>
-    public partial class MainSettings : UserControl
+    public partial class Register : UserControl
     {
-        public MainSettings()
+        public Register()
         {
             InitializeComponent();
         }

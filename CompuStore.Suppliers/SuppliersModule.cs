@@ -23,7 +23,7 @@ namespace CompuStore.Suppliers
             _regionManager.RegisterViewWithRegion("SupplierPaymentRegion", typeof(SupplierPaymentMain));
             _regionManager.RegisterViewWithRegion("SupplierPurchasesRegion", typeof(SupplierPurchasesMain));
             _regionManager.RegisterViewWithRegion("SupplierNavigationRegion", typeof(SupplierNavigation));
-            _regionManager.RegisterViewWithRegion("SuppliersRegion", typeof(SuppliersMain));     
+            _container.RegisterTypeForNavigation<SuppliersMain>("SuppliersMain");
         }
     }
 }

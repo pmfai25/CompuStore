@@ -52,4 +52,5 @@
     </Style>
     <conv:PositiveNegativeColorConverter x:Key="PositiveNegativeConverter"/>
     <conv:VisibleHiddenBoolConverter x:Key="HiddenVisibleConverter"/>
+    <conv:HiddenBoolConverter x:Key="HiddenConverter"/>
 </ResourceDictionary>

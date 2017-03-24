@@ -30,6 +30,7 @@ namespace Service
             Connection.Open();
             Connection.Execute("PRAGMA foreign_keys = ON");
             _container.RegisterInstance<IDbConnection>(Connection);
+            _container.RegisterType<IAccountService, AccountService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IClientService, ClientService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IClientPaymentService, ClientPaymentService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISupplierService, SupplierService>(new ContainerControlledLifetimeManager());
@@ -39,7 +40,6 @@ namespace Service
             _container.RegisterType<IItemService, ItemService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IAccountService, AccountService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IReportService, ReportService>(new ContainerControlledLifetimeManager());
         }
     }

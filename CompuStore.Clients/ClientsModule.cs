@@ -25,7 +25,7 @@ namespace CompuStore.Clients
             _regionManager.RegisterViewWithRegion("ClientPaymentRegion", typeof(ClientPaymentMain));
             _regionManager.RegisterViewWithRegion("ClientSalesRegion", typeof(ClientSalesMain));
             _regionManager.RegisterViewWithRegion("ClientNavigationRegion", typeof(ClientNavigation));
-            _regionManager.RegisterViewWithRegion("ClientsRegion", typeof(ClientsMain));
+            _container.RegisterTypeForNavigation<ClientsMain>("ClientsMain");
         }
     }
 }

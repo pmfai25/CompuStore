@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\HiddenBoolConverter.cs" />
     <Compile Include="Converters\PositiveNegativeColorConverter.cs" />
     <Compile Include="Converters\VisibleHiddenBoolConverter.cs" />
     <Compile Include="DataUtils.cs" />
