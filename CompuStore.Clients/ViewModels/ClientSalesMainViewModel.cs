@@ -93,6 +93,7 @@ namespace CompuStore.Clients.ViewModels
                  {
                      Items.Add(x.ClientOrder);
                      FixData();
+                     SelectedItem = x.ClientOrder;
                  }
              });
         }

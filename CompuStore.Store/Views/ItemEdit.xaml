@@ -35,10 +35,10 @@
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Label Content="اسم الصنف" Grid.Row="0" Grid.Column="0" Margin="4,6"></Label>
-            <TextBox Text="{Binding  Item.Name,  ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
+            <TextBox Text="{Binding  Item.Name, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="4,6"/>
 
             <Label Content="الباركود" Grid.Column="2" Margin="4,6"/>
-            <TextBox Text="{Binding Item.Serial,  ValidatesOnDataErrors=True}" Grid.Column="3" Margin="4,6"/>
+            <TextBox Text="{Binding Item.Serial, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}" Grid.Column="3" Margin="4,6"/>
 
             <Label Content="القسم" Grid.Row="1" Grid.Column="0" Margin="4,6"></Label>
             <Grid  Grid.Row="1" Grid.Column="1">
@@ -54,13 +54,13 @@
             
 
             <Label Content="حد الطلب" Grid.Row="1" Grid.Column="2" Margin="4,6" Grid.ColumnSpan="3"></Label>
-            <TextBox Text="{Binding Item.Limit,  ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
+            <TextBox Text="{Binding Item.Limit, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="3" Margin="4,6"  />
 
             <Label Content="الوصف" Grid.Row="3" Grid.Column="0" Margin="4,6"></Label>
             <TextBox Text="{Binding Item.Description}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1" Margin="4,6"  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  AcceptsReturn="True" />
 
             <Label Content="سعر البيع" Grid.Row="2" Grid.Column="0" Margin="4,6" ></Label>
-            <TextBox Text="{Binding Item.Price, StringFormat=N2,  ValidatesOnDataErrors=True}" Grid.Row="2" Grid.Column="1" Margin="4,6"  />
+            <TextBox Text="{Binding Item.Price, StringFormat=N2,UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}" Grid.Row="2" Grid.Column="1" Margin="4,6"  />
 
             <StackPanel Margin="4,10" Grid.ColumnSpan="4" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" >
                 <Button Command="{Binding SaveCommand}" Width="80" Margin="5,0">

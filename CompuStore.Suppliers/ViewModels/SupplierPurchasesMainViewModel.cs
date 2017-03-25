@@ -93,6 +93,7 @@ namespace CompuStore.Suppliers.ViewModels
                     if (x.Confirmed)
                     {
                         Items.Add(x.SupplierPurchase);
+                        SelectedItem = x.SupplierPurchase;
                         FixData();
                     }
                 });

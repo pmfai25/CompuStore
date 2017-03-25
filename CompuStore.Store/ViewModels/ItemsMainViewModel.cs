@@ -75,6 +75,7 @@ namespace CompuStore.Store.ViewModels
                  {
                      _categoryService.Add(x.Category);
                      Categories.Add(x.Category);
+                     SelectedCategory = x.Category;
                  }
              });
         }
@@ -111,7 +112,10 @@ namespace CompuStore.Store.ViewModels
                  {
                      _itemService.Add(x.Item);
                      if (SelectedCategory.ID == x.Category.ID)
+                     {
                          Items.Add(x.Item);
+                         SelectedItem = x.Item;
+                     }
                  }
              });
         }
@@ -145,7 +149,10 @@ namespace CompuStore.Store.ViewModels
         }
         private void Refresh()
         {
-            Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
+            if (SelectedCategory == null)
+                Items = new ObservableCollection<Item>();
+            else
+                Items = new ObservableCollection<Item>(_itemService.GetAll(SelectedCategory.ID));
         }
         private void Search(KeyEventArgs e)
         {

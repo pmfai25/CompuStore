@@ -63,7 +63,10 @@ namespace CompuStore.Clients.ViewModels
                  if (x.Confirmed)
                  {
                      if (_clientService.Add(x.Client))
+                     {
                          Items.Add(x.Client);
+                         SelectedItem = x.Client;
+                     }
                      else
                          Messages.Error("يوجد عميل بنفس رقم التليفون");
                  }

@@ -98,6 +98,7 @@ namespace CompuStore.Clients.ViewModels
                  {
                      _clientPaymentService.Add(x.ClientPayment);
                      Items.Add(x.ClientPayment);
+                     SelectedItem = x.ClientPayment;
                      Total = Items.Sum(y => y.Money);
                  }
              });

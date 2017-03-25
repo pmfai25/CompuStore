@@ -61,7 +61,10 @@ namespace CompuStore.Suppliers.ViewModels
                 if (x.Confirmed)
                 {
                     if (_supplierService.Add(x.Supplier))
+                    {
                         Items.Add(x.Supplier);
+                        SelectedItem = x.Supplier;
+                    }
                     else
                         Messages.Error("يوجد مورد بنفس رقم التليفون");
                 }
